@@ -8,6 +8,5 @@
         public string ProductionCompany { get; set; }
         public string Type { get; set; }
         //public List<Review> Reviews { get; set; }
-        public List<User> Users { get; set; }
     }
 }
