@@ -7,6 +7,6 @@
         public string Title { get; set; }
         public string ProductionCompany { get; set; }
         public string Type { get; set; }
-        //public List<Review> Reviews { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }

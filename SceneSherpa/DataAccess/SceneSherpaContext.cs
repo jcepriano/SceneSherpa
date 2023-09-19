@@ -7,6 +7,7 @@ namespace SceneSherpa.DataAccess
     {
         DbSet<User> Users { get; set; }
         DbSet<Media> Media { get; set; }
+        DbSet<Review> Reviews { get; set; }
 
         public SceneSherpaContext(DbContextOptions<SceneSherpaContext> options) : base(options)
         {
