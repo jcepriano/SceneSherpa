@@ -27,9 +27,15 @@ namespace SceneSherpa.Tests
         }
 
         [Fact]
-        public void Test1()
+        public async Task New_ReturnsForm()
         {
+            var client = _factory.CreateClient();
+            var response = await client.GetAsync("/users/new");
+            var html = await response.Content.ReadAsStringAsync();
 
+            response.EnsureSuccessStatusCode();
+            Assert.Contains("<form method=\"post\" action=\"/users\">", html);
+            Assert.Contains("<button type=\"submit\" class=\"submit-button\">Create Account</button>", html);
         }
     }
 }
