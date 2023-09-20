@@ -17,7 +17,7 @@ namespace SceneSherpa.Controllers
             return View();
         }
 
-        [Route("media/{id:int}/review")]
+        [Route("media/{id:int}/review/{reviewId:int}")]
         public IActionResult Edit(int reviewId)
         {
             var user = _context.Users.Find(reviewId);
