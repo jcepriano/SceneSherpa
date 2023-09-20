@@ -18,6 +18,11 @@ namespace SceneSherpa.Controllers
 
         public IActionResult Index()
         {
+            ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
+            if (ViewData["CurrentUser"] != null)
+            {
+                ViewData["CurrentUserObject"] = _context.Users.Where(e => e.Username == ViewData["CurrentUser"]).Single();
+            }
             return View();
         }
 
@@ -31,11 +36,10 @@ namespace SceneSherpa.Controllers
         public IActionResult Index(User user)
         {
             //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
-            TempData["Users Name"] = user.Name;
-            TempData["Users Email"] = user.Email;
-            user.Name = user.ReturnEncryptedString(user.Name);
-            user.Email = user.ReturnEncryptedString(user.Email);
             user.Password = user.ReturnEncryptedString(user.Password);
+            Response.Cookies.Append("CurrentUser", user.Username);
+            ViewData["CurrentUserObject"] = user;
+            ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -47,6 +51,20 @@ namespace SceneSherpa.Controllers
         public IActionResult LoginForm()
         {
             ViewData["FailedLogin"] = TempData["FailedLogin"];
+
+            if (ViewData["CurrentUser"] == null)
+            {
+                ViewData["CurrentUser"] = TempData["CurrentUser"];
+            }
+            else if (TempData["CurrentUser"] == null)
+            {
+                if (ViewData["CurrentUser"] != null)
+                {
+                    ViewData["CurrentUserObject"] = _context.Users.Where(e => e.Username == ViewData["CurrentUser"]).Single();
+                }
+                ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
+            }
+
             return View();
         }
 
@@ -54,6 +72,7 @@ namespace SceneSherpa.Controllers
         [Route("/users/login/attempt")]
         public IActionResult LoginAttempt(string username, string password)
         {
+            //this is the EXACT method in 'User.cs', however I did not have a User object here to call the method. This can be cleaned.
             HashAlgorithm sha = SHA256.Create();
             byte[] firstInputBytes = Encoding.ASCII.GetBytes(password);
             byte[] firstInputDigested = sha.ComputeHash(firstInputBytes);
@@ -69,6 +88,11 @@ namespace SceneSherpa.Controllers
             if (_context.Users.Where(e => e.Username == username && e.Password == value).Any())
             {
                 User user = _context.Users.Where(e => e.Username == e.Username).Single();
+
+                //assign the cookie "CurrentUser" to a username. TempData[] CANNOT store an object.
+                Response.Cookies.Append("CurrentUser", user.Username);
+                TempData["CurrentUser"] = Request.Cookies["CurrentUser"];
+
                 return Redirect($"/users/{user.Id}");
             }
             else
@@ -81,8 +105,6 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}")]
         public IActionResult Show(int id)
         {
-            ViewData["Users Name"] = TempData["Users Name"];
-            ViewData["Users Email"] = TempData["Users Email"];
             var user = _context.Users.Find(id);
             return View(user);
         }
@@ -91,6 +113,13 @@ namespace SceneSherpa.Controllers
         public IActionResult Edit(int id)
         {
             var user = _context.Users.Find(id);
+
+            ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
+            if (ViewData["CurrentUser"] != null)
+            {
+                ViewData["CurrentUserObject"] = _context.Users.Where(e => e.Username == ViewData["CurrentUser"]).Single();
+            }
+
             return View(user);
         }
         
@@ -104,7 +133,6 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("show", new { id = user.Id });
-
         }
         
         [HttpPost]
