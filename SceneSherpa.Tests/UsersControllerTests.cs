@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using SceneSherpa.DataAccess;
+using SceneSherpa.Models;
 
 namespace SceneSherpa.Tests
 {
@@ -42,6 +43,14 @@ namespace SceneSherpa.Tests
         public async Task IndexPost_CreatesNewUser()
         {
             var client = _factory.CreateClient();
+            User user = new()
+            {
+                Name = "John Doe",
+                Username = "jdoe123",
+                Email = "jdoe123@gmail.com",
+                Password = "password123",
+                Age = 20
+            };
 
             var FormData = new Dictionary<string, string>
             {
@@ -52,12 +61,16 @@ namespace SceneSherpa.Tests
                 {"Age", "20" }
             };
 
+            user.Email = user.ReturnEncryptedString(user.Email);
+            user.Name = user.ReturnEncryptedString(user.Name);
+
             var response = await client.PostAsync("/users", new FormUrlEncodedContent(FormData));
             var html = await response.Content.ReadAsStringAsync();
 
             response.EnsureSuccessStatusCode();
 
-            Assert.Contains("jdoe123", html);
+            Assert.Contains(user.Email, html);
+            Assert.Contains(user.Name, html);
         }
     }
 }
