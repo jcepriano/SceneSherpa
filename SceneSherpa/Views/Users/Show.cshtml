@@ -5,7 +5,7 @@
 <h1>Username: @Model.Username</h1>
 <h1>Email: @Model.Email</h1>
 
-<form>
+<form action="/Users/Delete/@Model.Id" method="post">
     <button type="submit">DELETE @Model.Username</button>
 </form>
 

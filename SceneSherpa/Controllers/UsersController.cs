@@ -68,6 +68,7 @@ namespace SceneSherpa.Controllers
         }
         
         [HttpPost]
+        [Route("/Users/Delete/{id:int}")]
         public IActionResult Delete(int id)
         {
             //Grab user from context with all lists included
