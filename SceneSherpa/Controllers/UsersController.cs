@@ -25,6 +25,10 @@ namespace SceneSherpa.Controllers
         [HttpPost]
         public IActionResult Index(User user)
         {
+            user.Name = user.ReturnEncryptedString(user.Name);
+            user.Email = user.ReturnEncryptedString(user.Email);
+            user.Password = user.ReturnEncryptedString(user.Password);
+
             _context.Users.Add(user);
             _context.SaveChanges();
 
