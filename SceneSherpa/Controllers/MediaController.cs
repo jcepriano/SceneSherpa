@@ -21,10 +21,17 @@ namespace SceneSherpa.Controllers
         [Route("media/{id:int}")]
         public IActionResult Show(int id)
         {
+
             var media = _context.Media
                 .Where(m => m.Id == id)
                 .Include(media => media.Reviews)
                 .FirstOrDefault();
+
+            //JK: find current user and pass in their review as a seperate review object 
+            var currentUser = _context.Users.Where(u => u.Username == Request.Cookies["CurrentUser"]).First();
+            ViewData["CurrentUserReview"] = media.Reviews.Where(r => r.User == currentUser).First();
+
+            
 
             return View(media);
         }

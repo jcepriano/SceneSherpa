@@ -43,7 +43,8 @@ namespace SceneSherpa.Controllers
         public IActionResult Create(int mediaId, Review review)
         {
             //Currently without saving state cannot find the correct user, fix this by using the cookies content to specify the correct user.
-            review.User = _context.Users.Find(1);
+            var currentUserId = _context.Users.Where(u => u.Username == Request.Cookies["CurrentUser"]).First().Id;
+            review.User = _context.Users.Find(currentUserId);
             
             var media = _context.Media
                 .Where(m => m.Id == mediaId)
