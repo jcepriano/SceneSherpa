@@ -59,6 +59,7 @@ namespace SceneSherpa.Controllers
         public IActionResult Update(int id, User user)
         {
             user.Id = id;
+      
             _context.Users.Update(user);
             _context.SaveChanges();
 
