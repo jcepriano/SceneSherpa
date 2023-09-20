@@ -61,5 +61,16 @@ namespace SceneSherpa.Controllers
             var media = _context.Media.Where(m => m.Id == mediaId).Include(m => m.Reviews).First();
             return View(media);
         }
+
+        [HttpPost]
+        [Route("media/{mediaId:int}/reviews/delete/{reviewId:int}")]
+        public IActionResult Delete(int reviewId, int mediaId)
+        {
+            var review = _context.Reviews.Find(reviewId);
+            _context.Reviews.Remove(review);
+            _context.SaveChanges();
+
+            return Redirect($"/media/{mediaId}");
+        }
     }
 }

@@ -15,6 +15,9 @@
         {
             <p>Content: @review.Content</p>
         }
+        <form method="post" action="/media/@Model.Id/reviews/delete/@review.Id">
+            <button "submit" onclick="return confirm('Are You Sure You Want To Delete Review')">Delete Review</button>
+        </form>
     }
 }
 else
