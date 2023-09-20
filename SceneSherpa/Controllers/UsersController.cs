@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SceneSherpa.DataAccess;
+using SceneSherpa.Models;
 
 namespace SceneSherpa.Controllers
 {
@@ -19,6 +20,15 @@ namespace SceneSherpa.Controllers
         public IActionResult New()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return Redirect($"/users/");
         }
     }
 }
