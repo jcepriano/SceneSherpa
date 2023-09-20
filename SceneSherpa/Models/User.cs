@@ -15,6 +15,7 @@ namespace SceneSherpa.Models
         public List<Media>? AllWatched { get; set; } = new List<Media>();
         public List<Media>? ToWatch { get; set; } = new List<Media>();
 
+
         //this method will take in any string and return it hashed. I've been using it for personal User information.
         public string ReturnEncryptedString(string stringToEncrypt)
         {
@@ -30,5 +31,6 @@ namespace SceneSherpa.Models
             }
             return firstInputBuilder.ToString();
         }
+
     }
 }
