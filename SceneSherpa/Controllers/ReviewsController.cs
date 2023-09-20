@@ -35,7 +35,7 @@ namespace SceneSherpa.Controllers
             _context.Reviews.Update(review);
             _context.SaveChanges();
 
-            return Redirect("/media/{id:int}");
+            return Redirect($"/media/{id}");
         }
 
         [HttpPost]
