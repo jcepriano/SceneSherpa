@@ -27,16 +27,10 @@ namespace SceneSherpa.Controllers
                 .Include(media => media.Reviews)
                 .FirstOrDefault();
 
-            // JK: pass currently logged in user's review to show page
-            try //JK: try to find a users review for this movie
-            {
-                var currentUser = _context.Users.Where(u => u.Username == Request.Cookies["CurrentUser"]).First();
-                ViewData["CurrentUserReview"] = media.Reviews.Where(r => r.User == currentUser);
-            }
-            catch (Exception e) //JK: if doesnt exist the viewdata is set to null
-            {
-                ViewData["CurrentUserReview"] = null;
-            }
+            //JK: find current user and pass in their review as a seperate review object 
+            var currentUser = _context.Users.Where(u => u.Username == Request.Cookies["CurrentUser"]).First();
+            ViewData["CurrentUserReview"] = media.Reviews.Where(r => r.User == currentUser).First();
+
             
 
             return View(media);

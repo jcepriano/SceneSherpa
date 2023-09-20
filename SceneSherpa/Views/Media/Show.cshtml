@@ -10,7 +10,7 @@
 <br />
 
 
-@if(currentUserReview != null)
+@if (currentUserReview != null)
 {
     <h2>My Review</h2>
 
@@ -19,11 +19,15 @@
     {
         <p>Content: @currentUserReview.Content</p>
     }
+    //JK: Maybe better way to do this, this removes a user's review temporarily so that it does not appear in the full list of reviews
+    @Model.Reviews.Remove(currentUserReview);
 }
+
 
 
 @if (Model.Reviews != null && Model.Reviews.Count > 0)
 {
+    <h2>Other Reviews</h2>
     foreach (var review in Model.Reviews)
     {
         <p>Rating: @review.Rating</p>
@@ -32,8 +36,4 @@
             <p>Content: @review.Content</p>
         }
     }
-}
-else
-{
-    <h4>There are currently no reviews for @Model.Title</h4>
 }
