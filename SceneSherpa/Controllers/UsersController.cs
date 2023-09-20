@@ -72,28 +72,14 @@ namespace SceneSherpa.Controllers
         [Route("/users/login/attempt")]
         public IActionResult LoginAttempt(string username, string password)
         {
-            //this is the EXACT method in 'User.cs', however I did not have a User object here to call the method. This can be cleaned.
-            HashAlgorithm sha = SHA256.Create();
-            byte[] firstInputBytes = Encoding.ASCII.GetBytes(password);
-            byte[] firstInputDigested = sha.ComputeHash(firstInputBytes);
+            //User Admin = new() { Username = "Admin", Name = "Admin", Age = 0000, Email = "Admin@gmail.com", Id = 0000, Password = "Admin" };
 
-            StringBuilder firstInputBuilder = new StringBuilder();
-            foreach (byte b in firstInputDigested)
+            var LoginAttemptUser = _context.Users.Where(e => e.Username == username).FirstOrDefault();
+
+            if(LoginAttemptUser.Password == LoginAttemptUser.ReturnEncryptedString(password))
             {
-                Console.Write(b + ", ");
-                firstInputBuilder.Append(b.ToString("x2"));
-            }
-            string value = firstInputBuilder.ToString();
-
-            if (_context.Users.Where(e => e.Username == username && e.Password == value).Any())
-            {
-                User user = _context.Users.Where(e => e.Username == e.Username).Single();
-
-                //assign the cookie "CurrentUser" to a username. TempData[] CANNOT store an object.
-                Response.Cookies.Append("CurrentUser", user.Username);
-                TempData["CurrentUser"] = Request.Cookies["CurrentUser"];
-
-                return Redirect($"/users/{user.Id}");
+                Response.Cookies.Append("CurrentUserIdUsername", $"{LoginAttemptUser.Id},{LoginAttemptUser.Username}");
+                return Redirect($"/users/{LoginAttemptUser.Id}");
             }
             else
             {
