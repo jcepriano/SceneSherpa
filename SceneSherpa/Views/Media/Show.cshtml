@@ -5,3 +5,16 @@
 
 <p>Production: @Model.ProductionCompany</p>
 <p>Type: @Model.Type</p>
+
+
+@foreach(var review in Model.Reviews)
+{
+    if(review.Content != null)
+    {
+        <p>Rating: @review.Rating || Content: @review.Content</p>
+    }
+    else
+    {
+        <p>Rating: @review.Rating</p>
+    }
+}
