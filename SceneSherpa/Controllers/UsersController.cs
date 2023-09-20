@@ -11,8 +11,15 @@ namespace SceneSherpa.Controllers
         {
             _context = context;
         }
+
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult Show(int id)
+        {
+            var user = _context.Users.Find(id);
             return View();
         }
     }
