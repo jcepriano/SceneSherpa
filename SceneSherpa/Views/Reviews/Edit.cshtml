@@ -1,0 +1,28 @@
+﻿@model SceneSherpa.Models.Media
+<h1>Edit review for @Model.Title</h1>
+<form method="post" action="/Media/@Model.Id/Reviews">
+    <div class="form-group">
+        <label for="rating" class="form-label mt-4">Choose a rating 1-10</label>
+        {
+        <select class="form-select" id="rating" name="rating">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+        </select>
+        <div class="form-group">
+            <label for="content" class="form-label mt-4">Comments...</label>
+            <textarea class="form-control" id="content" rows="3" style="height: 189px;" name="content"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Update Review</button>
+    </div>
+</form>
+<form method="get" action="/Media/@Model.Id">
+    <button type="submit" class="btn btn-danger">Discard Review</button>
+</form>

@@ -5,3 +5,19 @@
 
 <p>Production: @Model.ProductionCompany</p>
 <p>Type: @Model.Type</p>
+<br />
+@if (Model.Reviews != null && Model.Reviews.Count > 0)
+{
+    foreach (var review in Model.Reviews)
+    {
+        <p>Rating: @review.Rating</p>
+        @if (!string.IsNullOrEmpty(review.Content))
+        {
+            <p>Content: @review.Content</p>
+        }
+    }
+}
+else
+{
+    <h4>There are currently no reviews for @Model.Title</h4>
+}

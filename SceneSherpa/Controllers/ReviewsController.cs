@@ -20,11 +20,22 @@ namespace SceneSherpa.Controllers
             return View();
         }
 
-        [Route("/Media/{mediaId:int}/Reviews/New")]
-        public IActionResult New(int mediaId)
+        [Route("media/{id:int}/review/{reviewId:int}")]
+        public IActionResult Edit(int reviewId)
         {
-            var media = _context.Media.Where(m => m.Id == mediaId).Include(m => m.Reviews).First();
-            return View(media);
+            var user = _context.Users.Find(reviewId);
+            return View(user);
+        }
+
+        [HttpPost]
+        [Route("media/{id:int}")]
+        public IActionResult Update(int id, Review review)
+        {
+            review.Id = id;
+            _context.Reviews.Update(review);
+            _context.SaveChanges();
+
+            return Redirect("/media/{id:int}");
         }
 
         [HttpPost]
@@ -43,6 +54,12 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
             return Redirect($"/Media/{mediaId}");
         }
-
+        
+        [Route("/Media/{mediaId:int}/Reviews/New")]
+        public IActionResult New(int mediaId)
+        {
+            var media = _context.Media.Where(m => m.Id == mediaId).Include(m => m.Reviews).First();
+            return View(media);
+        }
     }
 }
