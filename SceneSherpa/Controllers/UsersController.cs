@@ -13,12 +13,19 @@ namespace SceneSherpa.Controllers
         {
             _context = context;
         }
-        
+
         public IActionResult Index()
         {
             return View();
         }
-
+        
+        [Route("/Users/{id:int}")]
+        public IActionResult Show(int id)
+        {
+            var user = _context.Users.Find(id);
+            return View(user);
+        }
+        
         [Route("users/{id:int}/edit")]
         public IActionResult Edit(int id)
         {
@@ -36,7 +43,8 @@ namespace SceneSherpa.Controllers
 
             return RedirectToAction("show", new { id = user.Id });
 
-
+        }
+        
         [HttpPost]
         public IActionResult Delete(int id)
         {
@@ -51,7 +59,7 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
             //Change the redirect to home page? 
             return RedirectToAction("index");
-
         }
+
     }
 }
