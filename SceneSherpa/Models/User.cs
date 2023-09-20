@@ -31,6 +31,5 @@ namespace SceneSherpa.Models
             }
             return firstInputBuilder.ToString();
         }
-
     }
 }

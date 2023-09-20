@@ -26,6 +26,7 @@ namespace SceneSherpa.Controllers
                 .Include(media => media.Reviews)
                 .FirstOrDefault();
 
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             return View(media);
         }
     }

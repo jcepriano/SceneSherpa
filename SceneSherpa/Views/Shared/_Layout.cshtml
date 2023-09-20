@@ -1,7 +1,20 @@
 ﻿@{
-    User user = ViewData["CurrentUserObject"] as User;
+    string userIdUsername = ViewData["CurrentUserId"] as string;
+    List<string> user = new List<string>();
+    string username = "";
+    int userId = 0;
+
+    if (userIdUsername != null)
+    {
+        user.AddRange(userIdUsername.Split());
+        userId = Int32.Parse(user[0]);
+        username = user[1];
+    }
+    
 }
 
+@using System.Web;
+@using SceneSherpa.DataAccess;
 @using Microsoft.AspNetCore.Http;
 @using Microsoft.AspNetCore.Mvc;
 @using SceneSherpa.Models;
@@ -40,10 +53,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        @if (ViewData["CurrentUser"] != null)
+                        @if (ViewData["CurrentUserId"] != null)
                         {
-                            <li><a href="/users/@user.Id" class="current-user-link">@ViewData["CurrentUser"]</a></li>
-                            <form action="/users/logout/@user.Id">
+                            <li><a href="/Users/@userId" class="current-user-link">@username</a></li>
+                            <form action="/users/logout/@userId">
                                 <button type="submit" class="nav-logout" onclick="return confirm('Are you sure you want to log out?')">Log Out</button>
                             </form>
                         }

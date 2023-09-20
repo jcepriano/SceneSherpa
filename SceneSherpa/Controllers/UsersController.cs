@@ -18,11 +18,7 @@ namespace SceneSherpa.Controllers
 
         public IActionResult Index()
         {
-            ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
-            if (ViewData["CurrentUser"] != null)
-            {
-                ViewData["CurrentUserObject"] = _context.Users.Where(e => e.Username == ViewData["CurrentUser"]).Single();
-            }
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             return View();
         }
 
@@ -37,9 +33,8 @@ namespace SceneSherpa.Controllers
         {
             //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
             user.Password = user.ReturnEncryptedString(user.Password);
-            Response.Cookies.Append("CurrentUser", user.Username);
-            ViewData["CurrentUserObject"] = user;
-            ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
+            Response.Cookies.Append("CurrentUserId", $"{user.Id} , {user.Username}");
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -50,19 +45,15 @@ namespace SceneSherpa.Controllers
         [Route("/users/login")]
         public IActionResult LoginForm()
         {
+            //this may not work as intended, but previously it was completely incoherent.
             ViewData["FailedLogin"] = TempData["FailedLogin"];
-
-            if (ViewData["CurrentUser"] == null)
+            if (ViewData["CurrentUserId"]  == null)
             {
-                ViewData["CurrentUser"] = TempData["CurrentUser"];
+                ViewData["CurrentUserId"] = TempData["LoggedInUserId"];
             }
-            else if (TempData["CurrentUser"] == null)
+            else if (TempData["LoggedInUserId"] == null)
             {
-                if (ViewData["CurrentUser"] != null)
-                {
-                    ViewData["CurrentUserObject"] = _context.Users.Where(e => e.Username == ViewData["CurrentUser"]).Single();
-                }
-                ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
+                ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             }
 
             return View();
@@ -72,26 +63,15 @@ namespace SceneSherpa.Controllers
         [Route("/users/login/attempt")]
         public IActionResult LoginAttempt(string username, string password)
         {
-            //this is the EXACT method in 'User.cs', however I did not have a User object here to call the method. This can be cleaned.
-            HashAlgorithm sha = SHA256.Create();
-            byte[] firstInputBytes = Encoding.ASCII.GetBytes(password);
-            byte[] firstInputDigested = sha.ComputeHash(firstInputBytes);
+            //Created an Admin User to allow the use of the 'ReturnEncyptedString' Method.. This can be changed, but this removed 15 lines.
+            User Admin = new() { Name = "Admin", Email = "Admin@gmail.com", Age = 9999, Password = "Admin", Username = "Admin", Id = 9999 };
 
-            StringBuilder firstInputBuilder = new StringBuilder();
-            foreach (byte b in firstInputDigested)
+            if (_context.Users.Where(e => e.Username == username && e.Password == Admin.ReturnEncryptedString(password)).Any())
             {
-                Console.Write(b + ", ");
-                firstInputBuilder.Append(b.ToString("x2"));
-            }
-            string value = firstInputBuilder.ToString();
-
-            if (_context.Users.Where(e => e.Username == username && e.Password == value).Any())
-            {
-                User user = _context.Users.Where(e => e.Username == e.Username).Single();
+                User user = _context.Users.Where(e => e.Username == e.Username).FirstOrDefault();
 
                 //assign the cookie "CurrentUser" to a username. TempData[] CANNOT store an object.
-                Response.Cookies.Append("CurrentUser", user.Username);
-                TempData["CurrentUser"] = Request.Cookies["CurrentUser"];
+                Response.Cookies.Append("CurrentUserId", $"{user.Id} , {user.Username}");
 
                 return Redirect($"/users/{user.Id}");
             }
@@ -102,13 +82,12 @@ namespace SceneSherpa.Controllers
             }
         }
 
-        [Route("/users/logout/{id:int}")]
+        [Route("/users/logout/{id:int}")] 
         public IActionResult Logout(int id)
         {
             if(id != null)
             {
-                Response.Cookies.Delete("CurrentUser");
-                Response.Cookies.Delete("CurrentUserObject");
+                Response.Cookies.Delete("CurrentUserId");
             }
 
             return Redirect("/media");
@@ -117,7 +96,9 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}")]
         public IActionResult Show(int id)
         {
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             var user = _context.Users.Find(id);
+            
             return View(user);
         }
         
@@ -125,12 +106,7 @@ namespace SceneSherpa.Controllers
         public IActionResult Edit(int id)
         {
             var user = _context.Users.Find(id);
-
-            ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
-            if (ViewData["CurrentUser"] != null)
-            {
-                ViewData["CurrentUserObject"] = _context.Users.Where(e => e.Username == ViewData["CurrentUser"]).Single();
-            }
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
 
             return View(user);
         }

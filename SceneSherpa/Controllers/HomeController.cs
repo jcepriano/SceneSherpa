@@ -16,11 +16,7 @@ namespace SceneSherpa.Controllers
         }
         public IActionResult Index()
         {
-            ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
-            if (ViewData["CurrentUser"] != null)
-            {
-                ViewData["CurrentUserObject"] = _context.Users.Where(e => e.Username == ViewData["CurrentUser"]).Single();
-            }
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             return View();
         }
     }

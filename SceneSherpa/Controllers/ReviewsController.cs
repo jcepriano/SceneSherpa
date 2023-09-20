@@ -24,6 +24,8 @@ namespace SceneSherpa.Controllers
         public IActionResult Edit(int reviewId)
         {
             var user = _context.Users.Find(reviewId);
+
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             return View(user);
         }
 
@@ -43,7 +45,7 @@ namespace SceneSherpa.Controllers
         public IActionResult Create(int mediaId, Review review)
         {
             //Currently without saving state cannot find the correct user, fix this by using the cookies content to specify the correct user.
-            review.User = _context.Users.Find(1);
+            review.User = _context.Users.Find(Int32.Parse(Request.Cookies["CurrentUserId"]));
             
             var media = _context.Media
                 .Where(m => m.Id == mediaId)
@@ -52,6 +54,7 @@ namespace SceneSherpa.Controllers
             review.CreatedAt = DateTime.Now.ToUniversalTime();
             media.Reviews.Add(review);
             _context.SaveChanges();
+
             return Redirect($"/Media/{mediaId}");
         }
         
@@ -59,6 +62,8 @@ namespace SceneSherpa.Controllers
         public IActionResult New(int mediaId)
         {
             var media = _context.Media.Where(m => m.Id == mediaId).Include(m => m.Reviews).First();
+
+            ViewData["CurrentUserId"] = Request.Cookies["CurrentUserId"];
             return View(media);
         }
     }
