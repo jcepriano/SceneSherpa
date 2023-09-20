@@ -59,6 +59,7 @@ namespace SceneSherpa.Controllers
         public IActionResult Update(int id, User user)
         {
             user.Id = id;
+      
             _context.Users.Update(user);
             _context.SaveChanges();
 
@@ -67,6 +68,7 @@ namespace SceneSherpa.Controllers
         }
         
         [HttpPost]
+        [Route("/Users/Delete/{id:int}")]
         public IActionResult Delete(int id)
         {
             //Grab user from context with all lists included
