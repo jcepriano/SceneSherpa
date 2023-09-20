@@ -1,11 +1,27 @@
 ﻿@model SceneSherpa.Models.Media
-
+@{
+    SceneSherpa.Models.Review currentUserReview = ViewData["CurrentUserReview"] as SceneSherpa.Models.Review; 
+}
 <h1>@Model.Title</h1>
 <br />
 
 <p>Production: @Model.ProductionCompany</p>
 <p>Type: @Model.Type</p>
 <br />
+
+
+@if(currentUserReview != null)
+{
+    <h2>My Review</h2>
+
+    <p>Rating: @currentUserReview.Rating</p>
+    @if (!string.IsNullOrEmpty(currentUserReview.Content))
+    {
+        <p>Content: @currentUserReview.Content</p>
+    }
+}
+
+
 @if (Model.Reviews != null && Model.Reviews.Count > 0)
 {
     foreach (var review in Model.Reviews)
