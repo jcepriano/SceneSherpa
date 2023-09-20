@@ -37,5 +37,27 @@ namespace SceneSherpa.Tests
             Assert.Contains("<form method=\"post\" action=\"/users\">", html);
             Assert.Contains("<button type=\"submit\" class=\"submit-button\">Create Account</button>", html);
         }
+
+        [Fact]
+        public async Task IndexPost_CreatesNewUser()
+        {
+            var client = _factory.CreateClient();
+
+            var FormData = new Dictionary<string, string>
+            {
+                {"Name", "John Doe" },
+                {"Username", "jdoe123" },
+                {"Email", "jdoe123@gmail.com" },
+                {"Password", "password123" },
+                {"Age", "20" }
+            };
+
+            var response = await client.PostAsync("/users", new FormUrlEncodedContent(FormData));
+            var html = await response.Content.ReadAsStringAsync();
+
+            response.EnsureSuccessStatusCode();
+
+            Assert.Contains("jdoe123", html);
+        }
     }
 }
