@@ -15,13 +15,13 @@
 
 @foreach(var Media in Model.CurrentWatch)
 {
-    <p>@Media.Type: @Media.Title <button type="submit">DELETE @Media.Title</button></p>
+    <p>@Media.Type: @Media.Title <form><button type="submit">DELETE @Media.Title</button></form></p>
 }
 @foreach (var Media in Model.AllWatched)
 {
-    <p>@Media.Type: @Media.Title <button type="submit">DELETE @Media.Title</button></p>
+    <p>@Media.Type: @Media.Title <form><button type="submit">DELETE @Media.Title</button></form></p>
 }
 @foreach (var Media in Model.ToWatch)
 {
-    <p>@Media.Type: @Media.Title <button type="submit">DELETE @Media.Title</button></p>
+    <p>@Media.Type: @Media.Title <form><button type="submit">DELETE @Media.Title</button></form></p>
 }
