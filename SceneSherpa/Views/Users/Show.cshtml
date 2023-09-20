@@ -1,13 +1,9 @@
 ﻿@model SceneSherpa.Models.User
-@{
-    string Name = ViewData["Users Name"].ToString();
-    string Email = ViewData["Users Email"].ToString();
-}
 
-<h1>Name: @Name</h1>
+<h1>Name: @Model.Name</h1>
 <h1>Age: @Model.Age</h1>
 <h1>Username: @Model.Username</h1>
-<h1>Email: @Email</h1>
+<h1>Email: @Model.Email</h1>
 
 <form action="/Users/Delete/@Model.Id" method="post">
     <button type="submit">DELETE @Model.Username</button>

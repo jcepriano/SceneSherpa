@@ -31,10 +31,6 @@ namespace SceneSherpa.Controllers
         public IActionResult Index(User user)
         {
             //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
-            TempData["Users Name"] = user.Name;
-            TempData["Users Email"] = user.Email;
-            user.Name = user.ReturnEncryptedString(user.Name);
-            user.Email = user.ReturnEncryptedString(user.Email);
             user.Password = user.ReturnEncryptedString(user.Password);
 
             _context.Users.Add(user);
@@ -81,8 +77,6 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}")]
         public IActionResult Show(int id)
         {
-            ViewData["Users Name"] = TempData["Users Name"];
-            ViewData["Users Email"] = TempData["Users Email"];
             var user = _context.Users.Find(id);
             return View(user);
         }
@@ -104,7 +98,6 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("show", new { id = user.Id });
-
         }
         
         [HttpPost]
