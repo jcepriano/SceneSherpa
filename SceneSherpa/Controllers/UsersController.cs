@@ -35,6 +35,7 @@ namespace SceneSherpa.Controllers
         [HttpPost]
         public IActionResult Index(User user)
         {
+            //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
             user.Password = user.ReturnEncryptedString(user.Password);
             Response.Cookies.Append("CurrentUser", user.Username);
             ViewData["CurrentUserObject"] = user;
@@ -132,7 +133,6 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("show", new { id = user.Id });
-
         }
         
         [HttpPost]
