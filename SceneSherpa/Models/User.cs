@@ -1,4 +1,7 @@
-﻿namespace SceneSherpa.Models
+﻿using System.Security.Cryptography;
+using System.Text;
+
+namespace SceneSherpa.Models
 {
     public class User
     {
@@ -11,5 +14,23 @@
         public List<Media>? CurrentWatch { get; set; } = new List<Media>();
         public List<Media>? AllWatched { get; set; } = new List<Media>();
         public List<Media>? ToWatch { get; set; } = new List<Media>();
+
+
+        //this method will take in any string and return it hashed. I've been using it for personal User information.
+        public string ReturnEncryptedString(string stringToEncrypt)
+        {
+            HashAlgorithm sha = SHA256.Create();
+            byte[] firstInputBytes = Encoding.ASCII.GetBytes(stringToEncrypt);
+            byte[] firstInputDigested = sha.ComputeHash(firstInputBytes);
+
+            StringBuilder firstInputBuilder = new StringBuilder();
+            foreach (byte b in firstInputDigested)
+            {
+                Console.Write(b + ", ");
+                firstInputBuilder.Append(b.ToString("x2"));
+            }
+            return firstInputBuilder.ToString();
+        }
+
     }
 }
