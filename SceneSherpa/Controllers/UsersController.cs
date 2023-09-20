@@ -101,6 +101,18 @@ namespace SceneSherpa.Controllers
                 return Redirect("/users/login");
             }
         }
+
+        [Route("/users/logout/{id:int}")]
+        public IActionResult Logout(int id)
+        {
+            if(id != null)
+            {
+                Response.Cookies.Delete("CurrentUser");
+                Response.Cookies.Delete("CurrentUserObject");
+            }
+
+            return Redirect("/media");
+        }
         
         [Route("/Users/{id:int}")]
         public IActionResult Show(int id)
