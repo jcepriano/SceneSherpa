@@ -1,0 +1,9 @@
+﻿@model IEnumerable<SceneSherpa.Models.Media>
+
+<h1>All Media</h1>
+@foreach(var media in @Model)
+{
+    <ul>
+        <li>@media.Type: @media.Title</li>
+    </ul>
+}

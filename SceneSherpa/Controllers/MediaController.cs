@@ -13,7 +13,8 @@ namespace SceneSherpa.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var media = _context.Media;
+            return View(media);
         }
     }
 }
