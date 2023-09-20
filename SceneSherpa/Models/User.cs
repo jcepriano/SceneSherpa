@@ -8,8 +8,8 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public int Age { get; set; }
-        public List<Media>? CurrentWatch { get; set; }
-        public List<Media>? AllWatched { get; set; }
-        public List<Media>? ToWatch { get; set; }
+        public List<Media>? CurrentWatch { get; set; } = new List<Media>();
+        public List<Media>? AllWatched { get; set; } = new List<Media>();
+        public List<Media>? ToWatch { get; set; } = new List<Media>();
     }
 }

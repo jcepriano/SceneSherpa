@@ -1,1 +1,27 @@
-﻿
+﻿@model SceneSherpa.Models.User
+
+<h1>Name: @Model.Name</h1>
+<h1>Age: @Model.Age</h1>
+<h1>Username: @Model.Username</h1>
+<h1>Email: @Model.Email</h1>
+
+<form>
+    <button type="submit">DELETE @Model.Username</button>
+</form>
+
+
+<hr></hr>
+<h3>Library</h3>
+
+@foreach(var Media in Model.CurrentWatch)
+{
+    <p>@Media.Type: @Media.Title <button type="submit">DELETE @Media.Title</button></p>
+}
+@foreach (var Media in Model.AllWatched)
+{
+    <p>@Media.Type: @Media.Title <button type="submit">DELETE @Media.Title</button></p>
+}
+@foreach (var Media in Model.ToWatch)
+{
+    <p>@Media.Type: @Media.Title <button type="submit">DELETE @Media.Title</button></p>
+}

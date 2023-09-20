@@ -17,10 +17,11 @@ namespace SceneSherpa.Controllers
             return View();
         }
 
+        [Route("/Users/{id}")]
         public IActionResult Show(int id)
         {
             var user = _context.Users.Find(id);
-            return View();
+            return View(user);
         }
     }
 }
