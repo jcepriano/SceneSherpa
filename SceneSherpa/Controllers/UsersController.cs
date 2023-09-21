@@ -36,6 +36,14 @@ namespace SceneSherpa.Controllers
 
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
 
+            bool usernames = _context.Users.Any(u => u.Username == user.Username);
+            
+            if (usernames)
+            {
+                ModelState.AddModelError("Username", "Username already exists");
+                return View("New", user);
+            }
+
             _context.Users.Add(user);
             _context.SaveChanges();
 

@@ -23,3 +23,19 @@
     <button type="submit" class="submit-button">Create Account</button>
 
 </form>
+
+<script>
+    function checkUsernameAvailability() {
+        const username = document.getElementById("Username").value;
+        const availabilityMessage = document.getElementById("availabilityMessage");
+        const isUsernameAvailable = checkUsernameOnServer(username);
+
+        if (!isUsernameAvailable) {
+            availabilityMessage.innerText = "Username already exists";
+            return false;
+        }
+
+        availabilityMessage.innerText = "";
+        return true;
+    }
+</script>
