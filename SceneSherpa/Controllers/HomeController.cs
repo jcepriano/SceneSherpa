@@ -14,7 +14,7 @@ namespace SceneSherpa.Controllers
             _logger = logger;
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult About()
         {
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View();
