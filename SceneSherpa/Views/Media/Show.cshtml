@@ -14,19 +14,34 @@
 
 @if (currentUserReview != null)
 {
-    <h2>My Review</h2>  
-
-    <p>Rating: @currentUserReview.Rating</p>
-    @if (!string.IsNullOrEmpty(currentUserReview.Content))
-    {
-        <p>Content: @currentUserReview.Content</p>
-        <form method="post" action="/media/@Model.Id/reviews/delete/@currentUserReview.Id">
-            <button type="submit" onclick="return confirm('Are You Sure You Want To Delete Review')">Delete Review</button>
-        </form>
-        <form action="/media/@Model.Id/reviews/@currentUserReview.Id">
-            <button type="submit">Edit Review</button>
-        </form>
-    }
+    <div class="card border-secondary mb-3" style="max-width: 20rem;">
+        <div class="card-header">
+            <span style="display:inline-block">My Review</span>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Rating: @currentUserReview.Rating</h4>
+            @if(!string.IsNullOrEmpty(currentUserReview.Content))
+            {
+                <p class="card-text">@currentUserReview.Content</p>
+                <form method="post" action="/media/@Model.Id/reviews/delete/@currentUserReview.Id">
+                    <button type="submit" onclick="return confirm('Are You Sure You Want To Delete Review')">Delete Review</button>
+                </form>
+                <form action="/media/@Model.Id/reviews/@currentUserReview.Id">
+                    <button type="submit">Edit Review</button>
+                </form>
+            }
+            else
+            {
+                <p>User left review empty</p>
+                <form method="post" action="/media/@Model.Id/reviews/delete/@currentUserReview.Id">
+                    <button type="submit" onclick="return confirm('Are You Sure You Want To Delete Review')">Delete Review</button>
+                </form>
+                <form action="/media/@Model.Id/reviews/@currentUserReview.Id">
+                    <button type="submit">Edit Review</button>
+                </form>
+            }
+        </div>
+    </div>
     //JK: Maybe better way to do this, this removes a user's review temporarily so that it does not appear in the full list of reviews, returns true so I hide the true value
     <p hidden>@Model.Reviews.Remove(currentUserReview);</p>
 }
@@ -45,7 +60,3 @@
         }
     }
 }
-
-
-
-<!--<i class="gg-more-vertical"></i>-->
