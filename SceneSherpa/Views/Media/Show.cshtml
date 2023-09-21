@@ -11,6 +11,19 @@
 <p>Type: @Model.Type</p>
 <br />
 
+<button>
+    Currently Watching
+</button>
+<button>
+    Already watched
+</button>
+<button>
+    To watch
+</button>
+
+
+<br />
+<br />
 
 @if (currentUserReview != null)
 {
@@ -44,6 +57,15 @@
     </div>
     //JK: Maybe better way to do this, this removes a user's review temporarily so that it does not appear in the full list of reviews, returns true so I hide the true value
     <p hidden>@Model.Reviews.Remove(currentUserReview);</p>
+}
+else
+{
+    <form action="/Media/@Model.Id/Reviews/New">
+        <button type="submit">
+            Add Review
+        </button>
+    </form>
+
 }
 
 
