@@ -203,7 +203,7 @@ body {
     font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
     line-height: var(--bs-body-line-height);
-    color: var(--bs-body-color);
+    color: white; /*CHANGE TEXT COLOR*/
     text-align: var(--bs-body-text-align);
     background-color: #1d305b;
     -webkit-text-size-adjust: 100%;
@@ -223,7 +223,7 @@ hr {
     margin-bottom: .5rem;
     font-weight: 600;
     line-height: 1.2;
-    color: var(--bs-heading-color)
+    color: white;
 }
 
 .h1, h1 {
