@@ -23,27 +23,31 @@ namespace SceneSherpa.Controllers
         [Route("media/{id:int}/reviews/{reviewId:int}")]
         public IActionResult Edit(int reviewId)
         {
-            var user = _context.Users.Find(reviewId);
-            return View(user);
+            var review = _context.Reviews.Where(r => r.Id == reviewId).Include(r => r.Media).First();
+            return View(review);
         }
 
         [HttpPost]
-        [Route("media/{id:int}")]
-        public IActionResult Update(int id, Review review, int reviewId)
+        [Route("media/{mediaId:int}/reviews/{reviewId:int}")]
+        public IActionResult Update(int mediaId, Review review, int reviewId)
         {
             review.Id = reviewId;
             _context.Reviews.Update(review);
             _context.SaveChanges();
 
-            return Redirect($"/media/{id}");
+            return Redirect($"/media/{mediaId}");
         }
 
         [HttpPost]
         [Route("/Media/{mediaId:int}/Reviews")]
         public IActionResult Create(int mediaId, Review review)
         {
-            //Currently without saving state cannot find the correct user, fix this by using the cookies content to specify the correct user.
-            var currentUserId = _context.Users.Where(u => u.Username == Request.Cookies["CurrentUser"]).First().Id;
+            //Getting Currently Logged in User
+            var currentUsername = Request.Cookies["CurrentUserIdUsername"].Split()[1];
+            var currentUserId = _context.Users
+                .Where(u => u.Username == currentUsername)
+                .First()
+                .Id;
             review.User = _context.Users.Find(currentUserId);
             
             var media = _context.Media

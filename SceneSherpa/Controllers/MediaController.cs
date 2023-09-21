@@ -27,9 +27,15 @@ namespace SceneSherpa.Controllers
                 .Include(media => media.Reviews)
                 .FirstOrDefault();
 
-            //JK: find current user and pass in their review as a seperate review object 
-            var currentUser = _context.Users.Where(u => u.Username == Request.Cookies["CurrentUser"]).First();
-            ViewData["CurrentUserReview"] = media.Reviews.Where(r => r.User == currentUser).First();
+            //JK: find current user and pass in their review as a seperate review object, If no one is logged in, pass no user reviews in
+            if(Request.Cookies["CurrentUserIdUsername"] != null)
+            {
+                var currentUsername = Request.Cookies["CurrentUserIdUsername"].Split()[1];
+                var currentUser = _context.Users.Where(u => u.Username == currentUsername).First();
+                ViewData["CurrentUserReview"] = media.Reviews.Where(r => r.User == currentUser).First();
+                ViewData["CurrentUserObject"] = currentUser;
+            }
+            
 
             
 

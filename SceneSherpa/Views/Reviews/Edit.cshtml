@@ -1,6 +1,6 @@
-﻿@model SceneSherpa.Models.Media
-<h1>Edit review for @Model.Title</h1>
-<form method="post" action="/Media/@Model.Id/Reviews">
+﻿@model SceneSherpa.Models.Review
+<h1>Edit review for @Model.Media.Title</h1>
+<form method="post" action="/Media/@Model.Media.Id/Reviews/@Model.Id">
     <div class="form-group">
         <label for="rating" class="form-label mt-4">Choose a rating 1-10</label>
         {
@@ -23,6 +23,6 @@
         <button type="submit" class="btn btn-success">Update Review</button>
     </div>
 </form>
-<form method="get" action="/Media/@Model.Id">
+<form method="get" action="/Media/@Model.Media.Id">
     <button type="submit" class="btn btn-danger">Discard Review</button>
 </form>
