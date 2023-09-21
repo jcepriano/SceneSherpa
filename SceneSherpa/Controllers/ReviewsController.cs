@@ -43,7 +43,7 @@ namespace SceneSherpa.Controllers
         public IActionResult Create(int mediaId, Review review)
         {
             //Getting Currently Logged in User
-            var currentUsername = Request.Cookies["CurrentUser"].Split()[1];
+            var currentUsername = Request.Cookies["CurrentUserIdUsername"].Split()[1];
             var currentUserId = _context.Users
                 .Where(u => u.Username == currentUsername)
                 .First()
