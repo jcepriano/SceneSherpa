@@ -24,6 +24,7 @@ namespace SceneSherpa.Controllers
 
         public IActionResult New()
         {
+            ViewData["ErrorMessage"] = TempData["ErrorMessage"];
             return View();
         }
 
@@ -32,17 +33,19 @@ namespace SceneSherpa.Controllers
         {
             //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
             user.Password = user.ReturnEncryptedString(user.Password);
-            Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
-
-            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
 
             bool usernames = _context.Users.Any(u => u.Username == user.Username);
-            
+
             if (usernames)
             {
                 ModelState.AddModelError("Username", "Username already exists");
+                TempData["ErrorMessage"] = "Username already exists";
                 return View("New", user);
             }
+
+            Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
+
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
 
             _context.Users.Add(user);
             _context.SaveChanges();

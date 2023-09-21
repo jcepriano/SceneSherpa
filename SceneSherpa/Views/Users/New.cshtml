@@ -1,4 +1,7 @@
-﻿<link rel="stylesheet" href="css/site.css" />
+﻿@{
+    string errorMessage = ViewData["ErrorMessage"] as string;
+}
+<link rel="stylesheet" href="css/site.css" />
 
 <h2>Create Your Account!</h2>
 
@@ -20,6 +23,10 @@
         <label for="Password">Password: </label>
         <input type="password" id="Password" name="Password" required />
     </div>
+    @if(errorMessage != null)
+    {
+        <h4>@errorMessage</h4>
+    }
     <button type="submit" class="submit-button">Create Account</button>
 
 </form>
