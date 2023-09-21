@@ -2,6 +2,8 @@
 @{
     SceneSherpa.Models.Review currentUserReview = ViewData["CurrentUserReview"] as SceneSherpa.Models.Review; 
 }
+<link href='https://unpkg.com/css.gg@2.0.0/icons/css/more-vertical.css' rel='stylesheet'>
+
 <h1>@Model.Title</h1>
 <br />
 
@@ -12,15 +14,21 @@
 
 @if (currentUserReview != null)
 {
-    <h2>My Review</h2>
+    <h2>My Review</h2>  
 
     <p>Rating: @currentUserReview.Rating</p>
     @if (!string.IsNullOrEmpty(currentUserReview.Content))
     {
         <p>Content: @currentUserReview.Content</p>
+        <form method="post" action="/media/@Model.Id/reviews/delete/@currentUserReview.Id">
+            <button type="submit" onclick="return confirm('Are You Sure You Want To Delete Review')">Delete Review</button>
+        </form>
+        <form action="/media/@Model.Id/reviews/@currentUserReview.Id">
+            <button type="submit">Edit Review</button>
+        </form>
     }
-    //JK: Maybe better way to do this, this removes a user's review temporarily so that it does not appear in the full list of reviews
-    @Model.Reviews.Remove(currentUserReview);
+    //JK: Maybe better way to do this, this removes a user's review temporarily so that it does not appear in the full list of reviews, returns true so I hide the true value
+    <p hidden>@Model.Reviews.Remove(currentUserReview);</p>
 }
 
 
@@ -35,8 +43,9 @@
         {
             <p>Content: @review.Content</p>
         }
-        <form method="post" action="/media/@Model.Id/reviews/delete/@review.Id">
-            <button "submit" onclick="return confirm('Are You Sure You Want To Delete Review')">Delete Review</button>
-        </form>
     }
 }
+
+
+
+<!--<i class="gg-more-vertical"></i>-->

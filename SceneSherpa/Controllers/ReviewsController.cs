@@ -23,19 +23,19 @@ namespace SceneSherpa.Controllers
         [Route("media/{id:int}/reviews/{reviewId:int}")]
         public IActionResult Edit(int reviewId)
         {
-            var user = _context.Users.Find(reviewId);
-            return View(user);
+            var review = _context.Reviews.Where(r => r.Id == reviewId).Include(r => r.Media).First();
+            return View(review);
         }
 
         [HttpPost]
-        [Route("media/{id:int}")]
-        public IActionResult Update(int id, Review review, int reviewId)
+        [Route("media/{mediaId:int}/reviews/{reviewId:int}")]
+        public IActionResult Update(int mediaId, Review review, int reviewId)
         {
             review.Id = reviewId;
             _context.Reviews.Update(review);
             _context.SaveChanges();
 
-            return Redirect($"/media/{id}");
+            return Redirect($"/media/{mediaId}");
         }
 
         [HttpPost]
