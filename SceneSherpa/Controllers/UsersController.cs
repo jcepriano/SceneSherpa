@@ -40,7 +40,7 @@ namespace SceneSherpa.Controllers
             {
                 ModelState.AddModelError("Username", "Username already exists");
                 TempData["ErrorMessage"] = "Username already exists";
-                return View("New", user);
+                return Redirect("/users/new");
             }
 
             Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
