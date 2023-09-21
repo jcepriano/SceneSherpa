@@ -4,6 +4,6 @@
 @foreach(var media in @Model)
 {
     <ul>
-        <li>@media.Type: @media.Title</li>
+        <li>@media.Type: <a href="/media/@media.Id">@media.Title</a></li>
     </ul>
 }
