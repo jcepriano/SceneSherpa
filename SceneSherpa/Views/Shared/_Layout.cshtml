@@ -1,5 +1,12 @@
 ﻿@{
-    User user = ViewData["CurrentUserObject"] as User;
+    string CurrentUserIdUsername = ViewData["CurrentUserIdUsername"] as string;
+    Console.WriteLine(CurrentUserIdUsername);
+
+    List<string> CurrentUser = new List<string>();
+    if(CurrentUserIdUsername != null)
+    {
+        CurrentUser.AddRange(CurrentUserIdUsername.Split());
+    }
 }
 
 @using Microsoft.AspNetCore.Http;
@@ -43,10 +50,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        @if (ViewData["CurrentUser"] != null)
+                        @if (ViewData["CurrentUserIdUsername"] != null)
                         {
-                            <li><a href="/users/@user.Id" class="current-user-link">@ViewData["CurrentUser"]</a></li>
-                            <form action="/users/logout/@user.Id">
+                            <li><a href="/users/@CurrentUser[0]" class="current-user-link">@CurrentUser[1]</a></li>
+                            <form action="/users/logout/@CurrentUser[0]">
                                 <button type="submit" class="nav-logout" onclick="return confirm('Are you sure you want to log out?')">Log Out</button>
                             </form>
                         }

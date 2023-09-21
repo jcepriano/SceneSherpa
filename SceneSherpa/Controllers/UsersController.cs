@@ -18,14 +18,9 @@ namespace SceneSherpa.Controllers
 
         public IActionResult Index()
         {
-            ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
-            if (ViewData["CurrentUser"] != null)
-            {
-                ViewData["CurrentUserObject"] = _context.Users.Where(e => e.Username == ViewData["CurrentUser"]).Single();
-            }
-            return View();
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+            return View(_context.Users.ToList());
         }
-
 
         public IActionResult New()
         {
@@ -37,9 +32,9 @@ namespace SceneSherpa.Controllers
         {
             //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
             user.Password = user.ReturnEncryptedString(user.Password);
-            Response.Cookies.Append("CurrentUser", user.Username);
-            ViewData["CurrentUserObject"] = user;
-            ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
+            Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
+
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -52,18 +47,14 @@ namespace SceneSherpa.Controllers
         {
             ViewData["FailedLogin"] = TempData["FailedLogin"];
 
-            if (ViewData["CurrentUser"] == null)
-            {
-                ViewData["CurrentUser"] = TempData["CurrentUser"];
-            }
-            else if (TempData["CurrentUser"] == null)
-            {
-                if (ViewData["CurrentUser"] != null)
-                {
-                    ViewData["CurrentUserObject"] = _context.Users.Where(e => e.Username == ViewData["CurrentUser"]).Single();
-                }
-                ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
-            }
+            //if (ViewData["CurrentUserIdUsername"] == null)
+            //{
+            //    ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrenCurrentUserIdUsernametUser"];
+            //}
+            //else if (TempData["CurrentUserIdUsername"] == null)
+            //{
+            //    ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrenCurrentUserIdUsernametUser"];
+            //}
 
             return View();
         }
@@ -78,7 +69,7 @@ namespace SceneSherpa.Controllers
 
             if(LoginAttemptUser.Password == LoginAttemptUser.ReturnEncryptedString(password))
             {
-                Response.Cookies.Append("CurrentUserIdUsername", $"{LoginAttemptUser.Id},{LoginAttemptUser.Username}");
+                Response.Cookies.Append("CurrentUserIdUsername", $"{LoginAttemptUser.Id} {LoginAttemptUser.Username}");
                 return Redirect($"/users/{LoginAttemptUser.Id}");
             }
             else
@@ -93,8 +84,7 @@ namespace SceneSherpa.Controllers
         {
             if(id != null)
             {
-                Response.Cookies.Delete("CurrentUser");
-                Response.Cookies.Delete("CurrentUserObject");
+                Response.Cookies.Delete("CurrentUserIdUsername");
             }
 
             return Redirect("/media");
@@ -104,6 +94,7 @@ namespace SceneSherpa.Controllers
         public IActionResult Show(int id)
         {
             var user = _context.Users.Find(id);
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View(user);
         }
         
@@ -111,12 +102,7 @@ namespace SceneSherpa.Controllers
         public IActionResult Edit(int id)
         {
             var user = _context.Users.Find(id);
-
-            ViewData["CurrentUser"] = Request.Cookies["CurrentUser"];
-            if (ViewData["CurrentUser"] != null)
-            {
-                ViewData["CurrentUserObject"] = _context.Users.Where(e => e.Username == ViewData["CurrentUser"]).Single();
-            }
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
 
             return View(user);
         }
