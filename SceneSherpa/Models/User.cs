@@ -14,6 +14,8 @@ namespace SceneSherpa.Models
         public List<Media>? CurrentWatch { get; set; } = new List<Media>();
         public List<Media>? AllWatched { get; set; } = new List<Media>();
         public List<Media>? ToWatch { get; set; } = new List<Media>();
+        public List<User>? Friends { get; set; } = new List<User>();
+        public List<User>? Friended { get; set; } = new List<User>();
 
 
         //this method will take in any string and return it hashed. I've been using it for personal User information.
