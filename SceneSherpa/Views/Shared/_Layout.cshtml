@@ -39,29 +39,34 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Media" asp-action="Index">Explore Media</a>
                         </li>
-                        <!--
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Users" asp-action="Index">Users</a>
-                        </li>
-                        -->
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Users" asp-action="New">Sign Up</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Users" asp-action="Login">Log In</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a>
                         </li>
+                        <li>
+                            @if (ViewData["CurrentUserIdUsername"] == null)
+                            {
+                                <form action="/users/login">
+                                    <button type="submit" class="btn btn-outline-primary" asp-controller="Users" asp-action="Login">Log In</button>
+                                </form>
+                            }
                         @if (ViewData["CurrentUserIdUsername"] != null)
                         {
-                            <li><a href="/users/@CurrentUser[0]" class="current-user-link">@CurrentUser[1]</a></li>
-                            <form action="/users/logout/@CurrentUser[0]">
-                                <button type="submit" class="nav-logout" onclick="return confirm('Are you sure you want to log out?')">Log Out</button>
-                            </form>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@CurrentUser[1]</a>
+                                <div class="dropdown-menu" style="">
+                                    <h6 class="dropdown-header">Options</h6>
+                                    <a class="dropdown-item" href="/Users/@CurrentUser[0]">My Profile</a>
+                                    <!--Can add more options here, add the link to href, and content between ><  -->
+                                    <!--<a class="dropdown-item" href="#"></a>
+                                    <a class="dropdown-item" href="#"></a>-->
+                                    <a class="dropdown-item" href="/users/@CurrentUser[0]/Logout" onclick="return confirm('Are You Sure You Want To Log Out?')">Log Out</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
+                            </li>
                         }
                     </ul>
                 </div>
