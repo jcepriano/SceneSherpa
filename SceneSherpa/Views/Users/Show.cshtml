@@ -10,8 +10,11 @@
 <h1>Username: @Model.Username</h1>
 <h1>Email: @Model.Email</h1>
 
-<form action="/Users/Delete/@Model.Id" method="post">
+<form action="/Users/@Model.Id/Delete" method="post">
     <button type="submit">DELETE @Model.Username</button>
+</form>
+<form action="/Users/@Model.Id/Edit">
+    <button type="submit">EDIT @Model.Username</button>
 </form>
 
 

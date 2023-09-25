@@ -75,22 +75,24 @@ namespace SceneSherpa.Controllers
         public IActionResult LoginAttempt(string username, string password)
         {
             //User Admin = new() { Username = "Admin", Name = "Admin", Age = 0000, Email = "Admin@gmail.com", Id = 0000, Password = "Admin" };
-
-            var LoginAttemptUser = _context.Users.Where(e => e.Username == username).FirstOrDefault();
-
-            if(LoginAttemptUser.Password == LoginAttemptUser.ReturnEncryptedString(password))
+            if(username != null && password != null)
             {
-                Response.Cookies.Append("CurrentUserIdUsername", $"{LoginAttemptUser.Id} {LoginAttemptUser.Username}");
-                return Redirect($"/users/{LoginAttemptUser.Id}");
-            }
+                var LoginAttemptUser = _context.Users.Where(e => e.Username == username).FirstOrDefault();
+
+                if (LoginAttemptUser.Password == LoginAttemptUser.ReturnEncryptedString(password))
+                {
+                    Response.Cookies.Append("CurrentUserIdUsername", $"{LoginAttemptUser.Id} {LoginAttemptUser.Username}");
+                    return Redirect($"/users/{LoginAttemptUser.Id}");
+                }
             else
             {
                 TempData["FailedLogin"] = "Either your password or username is incorrect, please try again.";
-                return Redirect("/users/login");
             }
+            }
+            return Redirect("/users/login");
         }
 
-        [Route("/users/logout/{id:int}")]
+        [Route("/users/{id:int}/Logout")]
         public IActionResult Logout(int id)
         {
             if(id != null)
@@ -114,24 +116,52 @@ namespace SceneSherpa.Controllers
         {
             var user = _context.Users.Find(id);
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+            ViewData["ErrorMessage"] = TempData["ErrorMessage"];
 
             return View(user);
         }
         
+        //------------------------------------------------------------
         [HttpPost]
         [Route("users/{id:int}")]
         public IActionResult Update(int id, User user)
         {
+            var CurrentUser = _context.Users.Find(id);
+
+            var usernames = _context.Users.Select(e => e.Username).ToList();
+            var emails = _context.Users.Select(e => e.Email).ToList();
+
+            usernames.Remove(CurrentUser.Username);
+            emails.Remove(CurrentUser.Email);
+
+            bool CheckUsernames = usernames.Where(e => e == user.Username).Any();
+            bool CheckEmails = emails.Where(e => e == user.Email).Any();
+
+            if (CheckUsernames)
+            {
+                TempData["ErrorMessage"] = "Username already exists";
+                return Redirect($"/users/{id}/edit");
+            }
+            if (CheckEmails)
+            {
+                TempData["ErrorMessage"] = "Email already exists";
+                return Redirect($"/users/{id}/edit");
+            }
+            else if(user.Age != CurrentUser.Age)
+            {
+                
+            }
+
             user.Id = id;
-      
             _context.Users.Update(user);
             _context.SaveChanges();
 
             return RedirectToAction("show", new { id = user.Id });
         }
-        
+        //------------------------------------------------------------
+
         [HttpPost]
-        [Route("/Users/Delete/{id:int}")]
+        [Route("/Users/{id:int}/Delete")]
         public IActionResult Delete(int id)
         {
             //Grab user from context with all lists included
