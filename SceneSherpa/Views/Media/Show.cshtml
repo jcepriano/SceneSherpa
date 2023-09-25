@@ -1,6 +1,7 @@
 ﻿@model SceneSherpa.Models.Media
 @{
     SceneSherpa.Models.Review currentUserReview = ViewData["CurrentUserReview"] as SceneSherpa.Models.Review;
+    SceneSherpa.Models.User currentUser = ViewData["CurrentUserObject"] as SceneSherpa.Models.User;
 }
 <link href='https://unpkg.com/css.gg@2.0.0/icons/css/more-vertical.css' rel='stylesheet'>
 
@@ -11,17 +12,21 @@
 <p>Type: @Model.Type</p>
 <br />
 
-<button>
+<form method="post" action="/Users/@currentUser.Id/@Model.Id/CurrentlyWatch">
+<button type="submit">
     Currently Watching
 </button>
-<button>
-    Already watched
-</button>
-<button>
-    To watch
-</button>
-
-
+</form>
+<form method="post" action="/Users/@currentUser.Id/@Model.Id/AllWatched">
+    <button type="submit">
+        Already Watched
+    </button>
+</form>
+<form method="post" action="/Users/@currentUser.Id/@Model.Id/ToWatch">
+    <button type="submit">
+        To Watch
+    </button>
+</form>
 <br />
 <br />
 
