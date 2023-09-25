@@ -1,10 +1,4 @@
 ﻿@model IEnumerable<SceneSherpa.Models.Media>
-@{
-    string currentUsernameId = ViewData["CurrentUserIdUsername"] as string;
-    List<string> userObj = new List<string>();
-
-    userObj.AddRange(currentUsernameId.Split());
-}
 <h1>All Media</h1>
 @foreach(var media in @Model)
 {
