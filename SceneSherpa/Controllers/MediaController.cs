@@ -33,7 +33,12 @@ namespace SceneSherpa.Controllers
             if(Request.Cookies["CurrentUserIdUsername"] != null)
             {
                 var currentUsername = Request.Cookies["CurrentUserIdUsername"].Split()[1];
-                var currentUser = _context.Users.Where(u => u.Username == currentUsername).First();
+                var currentUser = _context.Users
+                    .Where(u => u.Username == currentUsername)
+                    .Include(u => u.AllWatched)
+                    .Include(u => u.ToWatch)
+                    .Include(u => u.CurrentWatch)
+                    .First();
                 if(media.Reviews.Any(r => r.User == currentUser))
                 {
                     ViewData["CurrentUserReview"] = media.Reviews.Where(r => r.User == currentUser).First();

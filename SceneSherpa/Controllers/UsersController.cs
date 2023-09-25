@@ -176,5 +176,60 @@ namespace SceneSherpa.Controllers
             //Change the redirect to home page? 
             return RedirectToAction("index");
         }
+
+        //jk: Add or remove from users allwatched list
+        [HttpPost]
+        [Route("/Users/{id:int}/{movieId:int}/AllWatched")]
+        public IActionResult AllWatched(int id, int movieId)
+        {
+            var user = _context.Users.Find(id);
+            var movie = _context.Media.Find(movieId);
+            if (user.AllWatched.Contains(movie))
+            {
+                user.AllWatched.Remove(movie);
+            }
+            else
+            {
+                user.AllWatched.Add(movie);
+            }
+            _context.SaveChanges();
+            return Redirect($"/media/{movieId}");
+        }
+        //jk: Add or remove from users towatch list
+        [HttpPost]
+        [Route("/Users/{id:int}/{movieId:int}/ToWatch")]
+        public IActionResult ToWatch(int id, int movieId)
+        {
+            var user = _context.Users.Find(id);
+            var movie = _context.Media.Find(movieId);
+            if (user.ToWatch.Contains(movie))
+            {
+                user.ToWatch.Remove(movie);
+            }
+            else
+            {
+                user.ToWatch.Add(movie);
+            }
+            _context.SaveChanges();
+            return Redirect($"/media/{movieId}");
+        }
+        //jk: Add or remove from users CurrentlyWatch list
+        [HttpPost]
+        [Route("/Users/{id:int}/{movieId:int}/CurrentlyWatch")]
+        public IActionResult CurrentlyWatch(int id, int movieId)
+        {
+            var user = _context.Users.Find(id);
+            var movie = _context.Media.Find(movieId);
+            if (user.CurrentWatch.Contains(movie))
+            {
+                user.CurrentWatch.Remove(movie);
+            }
+            else
+            {
+                user.CurrentWatch.Add(movie);
+            }
+            _context.SaveChanges();
+            return Redirect($"/media/{movieId}");
+        }
     }
 }
