@@ -1,6 +1,10 @@
 ﻿@model SceneSherpa.Models.Media
 @{
     SceneSherpa.Models.Review currentUserReview = ViewData["CurrentUserReview"] as SceneSherpa.Models.Review; 
+    string currentUsernameId = ViewData["CurrentUserIdUsername"] as string;
+    List<string> userObj = new List<string>();
+
+    userObj.AddRange(currentUsernameId.Split());
 }
 <link href='https://unpkg.com/css.gg@2.0.0/icons/css/more-vertical.css' rel='stylesheet'>
 

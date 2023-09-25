@@ -1,5 +1,10 @@
 ﻿@model SceneSherpa.Models.User
+@{
+    string currentUsernameId = ViewData["CurrentUserIdUsername"] as string;
+    List<string> userObj = new List<string>();
 
+    userObj.AddRange(currentUsernameId.Split());
+}
 <h1>Edit Profile</h1>
 
 <form method="post" action="/users/@Model.Id">

@@ -1,5 +1,10 @@
 ﻿@model SceneSherpa.Models.User
+@{
+    string currentUsernameId = ViewData["CurrentUserIdUsername"] as string;
+    List<string> userObj = new List<string>();
 
+    userObj.AddRange(currentUsernameId.Split());
+}
 <h1>Name: @Model.Name</h1>
 <h1>Age: @Model.Age</h1>
 <h1>Username: @Model.Username</h1>

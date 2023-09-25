@@ -1,4 +1,10 @@
 ﻿@model SceneSherpa.Models.Media
+@{
+    string currentUsernameId = ViewData["CurrentUserIdUsername"] as string;
+    List<string> userObj = new List<string>();
+
+    userObj.AddRange(currentUsernameId.Split());
+}
 <h1>Write a review for @Model.Title</h1>
 <form method="post" action="/Media/@Model.Id/Reviews">
 <div class="form-group">
