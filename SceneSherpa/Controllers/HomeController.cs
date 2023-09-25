@@ -22,6 +22,7 @@ namespace SceneSherpa.Controllers
 
         public IActionResult Privacy()
         {
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View();
         }
     }

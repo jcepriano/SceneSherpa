@@ -15,6 +15,8 @@ namespace SceneSherpa.Controllers
         public IActionResult Index()
         {
             var media = _context.Media;
+
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View(media);
         }
 
@@ -39,6 +41,7 @@ namespace SceneSherpa.Controllers
                 }
             }
 
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View(media);
         }
     }

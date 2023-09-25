@@ -1,5 +1,10 @@
 ﻿@model List<SceneSherpa.Models.User>
+@{
+    string currentUsernameId = ViewData["CurrentUserIdUsername"] as string;
+    List<string> userObj = new List<string>();
 
+    userObj.AddRange(currentUsernameId.Split());
+}
     @foreach(var e in Model)
     {
         <p>@e</p>

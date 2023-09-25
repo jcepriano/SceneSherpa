@@ -24,6 +24,8 @@ namespace SceneSherpa.Controllers
         public IActionResult Edit(int reviewId)
         {
             var review = _context.Reviews.Where(r => r.Id == reviewId).Include(r => r.Media).First();
+
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View(review);
         }
 
@@ -64,6 +66,8 @@ namespace SceneSherpa.Controllers
         public IActionResult New(int mediaId)
         {
             var media = _context.Media.Where(m => m.Id == mediaId).Include(m => m.Reviews).First();
+
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View(media);
         }
 
