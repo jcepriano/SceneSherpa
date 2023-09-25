@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SceneSherpa.DataAccess;
 using SceneSherpa.Models;
@@ -29,6 +30,7 @@ namespace SceneSherpa.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Index(User user)
         {
             //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
