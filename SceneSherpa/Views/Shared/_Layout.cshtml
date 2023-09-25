@@ -46,15 +46,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a>
                         </li>
+                        
                         <li>
-                            @if (ViewData["CurrentUserIdUsername"] == null)
+                            <form class="d-flex">
+                                <button class="btn btn-light my-2 my-sm-0" type="submit">Search</button>
+                                <input class="form-control me-sm-2" type="search" placeholder="Start typing...">
+                                
+                            </form>
+                        </li>
+                            @if (ViewData["CurrentUserIdUsername"] != null)
                             {
-                                <form action="/users/login">
-                                    <button type="submit" class="btn btn-outline-primary" asp-controller="Users" asp-action="Login">Log In</button>
-                                </form>
-                            }
-                        @if (ViewData["CurrentUserIdUsername"] != null)
-                        {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@CurrentUser[1]</a>
                                 <div class="dropdown-menu" style="">
@@ -67,7 +68,15 @@
                                     <div class="dropdown-divider"></div>
                                 </div>
                             </li>
-                        }
+                            }
+                        <li>
+                            @if (ViewData["CurrentUserIdUsername"] == null)
+                            {
+                                <form action="/users/login">
+                                    <button type="submit" class="btn btn-outline-primary" asp-controller="Users" asp-action="Login">Log In</button>
+                                </form>
+                            }
+                        </li>
                     </ul>
                 </div>
             </div>

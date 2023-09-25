@@ -1,10 +1,42 @@
-﻿@{
+﻿<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+@{
     string errorMessage = ViewData["ErrorMessage"] as string;
 }
 <link rel="stylesheet" href="css/site.css" />
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<form class="signup login" method="post" action="/users">
+    <h3>Sign Up</h3>
 
-<h2>Create Your Account!</h2>
+    <label for="name" class="login-form-label">Name</label>
+    <input type="text" placeholder="Name" id="name" class="login-form-input" name="Name" required>
 
+    <label for="username" class="login-form-label">Username</label>
+    <input type="text" placeholder="Username" id="username" class="login-form-input" name="Username" required>
+
+    <label for="email" class="login-form-label">Email</label>
+    <input type="email" placeholder="Email" id="email" class="login-form-input" name="Email" required>
+
+    <label for="age" class="login-form-label">Age</label>
+    <input type="text" placeholder="Age" id="age" class="login-form-input" required name="Age">
+
+    <label for="password" class="login-form-label">Password</label>
+    <input type="password" placeholder="Password" id="password" class="login-form-input" name="Password" required>
+    @if (errorMessage != null)
+    {
+        <p style="color: salmon">@errorMessage</p>
+    }
+
+    <button class="login-button" type="submit">Create Account</button>
+</form>
+
+
+<!--
 <form method="post" action="/users">
 
     <div class="new-form">
@@ -23,14 +55,11 @@
         <label for="Password">Password: </label>
         <input type="password" id="Password" name="Password" required />
     </div>
-    @if(errorMessage != null)
-    {
-        <h4 style="color: red">@errorMessage</h4>
-    }
+    
     <button type="submit" class="submit-button">Create Account</button>
 
 </form>
-
+-->
 <!--<script>
     function checkUsernameAvailability() {
         const username = document.getElementById("Username").value;
