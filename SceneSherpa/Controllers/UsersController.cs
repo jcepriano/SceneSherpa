@@ -42,13 +42,12 @@ namespace SceneSherpa.Controllers
                 TempData["ErrorMessage"] = "Username already exists";
                 return Redirect("/users/new");
             }
+            _context.Users.Add(user);
+            _context.SaveChanges();
 
             Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
 
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
 
             return Redirect($"/users/{user.Id}");
         }
@@ -57,16 +56,6 @@ namespace SceneSherpa.Controllers
         public IActionResult LoginForm()
         {
             ViewData["FailedLogin"] = TempData["FailedLogin"];
-
-            //if (ViewData["CurrentUserIdUsername"] == null)
-            //{
-            //    ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrenCurrentUserIdUsernametUser"];
-            //}
-            //else if (TempData["CurrentUserIdUsername"] == null)
-            //{
-            //    ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrenCurrentUserIdUsernametUser"];
-            //}
-
             return View();
         }
 
@@ -79,7 +68,7 @@ namespace SceneSherpa.Controllers
             {
                 var LoginAttemptUser = _context.Users.Where(e => e.Username == username).FirstOrDefault();
 
-                if (LoginAttemptUser.Password == LoginAttemptUser.ReturnEncryptedString(password))
+                if (LoginAttemptUser.Password != null && LoginAttemptUser.Password == LoginAttemptUser.ReturnEncryptedString(password))
                 {
                     Response.Cookies.Append("CurrentUserIdUsername", $"{LoginAttemptUser.Id} {LoginAttemptUser.Username}");
                     return Redirect($"/users/{LoginAttemptUser.Id}");

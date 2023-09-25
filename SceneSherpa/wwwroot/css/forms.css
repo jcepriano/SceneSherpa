@@ -37,6 +37,12 @@
 	padding: 50px 35px;
 }
 
+	.signup{
+		height: 800px;
+		width: 600px;
+		top: 50%;
+	}
+
 	.login * {
 		font-family: 'Poppins',sans-serif;
 		color: #ffffff;
@@ -113,3 +119,8 @@
 	.social i {
 		margin-right: 4px;
 	}
+
+.login-social{
+	height: 50px;
+	width: 150px;
+}
