@@ -56,6 +56,7 @@
 <br />
 <br />
 
+<!--Show Current Users Review As Long as there is one-->
 @if (currentUserReview != null)
 {
     <div class="card border-secondary mb-3" style="max-width: 20rem;">
@@ -100,7 +101,7 @@ else
 }
 
 
-
+<!--Show Everyone Elses Reviews-->
 @if (Model.Reviews != null && Model.Reviews.Count > 0)
 {
     <h2>Other Reviews</h2>
