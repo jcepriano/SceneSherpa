@@ -3,8 +3,8 @@
 <form method="post" action="/Media/@Model.Media.Id/Reviews/@Model.Id">
     <div class="form-group">
         <label for="rating" class="form-label mt-4">Choose a rating 1-10</label>
-        {
-        <select class="form-select" id="rating" name="rating">
+        
+        <select class="form-select" id="rating" name="rating" >
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -18,7 +18,7 @@
         </select>
         <div class="form-group">
             <label for="content" class="form-label mt-4">Comments...</label>
-            <textarea class="form-control" id="content" rows="3" style="height: 189px;" name="content"></textarea>
+            <textarea class="form-control" id="content" rows="3" style="height: 189px;" name="content" >@Model.Content</textarea>
         </div>
         <button type="submit" class="btn btn-success">Update Review</button>
     </div>

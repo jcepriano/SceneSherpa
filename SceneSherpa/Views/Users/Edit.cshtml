@@ -1,4 +1,7 @@
 ﻿@model SceneSherpa.Models.User
+@{
+    string error = ViewData["ErrorMessage"] as string;
+}
 <h1>Edit Profile</h1>
 
 <form method="post" action="/users/@Model.Id">
@@ -26,7 +29,11 @@
         <input type="hidden" id="password" name="password" value="@Model.Password" />
     </div>
     <br />
-    
+    @if(error != null)
+    {
+        <h4 style="color: red">@error</h4>
+    }
+
     <button type="submit">Update Profile</button>
 
 </form>
