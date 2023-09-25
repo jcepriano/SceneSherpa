@@ -13,7 +13,7 @@
     <div class="shape"></div>
     <div class="shape"></div>
 </div>
-<form class="login">
+<form class="login" method="post" action="/users/login/attempt">
     <h3>Login Here</h3>
 
     <label for="username" class="login-form-label">Username</label>
@@ -22,9 +22,9 @@
     <label for="password" class="login-form-label">Password</label>
     <input type="password" placeholder="Password" id="password" class="login-form-input">
 
-    <button class="login-button">Log In</button>
+    <button class="login-button" type="submit">Log In</button>
     <div class="social">
-        <div class="go"><i class="fab fa-google"></i>  Google</div>
-        <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
+        <div class="go"><i class="fab fa-google"></i>  Google</div><!--Here is where you can add the Google API-->
+        <div class="fb"><i class="fab fa-facebook"></i>  Coming soon!</div>
     </div>
 </form>
