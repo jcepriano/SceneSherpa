@@ -6,13 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SceneSherpa.Controllers
 {
-    [AllowAnonymous, Route("users")]
+    [AllowAnonymous, Route("account")]
     public class AccountController : Controller
     {
         [Route("google-login")]
         public IActionResult GoogleLogin()
         {
-            var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
+            var properties = new AuthenticationProperties 
+            { 
+                RedirectUri = Url.Action("GoogleResponse") 
+            };
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
 
