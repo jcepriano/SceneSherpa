@@ -1,22 +1,41 @@
-﻿@{
+﻿<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+@{
     string incorrect = ViewData["FailedLogin"] as string;
 }
 
-<h2>Login to Your Account!</h2>
+<h2 style="text-align: center; margin-top: 140px;">Already have an account with us? Log in!</h2>
+<h3 style="text-align: center;">Or Login with Google!</h3>
 
-<form action="/users/login/attempt" method="post">
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<div class="login">
+<form method="post" action="/users/login/attempt">
+    <h3>Login Here</h3>
 
-    <label for="Username">Username: </label>
-    <input type="text" id="Username" name="Username" />
+    <label for="username" class="login-form-label">Username</label>
+    <input type="text" placeholder="Username" id="username" class="login-form-input" name="username">
 
-    <label for="Password">Password</label>
-    <input type="password" id="Password" name="Password" />
+    <label for="password" class="login-form-label">Password</label>
+    <input type="password" placeholder="Password" id="password" class="login-form-input" name="password">
 
     @if(incorrect != null)
     {
-        <h6 style="color: red">@incorrect</h6>
+        <p class="error" style="color: salmon; position: absolute; margin-bottom: -10px;">@incorrect</p>
     }
 
-    <button type="submit">Login</button>
-
+    <button type="submit" class="login-button">Log In</button>
 </form>
+    <div class="social justify-content-between">
+        <form action=""> <!--GOOGLE API LOGIN BUTTON-->
+            <button type="submit" class="btn btn-primary login-social"><i class="fab fa-google"></i>  Google</button>
+        </form>
+        <form action="/users/new">
+            <button type="submit" class="btn btn-primary login-social">Sign Up</button>
+        </form>
+    </div>
+</div>

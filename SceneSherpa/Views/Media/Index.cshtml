@@ -1,8 +1,84 @@
-﻿@model IEnumerable<SceneSherpa.Models.Media>
-<h1>All Media</h1>
-@foreach(var media in @Model)
-{
-    <ul>
-        <li>@media.Type: <a href="/media/@media.Id">@media.Title</a></li>
-    </ul>
+﻿<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link href='https://unpkg.com/css.gg@2.0.0/icons/css/more-vertical.css' rel='stylesheet'>
+
+@model IEnumerable<SceneSherpa.Models.Media>
+@{
+    List<string> userObj = new List<string>();
+    List<string> ReviewContents = new List<string>();
+    int count = 0;
+
+    if(ViewData["CurrentUserIdUsername"] != null)
+    {
+        string currentUsernameId = ViewData["CurrentUserIdUsername"] as string;
+        
+
+        userObj.AddRange(currentUsernameId.Split());
+
+        foreach (var e in Model)
+        {
+            foreach (var i in e.Reviews)
+            {
+                ReviewContents.Add(i.Content);
+            }
+        }
+    }
 }
+<div class="media-index">
+    <ul class="ul-media-card">
+        @foreach (var media in Model)
+        {
+            <li class="align-card">
+                    <div class="card mb-3">
+                        <h4 class="card-header">@media.Title</h4>
+                        <div class="card-body">
+                            <h5 class="card-title">@media.Type</h5>
+                        </div>
+                        <div class="img-container">
+                        <a href="/media/@media.Id"><img src="https://placehold.co/400x600" class="img-fluid" /></a>
+                        </div>
+                    
+                        <div class="card-body">
+                            <p class="card-text">@media.Description</p>
+                        </div>
+                    <ul class="list-group list-group-flush">
+                                <li class="list-group-item">@media.ProductionCompany</li>
+                                <li class="list-group-item">@media.AgeRating</li>
+                    </ul>
+                    <ul class="list-style-none list-group-flush">
+                            @if(ViewData["CurrentUserIdUsername"] != null)
+                            {
+                                <li class="list-index"><strong>Add to a list?</strong></li>
+                                <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/CurrentlyWatch">
+                            <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-eye"></i></button></li>
+                                </form>
+                                <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/ToWatch">
+                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-bookmark"></i></button></li>
+                                </form>
+                                <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/AllWatched">
+                            <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-check-circle"></i></button></li>
+                                </form>
+                            }
+                            else
+                            {
+                            <form action="/users/login" class="list-style-none">
+                            <li class="list-index-footer"><p><strong>Want to add to a list?</strong></p></li>
+                                    <li class="list-index-footer"><button class="btn btn-light no-border login-btn" type="submit">Log in!</button></li>
+                                </form>
+                            }
+                    </ul>
+                        <div class="card-footer text-muted">
+                        @foreach (var e in media.Reviews)
+                        {
+                            count++;
+                            <p>@e.Content</p>
+                            if (count == 3)
+                            {
+                                break;
+                            }
+                        }
+                        </div>
+                    </div>
+            </li>
+        }
+    </ul>
+</div>

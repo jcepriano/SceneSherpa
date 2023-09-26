@@ -42,13 +42,12 @@ namespace SceneSherpa.Controllers
                 TempData["ErrorMessage"] = "Username already exists";
                 return Redirect("/users/new");
             }
+            _context.Users.Add(user);
+            _context.SaveChanges();
 
             Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
 
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
 
             return Redirect($"/users/{user.Id}");
         }
@@ -57,16 +56,6 @@ namespace SceneSherpa.Controllers
         public IActionResult LoginForm()
         {
             ViewData["FailedLogin"] = TempData["FailedLogin"];
-
-            //if (ViewData["CurrentUserIdUsername"] == null)
-            //{
-            //    ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrenCurrentUserIdUsernametUser"];
-            //}
-            //else if (TempData["CurrentUserIdUsername"] == null)
-            //{
-            //    ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrenCurrentUserIdUsernametUser"];
-            //}
-
             return View();
         }
 
@@ -79,7 +68,7 @@ namespace SceneSherpa.Controllers
             {
                 var LoginAttemptUser = _context.Users.Where(e => e.Username == username).FirstOrDefault();
 
-                if (LoginAttemptUser.Password == LoginAttemptUser.ReturnEncryptedString(password))
+                if (LoginAttemptUser.Password != null && LoginAttemptUser.Password == LoginAttemptUser.ReturnEncryptedString(password))
                 {
                     Response.Cookies.Append("CurrentUserIdUsername", $"{LoginAttemptUser.Id} {LoginAttemptUser.Username}");
                     return Redirect($"/users/{LoginAttemptUser.Id}");
@@ -116,7 +105,7 @@ namespace SceneSherpa.Controllers
         {
             var user = _context.Users.Find(id);
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
-            ViewData["ErrorMessage"] = TempData["ErrorMessage"];
+            ViewData["TakenError"] = TempData["TakenError"];
 
             return View(user);
         }
@@ -134,29 +123,50 @@ namespace SceneSherpa.Controllers
             usernames.Remove(CurrentUser.Username);
             emails.Remove(CurrentUser.Email);
 
-            bool CheckUsernames = usernames.Where(e => e == user.Username).Any();
-            bool CheckEmails = emails.Where(e => e == user.Email).Any();
-
-            if (CheckUsernames)
+            if(usernames.Any(e => e == user.Username))
             {
-                TempData["ErrorMessage"] = "Username already exists";
-                return Redirect($"/users/{id}/edit");
+                TempData["TakenError"] = "That Username is already taken";
+                return Redirect($"/users/{CurrentUser.Id}/edit");
             }
-            if (CheckEmails)
+            if(emails.Any(e => e == user.Email))
             {
-                TempData["ErrorMessage"] = "Email already exists";
-                return Redirect($"/users/{id}/edit");
+                TempData["TakenError"] = "That Email is already taken";
+                return Redirect($"/users/{CurrentUser.Id}/edit");
             }
-            else if(user.Age != CurrentUser.Age)
+            else
             {
-                
+                CurrentUser.Age = user.Age;
+                CurrentUser.Email = user.Email;
+                CurrentUser.Name = user.Name;
+                CurrentUser.Username = user.Username;
+                _context.Users.Update(CurrentUser);
+                _context.SaveChanges();
             }
 
-            user.Id = id;
-            _context.Users.Update(user);
-            _context.SaveChanges();
+            //bool CheckUsernames = usernames.Where(e => e == user.Username).Any();
+            //bool CheckEmails = emails.Where(e => e == user.Email).Any();
 
-            return RedirectToAction("show", new { id = user.Id });
+            //if (CheckUsernames)
+            //{
+            //    TempData["ErrorMessage"] = "Username already exists";
+            //    return Redirect($"/users/{id}/edit");
+            //}
+            //if (CheckEmails)
+            //{
+            //    TempData["ErrorMessage"] = "Email already exists";
+            //    return Redirect($"/users/{id}/edit");
+            //}
+            //else if(user.Age != CurrentUser.Age)
+            //{
+
+            //}
+
+            //user.Id = id;
+            //_context.Users.Update(user);
+            //_context.SaveChanges();
+
+            //return RedirectToAction("show", new { id = user.Id });
+            return Redirect($"/users/{CurrentUser.Id}");
         }
         //------------------------------------------------------------
 
@@ -173,8 +183,9 @@ namespace SceneSherpa.Controllers
                 .First();
             _context.Users.Remove(user);
             _context.SaveChanges();
-            //Change the redirect to home page? 
-            return RedirectToAction("index");
+
+            Response.Cookies.Delete("CurrentUserIdUsername");
+            return Redirect("/media");
         }
 
         //jk: Add or remove from users allwatched list
