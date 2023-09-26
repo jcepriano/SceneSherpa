@@ -24,4 +24,8 @@
     <PackageReference Include="Westwind.Web.Markdown" Version="0.2.15" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Resources\" />
+  </ItemGroup>
+
 </Project>
