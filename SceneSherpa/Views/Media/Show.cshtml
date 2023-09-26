@@ -120,7 +120,7 @@ else
         <p>Rating: @review.Rating</p>
         @if (!string.IsNullOrEmpty(review.Content))
         {
-            <p>Content: @review.Content</p>
+            <p>Content: @Markdown.ParseHtmlString(review.Content)</p>
         }
     }
 }
