@@ -102,12 +102,15 @@
 }
 else
 {
-    <form action="/Media/@Model.Id/Reviews/New">
+    <!--Review Can't be added unless logged in-->
+    if(currentUser != null)
+    {
+     <form action="/Media/@Model.Id/Reviews/New">
         <button type="submit">
             Add Review
         </button>
     </form>
-
+    }
 }
 
 
