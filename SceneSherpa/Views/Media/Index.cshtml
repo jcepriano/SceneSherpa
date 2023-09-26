@@ -70,7 +70,7 @@
                         @foreach (var e in media.Reviews)
                         {
                             count++;
-                            <p>@e.Content</p>
+                            <p>@Markdown.ParseHtmlString(e.Content)</p>
                             if (count == 3)
                             {
                                 break;
