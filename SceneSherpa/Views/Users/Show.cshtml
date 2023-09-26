@@ -22,20 +22,56 @@
 <h3>Library</h3>
 <br />
 <br />
-<h2>Currently Watching:</h2>
-@foreach(var Media in Model.CurrentWatch)
+<h2>Currently Watching</h2>
+@if (Model.CurrentWatch != null && Model.CurrentWatch.Any())
 {
-    <p>@Media.Type: @Media.Title <form><button type="submit">DELETE @Media.Title</button></form></p>
+    foreach (var media in Model.CurrentWatch)
+    {
+        <p>
+            @media.Type: @media.Title
+            <form method="post" action="/Users/@Model.Id/RemoveFromCurrentWatch/@media.Id">
+                <button type="submit">Remove from Currently Watching</button>
+            </form>
+        </p>
+    }
 }
-<br />
-<h2>Watched:</h2>
-@foreach (var Media in Model.AllWatched)
+else
 {
-    <p>@Media.Type: @Media.Title <form><button type="submit">DELETE @Media.Title</button></form></p>
+    <p>No media currently being watched.</p>
 }
-<br />
-<h2>Want to watch:</h2>
-@foreach (var Media in Model.ToWatch)
+
+<h2>All Watched</h2>
+@if (Model.AllWatched != null && Model.AllWatched.Any())
 {
-    <p>@Media.Type: @Media.Title <form><button type="submit">DELETE @Media.Title</button></form></p>
+    foreach (var media in Model.AllWatched)
+    {
+        <p>
+            @media.Type: @media.Title
+            <form method="post" action="/Users/@Model.Id/RemoveFromAllWatched/@media.Id">
+                <button type="submit">Remove from All Watched</button>
+            </form>
+        </p>
+    }
+}
+else
+{
+    <p>No media in All Watched list.</p>
+}
+
+<h2>To Watch</h2>
+@if (Model.ToWatch != null && Model.ToWatch.Any())
+{
+    foreach (var media in Model.ToWatch)
+    {
+        <p>
+            @media.Type: @media.Title
+            <form method="post" action="/Users/@Model.Id/RemoveFromToWatch/@media.Id">
+                <button type="submit">Remove from To Watch</button>
+            </form>
+        </p>
+    }
+}
+else
+{
+    <p>No media in To Watch list.</p>
 }
