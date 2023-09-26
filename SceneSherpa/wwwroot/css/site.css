@@ -13369,4 +13369,13 @@ th {
 .spoiler:hover{
     all:unset;
 }
+
+.user-reviews{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+
 /*# sourceMappingURL=bootstrap.min.css.map */
