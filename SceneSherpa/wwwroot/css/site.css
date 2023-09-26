@@ -13362,5 +13362,11 @@ th {
     color: inherit
 }
 
-
+.spoiler{
+    background-color: black;
+    color:black;
+}
+.spoiler:hover{
+    all:unset;
+}
 /*# sourceMappingURL=bootstrap.min.css.map */
