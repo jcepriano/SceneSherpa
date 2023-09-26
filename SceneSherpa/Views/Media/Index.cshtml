@@ -70,8 +70,11 @@
                         @foreach (var e in media.Reviews)
                         {
                             count++;
-                            <p>@Markdown.ParseHtmlString(e.Content)</p>
-                            if (count == 3)
+                            <ul class="user-reviews">
+                                <li>[@e.Rating] <strong class="link-body-emphasis"><a href="/Users/@e.User.Id">@e.User.Username</a>:</strong> </li>
+                                <li>@Markdown.ParseHtmlString(e.Content)</li>
+                            </ul>
+                            if (count == 2)
                             {
                                 break;
                             }
