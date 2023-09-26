@@ -1,11 +1,21 @@
-﻿@{
+﻿
+
+@{
     string CurrentUserIdUsername = ViewData["CurrentUserIdUsername"] as string;
     Console.WriteLine(CurrentUserIdUsername);
 
+    List<Media> media = new List<Media>();
     List<string> CurrentUser = new List<string>();
     if(CurrentUserIdUsername != null)
     {
         CurrentUser.AddRange(CurrentUserIdUsername.Split());
+    }
+    if(ViewBag.MediaList != null)
+    {
+        foreach(var e in ViewBag.MediaList)
+        {
+            media.Add(e);
+        }
     }
 }
 
@@ -47,11 +57,22 @@
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a>
                         </li>
                         
-                        <li>
-                            <form class="d-flex">
+                        <li class="force-right">
+                            <form class="d-flex" id="live-search">
                                 <button class="btn btn-light my-2 my-sm-0" type="submit">Search</button>
-                                <input class="form-control me-sm-2" type="search" placeholder="Start typing...">
+                                <input class="form-control force-right" id="filter" type="search" placeholder="Start typing...">
                             </form>
+                            <div class="search-container form-control">
+                                <ul class="liveSearchBar">
+                                    @foreach(var e in media)
+                                    {
+                                        <li>
+                                            <h4 class="search-title"><a href="/media/@e.Id">@e.Title</a></h4>
+                                            <p class="search-company">@e.ProductionCompany</p>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
                         </li>
                             @if (ViewData["CurrentUserIdUsername"] != null)
                             {
@@ -66,12 +87,14 @@
                                     <a class="dropdown-item" href="/users/@CurrentUser[0]/Logout" onclick="return confirm('Are You Sure You Want To Log Out?')">Log Out</a>
                                     <div class="dropdown-divider"></div>
                                 </div>
+
+
                             </li>
                             }
                         <li>
                             @if (ViewData["CurrentUserIdUsername"] == null)
                             {
-                                <form action="/users/login">
+                                <form class="force-right" action="/users/login">
                                     <button type="submit" class="btn btn-outline-primary" asp-controller="Users" asp-action="Login">Log In</button>
                                 </form>
                             }
@@ -98,5 +121,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="/js/site.js"></script>
 </body>
 </html>

@@ -2258,7 +2258,7 @@ progress {
 
 .form-control {
     display: block;
-    width: 100%;
+    width: 310px;
     padding: .75rem 1.5rem;
     font-size: 1rem;
     font-weight: 300;
@@ -7678,7 +7678,7 @@ textarea.form-control-lg {
 }
 
 .d-flex {
-    display: flex !important
+    display: flex !important;
 }
 
 .d-inline-flex {
@@ -13362,5 +13362,87 @@ th {
     color: inherit
 }
 
+.liveSearchBar, .liveSearchBar li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
 
+    .liveSearchBar, .liveSearchBar li a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+.search-container {
+    margin: 0;
+    background-color: slategrey;
+    color: #fff;
+    font-weight: 700;
+    font-family: "Nunito Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 20px;
+    position: absolute;
+    z-index: 1;
+    width: 415px;
+    padding: 0px !important;
+    margin-left: 102px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+}
+
+    .liveSearchBar li {
+        display: none;
+    }
+
+.search-title {
+    font-size: 14px;
+}
+
+.search-company {
+    font-size: 10px;
+}
+
+.force-right {
+    float: right;
+    margin-right: 0px;
+    padding-right: 0px;
+}
+
+.liveSearchBar {
+    
+    
+    margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+}
+
+.search-result {
+    padding: 2px;
+}
+
+#live-search fieldset {
+    border: 0;
+    padding-left: 0;
+}
+
+:focus {
+    outline: none;
+}
+
+::-webkit-input-placeholder {
+    color: #fff;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: #fff;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    color: #fff;
+}
+
+:-ms-input-placeholder {
+    color: #fff;
+}
 /*# sourceMappingURL=bootstrap.min.css.map */
