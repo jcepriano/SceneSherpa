@@ -1,6 +1,7 @@
 ﻿@model SceneSherpa.Models.Media
 @{
     SceneSherpa.Models.Review currentUserReview = ViewData["CurrentUserReview"] as SceneSherpa.Models.Review;
+    SceneSherpa.Models.User currentUser = ViewData["CurrentUserObject"] as SceneSherpa.Models.User;
     string userIdUsername = "";
     string userId = "";
     if(ViewData["CurrentUserIdUsername"] != null)

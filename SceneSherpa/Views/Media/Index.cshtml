@@ -5,6 +5,7 @@
 @{
     List<string> userObj = new List<string>();
     List<string> ReviewContents = new List<string>();
+    int count = 0;
 
     if(ViewData["CurrentUserIdUsername"] != null)
     {
@@ -66,10 +67,15 @@
                             }
                     </ul>
                         <div class="card-footer text-muted">
-                            @for(int i = 0; i > 4; i++)
+                        @foreach (var e in media.Reviews)
+                        {
+                            count++;
+                            <p>@e.Content</p>
+                            if (count == 3)
                             {
-                                <p>@ReviewContents[i]</p>
+                                break;
                             }
+                        }
                         </div>
                     </div>
             </li>
