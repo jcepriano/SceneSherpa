@@ -117,6 +117,7 @@ else
     <h2>Other Reviews</h2>
     foreach (var review in Model.Reviews)
     {
+        <p>@review.User.Username:</p>
         <p>Rating: @review.Rating</p>
         @if (!string.IsNullOrEmpty(review.Content))
         {

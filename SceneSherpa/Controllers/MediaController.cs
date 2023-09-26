@@ -27,6 +27,7 @@ namespace SceneSherpa.Controllers
             var media = _context.Media
                 .Where(m => m.Id == id)
                 .Include(media => media.Reviews)
+                .ThenInclude(review => review.User)
                 .FirstOrDefault();
 
             //JK: find current user and pass in their review as a seperate review object, If no one is logged in, pass no user reviews in
