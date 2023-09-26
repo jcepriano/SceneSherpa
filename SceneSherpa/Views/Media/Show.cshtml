@@ -11,6 +11,9 @@
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <link href='https://unpkg.com/css.gg@2.0.0/icons/css/more-vertical.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+
 
 <h1>@Model.Title</h1>
 <br />
@@ -18,6 +21,7 @@
 <p>Production: @Model.ProductionCompany</p>
 <p>Type: @Model.Type</p>
 <br />
+
 
 <form method="post" action="/Users/@userId/@Model.Id/CurrentlyWatch">
 <button type="submit">
@@ -34,9 +38,50 @@
         To Watch
     </button>
 </form>
+
+<!--Change Button Logo Based on Users Lists-->
+@if(currentUser != null)
+{
+  <form method="post" action="/Users/@currentUser.Id/@Model.Id/CurrentlyWatch">
+<button class="btn btn-primary" type="submit">
+        @if (currentUser.CurrentWatch.Contains(Model))
+        {
+            <span><i class="bi bi-check-square"></i> Currently Watching</span>
+        }
+        else{
+            <span><i class="bi bi-square"></i> Currently Watching</span>
+        }
+</button>
+</form>
+<form method="post" action="/Users/@currentUser.Id/@Model.Id/AllWatched">
+<button class="btn btn-primary" type="submit">
+        @if (currentUser.AllWatched.Contains(Model))
+        {
+            <span><i class="bi bi-check-square"></i> Watched</span>
+        }
+        else{
+            <span><i class="bi bi-square"></i> Watched</span>
+        }
+</button>
+</form>
+<form method="post" action="/Users/@currentUser.Id/@Model.Id/ToWatch">
+<button class="btn btn-primary" type="submit">
+        @if (currentUser.ToWatch.Contains(Model))
+        {
+            <span><i class="bi bi-check-square"></i> To Watch</span>
+        }
+        else{
+            <span><i class="bi bi-square"></i> To Watch</span>
+        }
+</button>
+</form>  
+}
+
+
 <br />
 <br />
 
+<!--Show Current Users Review As Long as there is one-->
 @if (currentUserReview != null)
 {
     <div class="card border-secondary mb-3" style="max-width: 20rem;">
@@ -81,7 +126,7 @@ else
 }
 
 
-
+<!--Show Everyone Elses Reviews-->
 @if (Model.Reviews != null && Model.Reviews.Count > 0)
 {
     <h2>Other Reviews</h2>
