@@ -28,6 +28,7 @@ namespace SceneSherpa.Controllers
             var media = _context.Media
                 .Where(m => m.Id == id)
                 .Include(media => media.Reviews)
+                .ThenInclude(review => review.User)
                 .FirstOrDefault();
 
             //JK: find current user and pass in their review as a seperate review object, If no one is logged in, pass no user reviews in
@@ -40,10 +41,11 @@ namespace SceneSherpa.Controllers
                     .Include(u => u.ToWatch)
                     .Include(u => u.CurrentWatch)
                     .First();
-                if(media.Reviews.Any(r => r.User == currentUser))
+                ViewData["CurrentUserObject"] = currentUser;
+                if (media.Reviews.Any(r => r.User == currentUser))
                 {
                     ViewData["CurrentUserReview"] = media.Reviews.Where(r => r.User == currentUser).First();
-                    ViewData["CurrentUserObject"] = currentUser;
+                    
                 }
             }
 
