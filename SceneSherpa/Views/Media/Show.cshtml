@@ -1,8 +1,15 @@
 ﻿@model SceneSherpa.Models.Media
 @{
     SceneSherpa.Models.Review currentUserReview = ViewData["CurrentUserReview"] as SceneSherpa.Models.Review;
-    SceneSherpa.Models.User currentUser = ViewData["CurrentUserObject"] as SceneSherpa.Models.User;
+    string userIdUsername = "";
+    string userId = "";
+    if(ViewData["CurrentUserIdUsername"] != null)
+    {
+        userIdUsername = ViewData["CurrentUserIdUsername"] as string;
+        userId = userIdUsername.Split()[0];
+    }
 }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <link href='https://unpkg.com/css.gg@2.0.0/icons/css/more-vertical.css' rel='stylesheet'>
 
 <h1>@Model.Title</h1>
@@ -12,17 +19,17 @@
 <p>Type: @Model.Type</p>
 <br />
 
-<form method="post" action="/Users/@currentUser.Id/@Model.Id/CurrentlyWatch">
+<form method="post" action="/Users/@userId/@Model.Id/CurrentlyWatch">
 <button type="submit">
     Currently Watching
 </button>
 </form>
-<form method="post" action="/Users/@currentUser.Id/@Model.Id/AllWatched">
+<form method="post" action="/Users/@userId/@Model.Id/AllWatched">
     <button type="submit">
         Already Watched
     </button>
 </form>
-<form method="post" action="/Users/@currentUser.Id/@Model.Id/ToWatch">
+<form method="post" action="/Users/@userId/@Model.Id/ToWatch">
     <button type="submit">
         To Watch
     </button>
