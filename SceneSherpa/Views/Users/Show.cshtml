@@ -20,15 +20,21 @@
 
 <hr />
 <h3>Library</h3>
-
+<br />
+<br />
+<h2>Currently Watching:</h2>
 @foreach(var Media in Model.CurrentWatch)
 {
     <p>@Media.Type: @Media.Title <form><button type="submit">DELETE @Media.Title</button></form></p>
 }
+<br />
+<h2>Watched:</h2>
 @foreach (var Media in Model.AllWatched)
 {
     <p>@Media.Type: @Media.Title <form><button type="submit">DELETE @Media.Title</button></form></p>
 }
+<br />
+<h2>Want to watch:</h2>
 @foreach (var Media in Model.ToWatch)
 {
     <p>@Media.Type: @Media.Title <form><button type="submit">DELETE @Media.Title</button></form></p>
