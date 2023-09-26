@@ -242,5 +242,48 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
             return Redirect($"/media/{movieId}");
         }
+        [HttpPost]
+        public IActionResult RemoveFromCurrentWatch(int userId, int mediaId)
+        {
+            // Retrieve the user and the media item
+            var user = _context.Users.Include(u => u.CurrentWatch).FirstOrDefault(u => u.Id == userId);
+            var media = user?.CurrentWatch.FirstOrDefault(m => m.Id == mediaId);
+
+            if (user != null && media != null)
+            {
+                user.CurrentWatch.Remove(media);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Show", new { id = userId });
+        }
+        [HttpPost]
+        public IActionResult RemoveFromAllWatched(int userId, int mediaId)
+        {
+            var user = _context.Users.Include(u => u.AllWatched).FirstOrDefault(u => u.Id == userId);
+            var media = user?.AllWatched.FirstOrDefault(m => m.Id == mediaId);
+
+            if (user != null && media != null)
+            {
+                user.AllWatched.Remove(media);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Show", new { id = userId });
+        }
+        [HttpPost]
+        public IActionResult RemoveFromToWatch(int userId, int mediaId)
+        {
+            var user = _context.Users.Include(u => u.ToWatch).FirstOrDefault(u => u.Id == userId);
+            var media = user?.ToWatch.FirstOrDefault(m => m.Id == mediaId);
+
+            if (user != null && media != null)
+            {
+                user.ToWatch.Remove(media);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Show", new { id = userId });
+        }
     }
 }
