@@ -243,6 +243,7 @@ namespace SceneSherpa.Controllers
             return Redirect($"/media/{movieId}");
         }
         [HttpPost]
+        [Route("/Users/{id:int}/{movieId:int}/CurrentlyWatch")]
         public IActionResult RemoveFromCurrentWatch(int userId, int mediaId)
         {
             // Retrieve the user and the media item
@@ -258,6 +259,7 @@ namespace SceneSherpa.Controllers
             return RedirectToAction("Show", new { id = userId });
         }
         [HttpPost]
+        [Route("/Users/{id:int}/{movieId:int}/AllWatched")]
         public IActionResult RemoveFromAllWatched(int userId, int mediaId)
         {
             var user = _context.Users.Include(u => u.AllWatched).FirstOrDefault(u => u.Id == userId);
@@ -272,6 +274,7 @@ namespace SceneSherpa.Controllers
             return RedirectToAction("Show", new { id = userId });
         }
         [HttpPost]
+        [Route("/Users/{id:int}/{movieId:int}/ToWatch")]
         public IActionResult RemoveFromToWatch(int userId, int mediaId)
         {
             var user = _context.Users.Include(u => u.ToWatch).FirstOrDefault(u => u.Id == userId);
