@@ -13362,6 +13362,7 @@ th {
     color: inherit
 }
 
+
 .liveSearchBar, .liveSearchBar li {
     margin: 0;
     padding: 0;
@@ -13445,4 +13446,19 @@ th {
 :-ms-input-placeholder {
     color: #fff;
 }
+
+.spoiler{
+    background-color: black;
+    color:black;
+}
+.spoiler:hover{
+    all:unset;
+}
+
+.user-reviews{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 /*# sourceMappingURL=bootstrap.min.css.map */

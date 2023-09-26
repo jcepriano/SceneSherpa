@@ -25,5 +25,11 @@ namespace SceneSherpa.Controllers
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View();
         }
+
+        public IActionResult NotFound()
+        {
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+            return View();
+        }
     }
 }

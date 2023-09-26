@@ -93,7 +93,7 @@
             <h4 class="card-title">Rating: @currentUserReview.Rating</h4>
             @if(!string.IsNullOrEmpty(currentUserReview.Content))
             {
-                <p class="card-text">@currentUserReview.Content</p>
+                @Markdown.ParseHtmlString(@currentUserReview.Content)
                 <form method="post" action="/media/@Model.Id/reviews/delete/@currentUserReview.Id">
                     <button type="submit" onclick="return confirm('Are You Sure You Want To Delete Review')">Delete Review</button>
                 </form>
