@@ -26,7 +26,11 @@ public static class Markdown
             .UseAutoLinks()
             .UseGenericAttributes();
         var mdPipeline = builder.Build();
-        return Markdig.Markdown.ToHtml(markdown, mdPipeline);
+        if(markdown != null)
+        {
+            return Markdig.Markdown.ToHtml(markdown, mdPipeline);
+        }
+        return markdown;
     }
 
     public static HtmlString ParseHtmlString(string markdown)
