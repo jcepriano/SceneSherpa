@@ -29,7 +29,7 @@
     {
         <p>
             @media.Type: @media.Title
-            <form method="post" action="/Users/@Model.Id/@media.Id/CurrentlyWatch/Delete">
+            <form method="post" action="/Users/@Model.Id/@media.Id/CurrentlyWatch">
                 <button type="submit">Remove from Currently Watching</button>
             </form>
         </p>
@@ -47,7 +47,7 @@ else
     {
         <p>
             @media.Type: @media.Title
-            <form method="post" action="/Users/@Model.Id/@media.Id/AllWatched/Delete">
+            <form method="post" action="/Users/@Model.Id/@media.Id/AllWatched">
                 <button type="submit">Remove from All Watched</button>
             </form>
         </p>
@@ -65,7 +65,7 @@ else
     {
         <p>
             @media.Type: @media.Title
-            <form method="post" action="/Users/@Model.Id/@media.Id/ToWatch/Delete">
+            <form method="post" action="/Users/@Model.Id/@media.Id/ToWatch">
                 <button type="submit">Remove from To Watch</button>
             </form>
         </p>
