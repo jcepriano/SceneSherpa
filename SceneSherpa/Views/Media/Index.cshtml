@@ -26,9 +26,9 @@
     <ul class="ul-media-card">
         @foreach (var media in Model)
         {
-            <li>
+            <li class="align-card">
                     <div class="card mb-3">
-                        <h3 class="card-header">@media.Title</h3>
+                        <h4 class="card-header">@media.Title</h4>
                         <div class="card-body">
                             <h5 class="card-title">@media.Type</h5>
                         </div>
@@ -39,29 +39,29 @@
                         <div class="card-body">
                             <p class="card-text">@media.Description</p>
                         </div>
-                    <ul class="list-group list-group-flush .list-style-none">
+                    <ul class="list-group list-group-flush">
                                 <li class="list-group-item">@media.ProductionCompany</li>
                                 <li class="list-group-item">@media.AgeRating</li>
+                    </ul>
+                    <ul class="list-style-none list-group-flush">
                             @if(ViewData["CurrentUserIdUsername"] != null)
                             {
                                 <li class="list-index"><strong>Add to a list?</strong></li>
                                 <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/CurrentlyWatch">
-                                <li class="list-index"><button type="submit"><i class="bi bi-eye"></i></button></li>
+                            <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-eye"></i></button></li>
                                 </form>
                                 <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/ToWatch">
-                                <li class="list-index"><button type="submit"><i class="bi bi-bookmark"></i></button></li>
+                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-bookmark"></i></button></li>
                                 </form>
                                 <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/AllWatched">
-                                <li class="list-index"><button type="submit"><i class="bi bi-check-circle"></i></button></li>
+                            <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-check-circle"></i></button></li>
                                 </form>
                             }
                             else
                             {
-                                <form action="/users/login">
-                                    <span>
-                                        <p>Want to add to a list?</p>
-                                        <button class="btn btn-light" type="submit">Log in!</button>
-                                    </span>
+                            <form action="/users/login" class="list-style-none">
+                            <li class="list-index-footer"><p><strong>Want to add to a list?</strong></p></li>
+                                    <li class="list-index-footer"><button class="btn btn-light no-border login-btn" type="submit">Log in!</button></li>
                                 </form>
                             }
                     </ul>

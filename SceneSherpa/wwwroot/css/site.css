@@ -4661,6 +4661,11 @@ textarea.form-control-lg {
             border-top: 0
         }
 
+.align-card {
+    width: 450px !important;
+    height: 900px !important;
+}
+
 .media-index {
     display: inline-grid;
     grid-template-columns: auto auto auto;
@@ -4669,7 +4674,7 @@ textarea.form-control-lg {
 
 .movie-index-card {
     width: 450px !important;
-    height: 700px !important;
+    height: 900px !important;
     padding-right: 0px;
     margin-bottom: auto;
 }
@@ -4680,13 +4685,33 @@ textarea.form-control-lg {
     column-gap: 30px;
     row-gap: 30px;
     grid-template-columns: auto auto auto;
+    padding-left: 0px;
+    margin-left: 0px;
 }
 
 .list-style-none {
-    display: inline-grid;
+    display: inline-flex !important;
     list-style: none !important;
-    column-gap: 5px !important;
-    row-gap: 5px !important;
+    flex-flow: row wrap;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-left: 15px;
+    padding-right: 0px;
+    float: left;
+}
+
+.no-border {
+    border: none;
+    background-color: transparent;
+}
+
+.login-btn{
+    border: none;
+    border-radius: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .list-index-form {
@@ -4696,6 +4721,16 @@ textarea.form-control-lg {
     float: left;
     text-align: left;
 }
+
+.list-index{
+    padding-right: 10px;
+}
+
+    .list-index-footer{
+        padding-right: 10px;
+        margin-right: 0px;
+        margin-top: 5px;
+    }
 
 .card-body {
     flex: 1 1 auto;
