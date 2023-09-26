@@ -1,18 +1,36 @@
-﻿using Microsoft.AspNetCore.Html;
+﻿using Markdig;
+
+using Microsoft.AspNetCore.Html;
 using Westwind.Web.Markdown.MarkdownParser;
 public static class Markdown
 {
-    public static string Parse(string markdown, bool usePragmaLines = false, bool forceReload = false)
+    public static string Parse(string markdown)
     {
-        if (string.IsNullOrEmpty(markdown))
-            return "";
-
-        var parser = MarkdownParserFactory.GetParser(usePragmaLines, forceReload);
-        return parser.Parse(markdown);
+        var builder = new MarkdownPipelineBuilder();
+        builder.Extensions.Insert(0, new SpoilerContainerExtension());
+        builder.UseAbbreviations()
+            .UseAutoIdentifiers()
+            .UseCitations()
+            .UseDefinitionLists()
+            .UseEmphasisExtras()
+            .UseFigures()
+            .UseFooters()
+            .UseFootnotes()
+            .UseGridTables()
+            .UseMathematics()
+            .UseMediaLinks()
+            .UsePipeTables()
+            .UseListExtras()
+            .UseTaskLists()
+            .UseDiagrams()
+            .UseAutoLinks()
+            .UseGenericAttributes();
+        var mdPipeline = builder.Build();
+        return Markdig.Markdown.ToHtml(markdown, mdPipeline);
     }
 
-    public static HtmlString ParseHtmlString(string markdown, bool usePragmaLines = false, bool forceReload = false)
+    public static HtmlString ParseHtmlString(string markdown)
     {
-        return new HtmlString(Parse(markdown, usePragmaLines, forceReload));
+        return new HtmlString(Parse(markdown));
     }
 }

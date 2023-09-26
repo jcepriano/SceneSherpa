@@ -35,6 +35,7 @@ namespace SceneSherpa.Controllers
         public IActionResult Update(int mediaId, Review review, int reviewId)
         {
             review.Id = reviewId;
+            review.UpdatedAt = DateTime.Now.ToUniversalTime();
             review.Content = Markdown.Parse(review.Content);
             _context.Reviews.Update(review);
             _context.SaveChanges();
