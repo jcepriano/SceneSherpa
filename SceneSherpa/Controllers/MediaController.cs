@@ -40,10 +40,11 @@ namespace SceneSherpa.Controllers
                     .Include(u => u.ToWatch)
                     .Include(u => u.CurrentWatch)
                     .First();
-                if(media.Reviews.Any(r => r.User == currentUser))
+                ViewData["CurrentUserObject"] = currentUser;
+                if (media.Reviews.Any(r => r.User == currentUser))
                 {
                     ViewData["CurrentUserReview"] = media.Reviews.Where(r => r.User == currentUser).First();
-                    ViewData["CurrentUserObject"] = currentUser;
+                    
                 }
             }
 
