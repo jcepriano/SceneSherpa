@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Markdig;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using SceneSherpa.DataAccess;
@@ -34,6 +35,7 @@ namespace SceneSherpa.Controllers
         public IActionResult Update(int mediaId, Review review, int reviewId)
         {
             review.Id = reviewId;
+            review.Content = Markdown.Parse(review.Content);
             _context.Reviews.Update(review);
             _context.SaveChanges();
 
@@ -57,6 +59,7 @@ namespace SceneSherpa.Controllers
                 .Include(m => m.Reviews)
                 .First();
             review.CreatedAt = DateTime.Now.ToUniversalTime();
+            review.Content = Markdown.Parse(review.Content);
             media.Reviews.Add(review);
             _context.SaveChanges();
             return Redirect($"/Media/{mediaId}");
