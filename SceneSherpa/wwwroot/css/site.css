@@ -4705,6 +4705,30 @@ textarea.form-control-lg {
     background-color: transparent;
 }
 
+.about {
+    width: 100%;
+}
+
+.about-ul {
+    padding-bottom: 25px;
+}
+
+.about-li {
+    padding-top: 25px;
+}
+
+.about-footer {
+    margin-top: 25px;
+    padding-bottom: 0px !important;
+    margin-bottom: 0px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.about-header {
+    padding-top: 50px;
+}
+
 .login-btn{
     border: none;
     border-radius: 20px;
