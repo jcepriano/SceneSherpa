@@ -4729,6 +4729,16 @@ textarea.form-control-lg {
     padding-top: 50px;
 }
 
+.no-padding {
+    padding-bottom: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.no-padding p {
+    padding-bottom: 0px !important;
+    margin-bottom: 0px !important;
+}
+
 .login-btn{
     border: none;
     border-radius: 20px;

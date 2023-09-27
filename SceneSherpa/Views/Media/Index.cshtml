@@ -70,8 +70,8 @@
                                 {
                                     count++;
 
-                                    <li>[@e.Rating] <strong class="link-body-emphasis"><a href="/Users/@e.User.Id">@e.User.Username</a>:</strong> </li>
-                                    <li>@Markdown.ParseHtmlString(e.Content)</li>
+                                    <li class="no-padding">[@e.Rating] <strong class="link-body-emphasis"><a href="/Users/@e.User.Id">@e.User.Username</a>:</strong> </li>
+                                    <li class="no-padding">@Markdown.ParseHtmlString(e.Content)</li>
 
                                     if (count == 2)
                                     {
