@@ -5,12 +5,29 @@
 
     userObj.AddRange(currentUsernameId.Split());
 }
-@if(Model != null)
+@if (Model != null)
 {
-    <h1>Name: @Model.Name</h1>
-    <h1>Age: @Model.Age</h1>
-    <h1>Username: @Model.Username</h1>
-    <h1>Email: @Model.Email</h1>
+    <div class="nav-container">
+        <div id="userinfo">
+            <h1>Name: @Model.Name</h1>
+            <h1>Age: @Model.Age</h1>
+            <h1>Username: @Model.Username</h1>
+            <h1>Email: @Model.Email</h1>
+        </div>
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Settings</a>
+            <div class="dropdown-menu" style="">
+                <h6 class="dropdown-header">Options</h6>
+                <form action="/Users/@Model.Id/Delete" method="post">
+                    <button "submit" onclick="return confirm('Are You Sure You Want To Delete Profile For @Model.Name?')">DELETE @Model.Username</button>
+                </form>
+                <form action="/Users/@Model.Id/Edit">
+                    <button type="submit">EDIT @Model.Username</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     <!--    <form action="/Users/@Model.Id/Delete" method="post">
         <button "submit" onclick="return confirm('Are You Sure You Want To Delete Profile For @Model.Name?')">DELETE @Model.Username</button>
@@ -20,24 +37,6 @@
     </form>-->
 
 
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Settings</a>
-        <div class="dropdown-menu" style="">
-            <h6 class="dropdown-header">Options</h6>
-            <form action="/Users/@Model.Id/Delete" method="post">
-                <button "submit" onclick="return confirm('Are You Sure You Want To Delete Profile For @Model.Name?')">DELETE @Model.Username</button>
-            </form>
-            <!--Can add more options here, add the link to href, and content between ><  -->
-            <!--<a class="dropdown-item" href="#"></a>
-            <a class="dropdown-item" href="#"></a>-->
-            <form action="/Users/@Model.Id/Edit">
-                <button type="submit">EDIT @Model.Username</button>
-            </form>
-            <div class="dropdown-divider"></div>
-        </div>
-
-
-    </li>
 
 
     <hr />
@@ -126,6 +125,22 @@
 
         h1 {
             text-align: center;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+        }
+
+        .dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+
+        #userinfo {
+            float: left;
+            margin-right: 220px; /* Adjust margin to provide spacing between dropdown and user info */
         }
     </style>
 }
