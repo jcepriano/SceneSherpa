@@ -30,9 +30,10 @@ namespace SceneSherpa.Controllers
                 .Include(media => media.Reviews)
                 .ThenInclude(review => review.User)
                 .FirstOrDefault();
+            ViewBag.MediaList = _context.Media.ToList();
 
             //JK: find current user and pass in their review as a seperate review object, If no one is logged in, pass no user reviews in
-            if(Request.Cookies["CurrentUserIdUsername"] != null)
+            if (Request.Cookies["CurrentUserIdUsername"] != null)
             {
                 var currentUsername = Request.Cookies["CurrentUserIdUsername"].Split()[1];
                 var currentUser = _context.Users

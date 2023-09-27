@@ -18,12 +18,14 @@ namespace SceneSherpa.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.MediaList = _context.Media.ToList();
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View(_context.Users.ToList());
         }
 
         public IActionResult New()
         {
+            ViewBag.MediaList = _context.Media.ToList();
             ViewData["ErrorMessage"] = TempData["ErrorMessage"];
             return View();
         }
@@ -31,6 +33,7 @@ namespace SceneSherpa.Controllers
         [HttpPost]
         public IActionResult Index(User user)
         {
+            ViewBag.MediaList = _context.Media.ToList();
             //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
             user.Password = user.ReturnEncryptedString(user.Password);
 
@@ -55,6 +58,7 @@ namespace SceneSherpa.Controllers
         [Route("/users/login")]
         public IActionResult LoginForm()
         {
+            ViewBag.MediaList = _context.Media.ToList();
             ViewData["FailedLogin"] = TempData["FailedLogin"];
             return View();
         }
@@ -84,7 +88,8 @@ namespace SceneSherpa.Controllers
         [Route("/users/{id:int}/Logout")]
         public IActionResult Logout(int id)
         {
-            if(id != null)
+            ViewBag.MediaList = _context.Media.ToList();
+            if (id != null)
             {
                 Response.Cookies.Delete("CurrentUserIdUsername");
             }
@@ -95,6 +100,7 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}")]
         public IActionResult Show(int id)
         {
+            ViewBag.MediaList = _context.Media.ToList();
             var user = _context.Users.Include(u => u.CurrentWatch).Include(u => u.AllWatched).Include(u => u.ToWatch)
             .FirstOrDefault(u => u.Id == id); ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View(user);
@@ -103,6 +109,7 @@ namespace SceneSherpa.Controllers
         [Route("users/{id:int}/edit")]
         public IActionResult Edit(int id)
         {
+            ViewBag.MediaList = _context.Media.ToList();
             var user = _context.Users.Find(id);
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             ViewData["TakenError"] = TempData["TakenError"];

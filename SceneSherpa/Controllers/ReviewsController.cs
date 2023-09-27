@@ -24,6 +24,7 @@ namespace SceneSherpa.Controllers
         [Route("media/{id:int}/reviews/{reviewId:int}")]
         public IActionResult Edit(int reviewId)
         {
+            ViewBag.MediaList = _context.Media.ToList();
             var review = _context.Reviews.Where(r => r.Id == reviewId).Include(r => r.Media).First();
 
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
@@ -34,6 +35,7 @@ namespace SceneSherpa.Controllers
         [Route("media/{mediaId:int}/reviews/{reviewId:int}")]
         public IActionResult Update(int mediaId, Review review, int reviewId)
         {
+            ViewBag.MediaList = _context.Media.ToList();
             review.Id = reviewId;
             review.UpdatedAt = DateTime.Now.ToUniversalTime();
             review.Content = Markdown.Parse(review.Content);
@@ -69,6 +71,7 @@ namespace SceneSherpa.Controllers
         [Route("/Media/{mediaId:int}/Reviews/New")]
         public IActionResult New(int mediaId)
         {
+            ViewBag.MediaList = _context.Media.ToList();
             var media = _context.Media.Where(m => m.Id == mediaId).Include(m => m.Reviews).First();
 
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];

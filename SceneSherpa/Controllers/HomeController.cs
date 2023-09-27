@@ -16,18 +16,21 @@ namespace SceneSherpa.Controllers
         }
         public IActionResult About()
         {
+            ViewBag.MediaList = _context.Media.ToList();
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View();
         }
 
         public IActionResult Privacy()
         {
+            ViewBag.MediaList = _context.Media.ToList();
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View();
         }
 
         public IActionResult NotFound()
         {
+            ViewBag.MediaList = _context.Media.ToList();
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View();
         }
