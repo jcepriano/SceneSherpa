@@ -56,8 +56,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="About">About</a>
                         </li>
-                        
-                        <li class="force-right">
+                        <li class=" nav-item force-right">
                             <form class="d-flex" id="live-search">
                                 <button class="btn btn-light my-2 my-sm-0" type="submit">Search</button>
                                 <input class="form-control force-right" id="filter" type="search" placeholder="Start typing...">
@@ -76,7 +75,7 @@
                         </li>
                             @if (ViewData["CurrentUserIdUsername"] != null)
                             {
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown force-right">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@CurrentUser[1]</a>
                                 <div class="dropdown-menu" style="">
                                     <h6 class="dropdown-header">Options</h6>
@@ -87,8 +86,6 @@
                                     <a class="dropdown-item" href="/users/@CurrentUser[0]/Logout" onclick="return confirm('Are You Sure You Want To Log Out?')">Log Out</a>
                                     <div class="dropdown-divider"></div>
                                 </div>
-
-
                             </li>
                             }
                         <li>

@@ -4683,7 +4683,7 @@ textarea.form-control-lg {
     list-style: none;
     display: inline-grid;
     column-gap: 30px;
-    row-gap: 30px;
+    row-gap: 120px;
     grid-template-columns: auto auto auto;
     padding-left: 0px;
     margin-left: 0px;
@@ -4703,6 +4703,40 @@ textarea.form-control-lg {
 .no-border {
     border: none;
     background-color: transparent;
+}
+
+.about {
+    width: 100%;
+}
+
+.about-ul {
+    padding-bottom: 25px;
+}
+
+.about-li {
+    padding-top: 25px;
+}
+
+.about-footer {
+    margin-top: 25px;
+    padding-bottom: 0px !important;
+    margin-bottom: 0px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.about-header {
+    padding-top: 50px;
+}
+
+.no-padding {
+    padding-bottom: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.no-padding p {
+    padding-bottom: 0px !important;
+    margin-bottom: 0px !important;
 }
 
 .login-btn{

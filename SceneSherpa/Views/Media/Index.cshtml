@@ -31,7 +31,7 @@
                     <div class="card mb-3">
                         <h4 class="card-header">@media.Title</h4>
                         <div class="card-body">
-                            <h5 class="card-title">@media.Type</h5>
+                            <h5 class="card-title">@media.Type  |  @media.ProductionCompany</h5>
                         </div>
                         <div class="img-container">
                         <a href="/media/@media.Id"><img src="@media.ImageURL" class="img-fluid" /></a>
@@ -40,10 +40,6 @@
                         <div class="card-body">
                             <p class="card-text">@media.Description</p>
                         </div>
-                    <ul class="list-group list-group-flush">
-                                <li class="list-group-item">@media.ProductionCompany</li>
-                                <li class="list-group-item">@media.AgeRating</li>
-                    </ul>
                     <ul class="list-style-none list-group-flush">
                             @if(ViewData["CurrentUserIdUsername"] != null)
                             {
@@ -67,19 +63,29 @@
                             }
                     </ul>
                         <div class="card-footer text-muted">
-                        @foreach (var e in media.Reviews)
-                        {
-                            count++;
-                            <ul class="user-reviews">
-                                <li>[@e.Rating] <strong class="link-body-emphasis"><a href="/Users/@e.User.Id">@e.User.Username</a>:</strong> </li>
-                                <li>@Markdown.ParseHtmlString(e.Content)</li>
-                            </ul>
-                            if (count == 2)
+                        <ul class="user-reviews">
+                            @if(media.Reviews != null)
                             {
-                                break;
+                                @foreach (var e in media.Reviews)
+                                {
+                                    count++;
+
+                                    <li class="no-padding">[@e.Rating] <strong class="link-body-emphasis"><a href="/Users/@e.User.Id">@e.User.Username</a>:</strong> </li>
+                                    <li class="no-padding">@Markdown.ParseHtmlString(e.Content)</li>
+
+                                    if (count == 2)
+                                    {
+                                        break;
+                                    }
+                                }
                             }
-                        }
-                        </div>
+                            @if(media.Reviews.Count() == 0)
+                            {
+                                <li>There are currently no reviews for this @media.Type.</li>
+                                <li>Ask a friend to leave a review!</li>
+                            }
+                        </ul>
+                    </div>
                     </div>
             </li>
         }
