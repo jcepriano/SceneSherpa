@@ -12,28 +12,29 @@
     <div class="shape"></div>
 </div>
 <div class="edit-account">
-    <form class="edit-account login" method="post" action="/users/@Model.Id">
-    <h3>Edit your Account</h3>
+    <form class="user-edit login" method="post" action="/users/@Model.Id">
+        <h3>Edit your Account</h3>
 
-    <label for="name" class="login-form-label">Name</label>
-    <input type="text" id="name" class="login-form-input" name="Name" required value="@Model.Name">
+        <label for="name" class="login-form-label">Name</label>
+        <input type="text" id="name" class="login-form-input" name="Name" required value="@Model.Name">
 
-    <label for="username" class="login-form-label">Username</label>
-    <input type="text" id="username" class="login-form-input" name="Username" required value="@Model.Username">
+        <label for="username" class="login-form-label">Username</label>
+        <input type="text" id="username" class="login-form-input" name="Username" required value="@Model.Username">
 
-    <label for="email" class="login-form-label">Email</label>
-    <input type="email" id="email" class="login-form-input" name="Email" required value="@Model.Email">
+        <label for="email" class="login-form-label">Email</label>
+        <input type="email" id="email" class="login-form-input" name="Email" required value="@Model.Email">
 
-    <label for="age" class="login-form-label">Age</label>
-    <input type="text" id="age" class="login-form-input" required name="Age" value="@Model.Age">
+        <label for="age" class="login-form-label">Age</label>
+        <input type="text" id="age" class="login-form-input" required name="Age" value="@Model.Age">
 
         @if (error != null)
         {
             <p class="error" style="color: salmon; position: absolute; margin-bottom: -10px;">@error</p>
         }
 
-    <button class="login-button" type="submit">Confirm Changes</button>
-</form>
+        <button class="login-button" type="submit">Confirm Changes</button>
+        <button class="login-button" onclick="window.location.href='https://localhost:7230/Users/@Model.Id';">Discard Changes</button>
+    </form>
 </div>
 
 <!--
@@ -62,10 +63,10 @@
         <input type="hidden" id="password" name="password" value="@Model.Password" />
     </div>
     <br />
-    @if(error != null)
-    {
-        <h4 style="color: red">@error</h4>
-    }
+@if (error != null)
+{
+            <h4 style="color: red">@error</h4>
+}
 
     <button type="submit">Update Profile</button>
 
