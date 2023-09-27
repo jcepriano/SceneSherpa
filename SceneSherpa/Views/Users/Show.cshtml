@@ -13,7 +13,7 @@
     <h1>Email: @Model.Email</h1>
 
     <form action="/Users/@Model.Id/Delete" method="post">
-        <button type="submit">DELETE @Model.Username</button>
+        <button "submit" onclick="return confirm('Are You Sure You Want To Delete Profile For @Model.Name?')">DELETE @Model.Username</button>
     </form>
     <form action="/Users/@Model.Id/Edit">
         <button type="submit">EDIT @Model.Username</button>
@@ -24,57 +24,88 @@
     <h3>Library</h3>
     <br />
     <br />
-    <h2>Currently Watching</h2>
-    @if (Model.CurrentWatch != null && Model.CurrentWatch.Any())
-    {
-        foreach (var media in Model.CurrentWatch)
+    <div id="leftbox">
+        <h2>Currently Watching</h2>
+        @if (Model.CurrentWatch != null && Model.CurrentWatch.Any())
         {
-            <p>
-                @media.Type: @media.Title
-                <form method="post" action="/Users/@Model.Id/@media.Id/CurrentlyWatch/Delete">
-                    <button type="submit">Remove from Currently Watching</button>
-                </form>
-            </p>
+            foreach (var media in Model.CurrentWatch)
+            {
+                <p>
+                    @media.Type: @media.Title
+                    <form method="post" action="/Users/@Model.Id/@media.Id/CurrentlyWatch/Delete">
+                        <button type="submit">Remove from Currently Watching</button>
+                    </form>
+                </p>
+            }
         }
-    }
-    else
-    {
-        <p>No media currently being watched.</p>
-    }
+        else
+        {
+            <p>No media currently being watched.</p>
+        }
+    </div>
 
-    <h2>All Watched</h2>
-    @if (Model.AllWatched != null && Model.AllWatched.Any())
-    {
-        foreach (var media in Model.AllWatched)
+    <div id="middlebox">
+        <h2>All Watched</h2>
+        @if (Model.AllWatched != null && Model.AllWatched.Any())
         {
-            <p>
-                @media.Type: @media.Title
-                <form method="post" action="/Users/@Model.Id/@media.Id/AllWatched/Delete">
-                    <button type="submit">Remove from All Watched</button>
-                </form>
-            </p>
+            foreach (var media in Model.AllWatched)
+            {
+                <p>
+                    @media.Type: @media.Title
+                    <form method="post" action="/Users/@Model.Id/@media.Id/AllWatched/Delete">
+                        <button type="submit">Remove from All Watched</button>
+                    </form>
+                </p>
+            }
         }
-    }
-    else
-    {
-        <p>No media in All Watched list.</p>
-    }
+        else
+        {
+            <p>No media in All Watched list.</p>
+        }
+    </div>
 
-    <h2>To Watch</h2>
-    @if (Model.ToWatch != null && Model.ToWatch.Any())
-    {
-        foreach (var media in Model.ToWatch)
+    <div id="rightbox">
+        <h2>To Watch</h2>
+        @if (Model.ToWatch != null && Model.ToWatch.Any())
         {
-            <p>
-                @media.Type: @media.Title
-                <form method="post" action="/Users/@Model.Id/@media.Id/ToWatch/Delete">
-                    <button type="submit">Remove from To Watch</button>
-                </form>
-            </p>
+            foreach (var media in Model.ToWatch)
+            {
+                <p>
+                    @media.Type: @media.Title
+                    <form method="post" action="/Users/@Model.Id/@media.Id/ToWatch/Delete">
+                        <button type="submit">Remove from To Watch</button>
+                    </form>
+                </p>
+            }
         }
-    }
-    else
-    {
-        <p>No media in To Watch list.</p>
-    }
+        else
+        {
+            <p>No media in To Watch list.</p>
+        }
+    </div>
+
+    <style>
+        #leftbox {
+            float: left;
+            width: 25%;
+            height: 280px;
+        }
+
+        #middlebox {
+            float: left;
+            width: 40%;
+            margin-left: 14%;
+            height: 280px;
+        }
+
+        #rightbox {
+            float: right;
+            width: 20%;
+            height: 280px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
 }
