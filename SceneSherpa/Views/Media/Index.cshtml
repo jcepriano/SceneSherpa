@@ -1,6 +1,6 @@
 ﻿<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <link href='https://unpkg.com/css.gg@2.0.0/icons/css/more-vertical.css' rel='stylesheet'>
-
+<link href="~/css/forms.css"></link>
 @model IEnumerable<SceneSherpa.Models.Media>
 @{
     List<string> userObj = new List<string>();
@@ -48,7 +48,7 @@
 
                             <li class="list-index"><strong>Add to a list?</strong></li>
 
-
+                         
                             if (!user.CurrentWatch.Contains(media))
                             {
                                 <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/CurrentlyWatch">
@@ -110,7 +110,7 @@
                                 {
                                     count++;
 
-                                    <li class="no-padding">[@e.Rating] <strong class="link-body-emphasis"><a href="/Users/@e.User.Id">@e.User.Username</a>:</strong> </li>
+                                    <li class="no-padding"><a>[@e.Rating]</a><strong class="link-body-emphasis"><a href="/Users/@e.User.Id">@e.User.Username:</a></strong> </li>
                                     <li class="no-padding">@Markdown.ParseHtmlString(e.Content)</li>
 
                                     if (count == 2)
@@ -121,8 +121,8 @@
                             }
                             @if (media.Reviews.Count() == 0)
                             {
-                                <li>There are currently no reviews for this @media.Type.</li>
-                                <li>Ask a friend to leave a review!</li>
+                                <li class="no-padding">There are currently no reviews for this @media.Type.</li>
+                                <li class="no-padding">Ask a friend to leave a review!</li>
                             }
                         </ul>
                     </div>
