@@ -27,6 +27,7 @@ namespace SceneSherpa.Controllers
                 ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
                 ViewBag.MediaList = _context.Media.ToList();
             }
+            ViewBag.MediaList = _context.Media.ToList();
             return View(media);
         }
 

@@ -13528,7 +13528,7 @@ th {
 
 .navbar li {
     color: white !important;
-
+}
 .bi-eye {
     color: white;
 }
@@ -13554,4 +13554,8 @@ th {
 
 }
 
+.lg-margin-right {
+    padding-right: 0px;
+    margin-right: 300px;
+}
 /*# sourceMappingURL=bootstrap.min.css.map */

@@ -55,7 +55,7 @@
                             <a class="nav-link text-white" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-controller="Home" asp-action="About">About</a>
+                            <a class="nav-link text-white lg-margin-right" asp-controller="Home" asp-action="About">About</a>
                         </li>
                         <li class=" nav-item force-right">
                             <form autocomplete="off" class="d-flex" id="live-search">
@@ -77,7 +77,7 @@
                             @if (ViewData["CurrentUserIdUsername"] != null)
                             {
                             <li class="nav-item dropdown force-right">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@CurrentUser[1]</a>
+                                <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@CurrentUser[1]</a>
                                 <div class="dropdown-menu" style="">
                                     <h6 class="dropdown-header">Options</h6>
                                     <a class="dropdown-item" href="/Users/@CurrentUser[0]">My Profile</a>
