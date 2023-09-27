@@ -7,15 +7,15 @@
         $("ul.liveSearchBar li").each(function () {
             // Get the text content of the li element
             var listItemText = $(this).text().toLowerCase();
-            
+
             // If the list item contains the search query, show it; otherwise, hide it
-            
+
 
             if (listItemText.includes(filter)) {
-                
+
                 $(this).show();
             } else {
-                
+
                 $(this).hide();
             }
         });

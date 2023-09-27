@@ -4005,7 +4005,7 @@ textarea.form-control-lg {
     padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
     font-size: var(--bs-nav-link-font-size);
     font-weight: var(--bs-nav-link-font-weight);
-    color: var(--bs-nav-link-color);
+    color: white;
     text-decoration: none;
     background: 0 0;
     border: 0;
@@ -4147,7 +4147,9 @@ textarea.form-control-lg {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x)
+    padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
+    background-color: rgb(3, 17, 28) !important;
+    color: white !important;
 }
 
     .navbar > .container, .navbar > .container-fluid, .navbar > .container-lg, .navbar > .container-md, .navbar > .container-sm, .navbar > .container-xl, .navbar > .container-xxl {
@@ -4164,7 +4166,10 @@ textarea.form-control-lg {
     font-size: var(--bs-navbar-brand-font-size);
     color: var(--bs-navbar-brand-color);
     text-decoration: none;
-    white-space: nowrap
+    white-space: nowrap;
+    background-color: black;
+    border-radius: 50px;
+    padding: 7px;
 }
 
     .navbar-brand:focus, .navbar-brand:hover {
@@ -4182,7 +4187,8 @@ textarea.form-control-lg {
     flex-direction: column;
     padding-left: 0;
     margin-bottom: 0;
-    list-style: none
+    list-style: none;
+    color: white !important;
 }
 
     .navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
@@ -13316,7 +13322,8 @@ textarea.form-control-lg {
     }
 
 .nav-item {
-    margin-right: 2rem
+    margin-right: 2rem;
+    color: white !important;
 }
 
 .btn {
@@ -13441,6 +13448,8 @@ th {
 
 .search-company {
     font-size: 10px;
+    padding-bottom: 0px;
+    background-color: rgb(3, 17, 28);
 }
 
 .force-right {
@@ -13451,7 +13460,7 @@ th {
 
 .liveSearchBar {
     
-    
+    background-color: rgb(3, 17, 28);
     margin: 0;
     padding-left: 10px;
     padding-right: 10px;
@@ -13505,6 +13514,21 @@ th {
     filter: drop-shadow(4px 4px 4px black) !important;
 }
 
+
+.nav-logo {
+    padding-top: 20px;
+    padding-bottom: 21px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 70px;
+    background-color: rgb(3, 17, 28);
+    border: 2px;
+    margin-right: 70px;
+}
+
+.navbar li {
+    color: white !important;
+
 .bi-eye {
     color: white;
 }
@@ -13527,6 +13551,7 @@ th {
 
 .bi-check-circle-fill {
     color: gold;
+
 }
 
 /*# sourceMappingURL=bootstrap.min.css.map */

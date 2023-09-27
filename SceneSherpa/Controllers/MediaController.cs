@@ -17,9 +17,9 @@ namespace SceneSherpa.Controllers
             var media = _context.Media.Include(e => e.Reviews).ThenInclude(r => r.User);
             var currentUsernameId = Request.Cookies["CurrentUserIdUsername"];
 
-            List<string> userObj = new List<string>();
             if(currentUsernameId != null)
             {
+                List<string> userObj = new List<string>();
                 userObj.AddRange(currentUsernameId.Split());
 
                 var user = _context.Users.Find(Int32.Parse(userObj[0]));
