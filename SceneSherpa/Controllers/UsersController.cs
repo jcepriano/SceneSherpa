@@ -177,22 +177,59 @@ namespace SceneSherpa.Controllers
         }
         //------------------------------------------------------------
 
+        //[HttpPost]
+        //[Route("/Users/{id:int}/Delete")]
+        //public IActionResult Delete(int id)
+        //{
+        //    //Grab user from context with all lists included
+        //    var user = _context.Users
+        //        .Where(u => u.Id == id)
+        //        .Include(u => u.AllWatched)
+        //        .Include(u => u.CurrentWatch)
+        //        .Include(u => u.ToWatch)
+        //        .First();
+        //    _context.Users.Remove(user);
+        //    _context.SaveChanges();
+
+        //    Response.Cookies.Delete("CurrentUserIdUsername");
+        //    return Redirect("/media");
+        //}
+
         [HttpPost]
         [Route("/Users/{id:int}/Delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, string password)
         {
-            //Grab user from context with all lists included
             var user = _context.Users
                 .Where(u => u.Id == id)
                 .Include(u => u.AllWatched)
                 .Include(u => u.CurrentWatch)
                 .Include(u => u.ToWatch)
                 .First();
-            _context.Users.Remove(user);
-            _context.SaveChanges();
 
-            Response.Cookies.Delete("CurrentUserIdUsername");
-            return Redirect("/media");
+            if (password != null)
+            {
+                if (user.Password == user.ReturnEncryptedString(password))
+                {
+                    _context.Users.Remove(user);
+                    _context.SaveChanges();
+                    Response.Cookies.Delete("CurrentUserIdUsername");
+
+                    return Redirect("/media");
+                }
+            }
+            else
+            {
+                TempData["Incorrect"] = $"That password does not match the password for {user.Username}.";
+            }
+            return Redirect($"/Users/{user.Id}/ConfirmPassword");
+        }
+
+        [Route("/Users/{id:int}/ConfirmPassword")]
+        public IActionResult ConfirmPassword(int id)
+        {
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+            ViewData["Incorrect"] = TempData["Incorrect"];
+            return View();
         }
 
         //jk: Add or remove from users allwatched list
