@@ -398,5 +398,60 @@ namespace SceneSherpa.Controllers
 
         //    return RedirectToAction("Show", new { id = userId });
         //}
+        //jk: Add or remove from users allwatched list
+        [HttpPost]
+        [Route("/Users/{id:int}/{movieId:int}/Button/AllWatched")]
+        public IActionResult AllWatchedButton(int id, int movieId)
+        {
+            var user = _context.Users.Find(id);
+            var movie = _context.Media.Find(movieId);
+            if (user.AllWatched.Contains(movie))
+            {
+                user.AllWatched.Remove(movie);
+            }
+            else
+            {
+                user.AllWatched.Add(movie);
+            }
+            _context.SaveChanges();
+            return Redirect("/media");
+        }
+        //jk: Add or remove from users towatch list
+        [HttpPost]
+        [Route("/Users/{id:int}/{movieId:int}/Button/ToWatch")]
+        public IActionResult ToWatchButton(int id, int movieId)
+        {
+            var user = _context.Users.Find(id);
+            var movie = _context.Media.Find(movieId);
+            if (user.ToWatch.Contains(movie))
+            {
+                user.ToWatch.Remove(movie);
+            }
+            else
+            {
+                user.ToWatch.Add(movie);
+            }
+            _context.SaveChanges();
+            return Redirect("/media");
+        }
+        //jk: Add or remove from users CurrentlyWatch list
+        [HttpPost]
+        [Route("/Users/{id:int}/{movieId:int}/Button/CurrentlyWatch")]
+        public IActionResult CurrentlyWatchButton(int id, int movieId)
+        {
+            var user = _context.Users.Find(id);
+            var movie = _context.Media.Find(movieId);
+            if (user.CurrentWatch.Contains(movie))
+            {
+                user.CurrentWatch.Remove(movie);
+            }
+            else
+            {
+                user.CurrentWatch.Add(movie);
+            }
+            _context.SaveChanges();
+            return Redirect("/media");
+        }
+
     }
 }

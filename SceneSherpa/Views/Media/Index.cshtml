@@ -5,12 +5,13 @@
 @{
     List<string> userObj = new List<string>();
     List<string> ReviewContents = new List<string>();
+    SceneSherpa.Models.User user = ViewData["User"] as SceneSherpa.Models.User;
     int count = 0;
 
-    if(ViewData["CurrentUserIdUsername"] != null)
+    if (ViewData["CurrentUserIdUsername"] != null)
     {
         string currentUsernameId = ViewData["CurrentUserIdUsername"] as string;
-        
+
 
         userObj.AddRange(currentUsernameId.Split());
 
@@ -28,43 +29,82 @@
         @foreach (var media in Model)
         {
             <li class="align-card">
-                    <div class="card mb-3">
-                        <h4 class="card-header">@media.Title</h4>
-                        <div class="card-body">
-                            <h5 class="card-title">@media.Type  |  @media.ProductionCompany</h5>
-                        </div>
-                        <div class="img-container">
+                <div class="card mb-3">
+                    <h4 class="card-header">@media.Title</h4>
+                    <div class="card-body">
+                        <h5 class="card-title">@media.Type  |  @media.ProductionCompany</h5>
+                    </div>
+                    <div class="img-container">
                         <a href="/media/@media.Id"><img src="@media.ImageURL" class="img-fluid" /></a>
-                        </div>
-                    
-                        <div class="card-body">
-                            <p class="card-text">@media.Description</p>
-                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="card-text">@media.Description</p>
+                    </div>
                     <ul class="list-style-none list-group-flush">
-                            @if(ViewData["CurrentUserIdUsername"] != null)
+                        @if (ViewData["CurrentUserIdUsername"] != null)
+                        {
+
+
+                            <li class="list-index"><strong>Add to a list?</strong></li>
+
+
+                            if (!user.CurrentWatch.Contains(media))
                             {
-                                <li class="list-index"><strong>Add to a list?</strong></li>
-                                <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/CurrentlyWatch">
-                            <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-eye"></i></button></li>
+                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/CurrentlyWatch">
+                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-eye"></i></button></li>
                                 </form>
-                                <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/ToWatch">
-                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-bookmark"></i></button></li>
-                                </form>
-                                <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/AllWatched">
-                            <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-check-circle"></i></button></li>
-                                </form>
+
                             }
                             else
                             {
+                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/CurrentlyWatch">
+                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-eye-fill"></i></button></li>
+                                </form>
+
+                            }
+
+                            if (!user.ToWatch.Contains(media))
+                            {
+                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/ToWatch">
+                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-bookmark"></i></button></li>
+                                </form>
+
+                            }
+                            else
+                            {
+                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/ToWatch">
+                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-bookmark-fill"></i></button></li>
+                                </form>
+
+                            }
+
+                            if (!user.AllWatched.Contains(media))
+                            {
+                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/AllWatched">
+                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-check-circle"></i></button></li>
+                                </form>
+
+                            }
+                            else
+                            {
+                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/AllWatched">
+                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-check-circle-fill"></i></button></li>
+                                </form>
+
+                            }
+                        }
+                        else
+                        {
                             <form action="/users/login" class="list-style-none">
                             <li class="list-index-footer"><p><strong>Want to add to a list?</strong></p></li>
-                                    <li class="list-index-footer"><button class="btn btn-light no-border login-btn" type="submit">Log in!</button></li>
-                                </form>
-                            }
+                            <li class="list-index-footer"><button class="btn btn-light no-border login-btn" type="submit">Log in!</button></li>
+                            </form>
+                        }
                     </ul>
-                        <div class="card-footer text-muted">
+                    <div class="card-footer text-muted">
                         <ul class="user-reviews">
-                            @if(media.Reviews != null)
+                            @if (media.Reviews != null)
                             {
                                 @foreach (var e in media.Reviews)
                                 {
@@ -79,14 +119,14 @@
                                     }
                                 }
                             }
-                            @if(media.Reviews.Count() == 0)
+                            @if (media.Reviews.Count() == 0)
                             {
                                 <li>There are currently no reviews for this @media.Type.</li>
                                 <li>Ask a friend to leave a review!</li>
                             }
                         </ul>
                     </div>
-                    </div>
+                </div>
             </li>
         }
     </ul>
