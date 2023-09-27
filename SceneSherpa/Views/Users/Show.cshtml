@@ -12,12 +12,32 @@
     <h1>Username: @Model.Username</h1>
     <h1>Email: @Model.Email</h1>
 
-    <form action="/Users/@Model.Id/Delete" method="post">
+    <!--    <form action="/Users/@Model.Id/Delete" method="post">
         <button "submit" onclick="return confirm('Are You Sure You Want To Delete Profile For @Model.Name?')">DELETE @Model.Username</button>
     </form>
     <form action="/Users/@Model.Id/Edit">
         <button type="submit">EDIT @Model.Username</button>
-    </form>
+    </form>-->
+
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Settings</a>
+        <div class="dropdown-menu" style="">
+            <h6 class="dropdown-header">Options</h6>
+            <form action="/Users/@Model.Id/Delete" method="post">
+                <button "submit" onclick="return confirm('Are You Sure You Want To Delete Profile For @Model.Name?')">DELETE @Model.Username</button>
+            </form>
+            <!--Can add more options here, add the link to href, and content between ><  -->
+            <!--<a class="dropdown-item" href="#"></a>
+            <a class="dropdown-item" href="#"></a>-->
+            <form action="/Users/@Model.Id/Edit">
+                <button type="submit">EDIT @Model.Username</button>
+            </form>
+            <div class="dropdown-divider"></div>
+        </div>
+
+
+    </li>
 
 
     <hr />
