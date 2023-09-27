@@ -95,8 +95,8 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}")]
         public IActionResult Show(int id)
         {
-            var user = _context.Users.Find(id);
-            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+            var user = _context.Users.Include(u => u.CurrentWatch).Include(u => u.AllWatched).Include(u => u.ToWatch)
+            .FirstOrDefault(u => u.Id == id); ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View(user);
         }
         
@@ -242,5 +242,120 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
             return Redirect($"/media/{movieId}");
         }
+        [HttpPost]
+        [Route("/Users/{id:int}/{mediaId:int}/CurrentlyWatch/Delete")]
+        public IActionResult RemoveFromCurrentWatch(int Id, int mediaId)
+        {
+            // Retrieve the user and the media item
+            //var user = _context.Users.Include(u => u.CurrentWatch).FirstOrDefault(u => u.Id == userId);
+            var user = _context.Users.Where(u => u.Id == Id).Include(u => u.CurrentWatch).Single();
+            var media = user.CurrentWatch.Where(m => m.Id == mediaId).FirstOrDefault();
+            //var media = _context.Media.Find(mediaId);
+
+            if (user.CurrentWatch.Contains(media))
+            {
+                user.CurrentWatch.Remove(media);
+            }
+            else
+            {
+                user.CurrentWatch.Add(media);
+            }
+            _context.SaveChanges();
+
+            //if (user != null && media != null)
+            //{
+            //    user.CurrentWatch.Remove(media);
+            //    _context.SaveChanges();
+            //}
+
+            return RedirectToAction("Show", new { id = Id });
+        }
+        [HttpPost]
+        [Route("/Users/{id:int}/{mediaId:int}/AllWatched/Delete")]
+        public IActionResult RemoveFromAllWatched(int Id, int mediaId)
+        {
+            // Retrieve the user and the media item
+            //var user = _context.Users.Include(u => u.CurrentWatch).FirstOrDefault(u => u.Id == userId);
+            var user = _context.Users.Where(u => u.Id == Id).Include(u => u.AllWatched).Single();
+            var media = user.AllWatched.Where(m => m.Id == mediaId).FirstOrDefault();
+            //var media = _context.Media.Find(mediaId);
+
+            if (user.AllWatched.Contains(media))
+            {
+                user.AllWatched.Remove(media);
+            }
+            else
+            {
+                user.AllWatched.Add(media);
+            }
+            _context.SaveChanges();
+
+            //if (user != null && media != null)
+            //{
+            //    user.CurrentWatch.Remove(media);
+            //    _context.SaveChanges();
+            //}
+
+            return RedirectToAction("Show", new { id = Id });
+        }
+
+        //[HttpPost]
+        //[Route("/Users/{id:int}/{movieId:int}/AllWatched/Delete")]
+        //public IActionResult RemoveFromAllWatched(int userId, int mediaId)
+        //{
+        //    var user = _context.Users.Include(u => u.AllWatched).FirstOrDefault(u => u.Id == userId);
+        //    var media = user?.AllWatched.FirstOrDefault(m => m.Id == mediaId);
+
+        //    if (user != null && media != null)
+        //    {
+        //        user.AllWatched.Remove(media);
+        //        _context.SaveChanges();
+        //    }
+
+        //    return RedirectToAction("Show", new { id = userId });
+        //}
+        [HttpPost]
+        [Route("/Users/{id:int}/{mediaId:int}/ToWatch/Delete")]
+        public IActionResult RemoveFromToWatch(int Id, int mediaId)
+        {
+            // Retrieve the user and the media item
+            //var user = _context.Users.Include(u => u.CurrentWatch).FirstOrDefault(u => u.Id == userId);
+            var user = _context.Users.Where(u => u.Id == Id).Include(u => u.ToWatch).Single();
+            var media = user.ToWatch.Where(m => m.Id == mediaId).FirstOrDefault();
+            //var media = _context.Media.Find(mediaId);
+
+            if (user.ToWatch.Contains(media))
+            {
+                user.ToWatch.Remove(media);
+            }
+            else
+            {
+                user.ToWatch.Add(media);
+            }
+            _context.SaveChanges();
+
+            //if (user != null && media != null)
+            //{
+            //    user.CurrentWatch.Remove(media);
+            //    _context.SaveChanges();
+            //}
+
+            return RedirectToAction("Show", new { id = Id });
+        }
+        //[HttpPost]
+        //[Route("/Users/{id:int}/{movieId:int}/ToWatch/Delete")]
+        //public IActionResult RemoveFromToWatch(int userId, int mediaId)
+        //{
+        //    var user = _context.Users.Include(u => u.ToWatch).FirstOrDefault(u => u.Id == userId);
+        //    var media = user?.ToWatch.FirstOrDefault(m => m.Id == mediaId);
+
+        //    if (user != null && media != null)
+        //    {
+        //        user.ToWatch.Remove(media);
+        //        _context.SaveChanges();
+        //    }
+
+        //    return RedirectToAction("Show", new { id = userId });
+        //}
     }
 }
