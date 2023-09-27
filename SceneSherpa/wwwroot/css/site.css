@@ -4638,11 +4638,12 @@ textarea.form-control-lg {
     min-width: 0;
     height: auto;
     width: 450px;
-    color: var(--bs-body-color);
+    color: white;
     word-wrap: break-word;
-    background-color: var(--bs-card-bg);
+    background-color: rgba(255,255,255,0.13);
     background-clip: border-box;
-    border: var(--bs-card-border-width) solid var(--bs-card-border-color)
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    filter: drop-shadow(4px 4px 4px black) !important;
 }
 
     .card > hr {
@@ -4743,6 +4744,11 @@ textarea.form-control-lg {
 .no-padding p {
     padding-bottom: 0px !important;
     margin-bottom: 0px !important;
+    color: white;
+}
+.no-padding a{
+    color: white !important;
+    padding-right: 3px;
 }
 
 .login-btn{
@@ -13291,7 +13297,7 @@ textarea.form-control-lg {
 .navbar {
     font-size: .875rem;
     font-weight: 600;
-    text-transform: uppercase
+    text-transform: uppercase; 
 }
 
 .navbar-nav .nav-link {
@@ -13508,6 +13514,7 @@ th {
     filter: drop-shadow(4px 4px 4px black) !important;
 }
 
+
 .nav-logo {
     padding-top: 20px;
     padding-bottom: 21px;
@@ -13521,6 +13528,30 @@ th {
 
 .navbar li {
     color: white !important;
+
+.bi-eye {
+    color: white;
+}
+
+.bi-eye-fill {
+    color: gold;
+}
+
+.bi-bookmark {
+    color: white;
+}
+
+.bi-bookmark-fill {
+    color: gold;
+}
+
+.bi-check-circle {
+    color: white;
+}
+
+.bi-check-circle-fill {
+    color: gold;
+
 }
 
 /*# sourceMappingURL=bootstrap.min.css.map */

@@ -23,13 +23,10 @@ namespace SceneSherpa.Controllers
                 userObj.AddRange(currentUsernameId.Split());
 
                 var user = _context.Users.Find(Int32.Parse(userObj[0]));
-
                 ViewData["User"] = user;
                 ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
                 ViewBag.MediaList = _context.Media.ToList();
             }
-
-            
             return View(media);
         }
 
