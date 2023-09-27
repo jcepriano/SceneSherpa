@@ -18,8 +18,8 @@
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Settings</a>
             <div class="dropdown-menu" style="">
                 <h6 class="dropdown-header">Options</h6>
-                <form action="/Users/@Model.Id/Delete" method="post">
-                    <button "submit" onclick="return confirm('Are You Sure You Want To Delete Profile For @Model.Name?')">DELETE @Model.Username</button>
+                <form action="/Users/@Model.Id/ConfirmPassword">
+                    <button type="submit">DELETE @Model.Username</button>
                 </form>
                 <form action="/Users/@Model.Id/Edit">
                     <button type="submit">EDIT @Model.Username</button>

@@ -129,3 +129,15 @@
 	height: 800px;
 	width: 600px;
 }
+
+.login-short {
+	height: 400px;
+}
+
+.delete-short {
+	height: 450px;
+}
+
+.smaller-padding {
+	margin-top: 20px;
+}
