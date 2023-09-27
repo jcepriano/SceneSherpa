@@ -15,7 +15,14 @@ namespace SceneSherpa.Controllers
         public IActionResult Index()
         {
             var media = _context.Media.Include(e => e.Reviews).ThenInclude(r => r.User);
+            var currentUsernameId = Request.Cookies["CurrentUserIdUsername"];
 
+            List<string> userObj = new List<string>();
+            userObj.AddRange(currentUsernameId.Split());
+            
+            var user = _context.Users.Find(Int32.Parse(userObj[0]));
+
+            ViewData["User"] = user;
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             ViewBag.MediaList = _context.Media.ToList();
             return View(media);
