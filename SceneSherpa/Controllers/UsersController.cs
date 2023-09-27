@@ -217,15 +217,12 @@ namespace SceneSherpa.Controllers
                     return Redirect("/media");
                 }
             }
-            else
-            {
-                TempData["Incorrect"] = $"That password does not match the password for {user.Username}.";
-            }
+            TempData["Incorrect"] = $"That password does not match the password for {user.Username}.";
             return Redirect($"/Users/{user.Id}/ConfirmPassword");
         }
 
         [Route("/Users/{id:int}/ConfirmPassword")]
-        public IActionResult ConfirmPassword(int id)
+        public IActionResult ConfirmPassword()
         {
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             ViewData["Incorrect"] = TempData["Incorrect"];
