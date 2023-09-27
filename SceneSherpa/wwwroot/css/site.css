@@ -13495,4 +13495,8 @@ th {
     margin: 0;
 }
 
+.drop-shadow {
+    filter: drop-shadow(4px 4px 4px black) !important;
+}
+
 /*# sourceMappingURL=bootstrap.min.css.map */
