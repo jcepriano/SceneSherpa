@@ -44,13 +44,13 @@
                             @if(ViewData["CurrentUserIdUsername"] != null)
                             {
                                 <li class="list-index"><strong>Add to a list?</strong></li>
-                                <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/CurrentlyWatch">
+                            <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/CurrentlyWatch">
                             <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-eye"></i></button></li>
                                 </form>
-                                <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/ToWatch">
+                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/ToWatch">
                                 <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-bookmark"></i></button></li>
                                 </form>
-                                <form class=".list-style-none" action="/Users/@userObj[0]/@media.Id/AllWatched">
+                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/AllWatched">
                             <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-check-circle"></i></button></li>
                                 </form>
                             }
