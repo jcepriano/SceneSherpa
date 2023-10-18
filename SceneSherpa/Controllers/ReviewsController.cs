@@ -107,9 +107,17 @@ namespace SceneSherpa.Controllers
 
         [HttpPost]
         [Route("media/{mediaId:int}/reviews/delete/{reviewId:int}")]
-        public IActionResult Delete(int reviewId, int mediaId)
+        public IActionResult Delete(int? reviewId, int mediaId)
         {
+            if (reviewId == null)
+            {
+                return BadRequest();
+            }
             var review = _context.Reviews.Find(reviewId);
+            if (review == null)
+            {
+                return NotFound();
+            }
             _context.Reviews.Remove(review);
             _context.SaveChanges();
 
