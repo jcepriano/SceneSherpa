@@ -108,6 +108,7 @@ namespace SceneSherpa.Controllers
             ViewBag.MediaList = _context.Media.ToList();
             var user = _context.Users.Include(u => u.CurrentWatch).Include(u => u.AllWatched).Include(u => u.ToWatch)
             .FirstOrDefault(u => u.Id == id); ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+
             if (user == null)
             {
                 return NotFound();
@@ -116,13 +117,22 @@ namespace SceneSherpa.Controllers
         }
         
         [Route("users/{id:int}/edit")]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             ViewBag.MediaList = _context.Media.ToList();
             var user = _context.Users.Find(id);
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             ViewData["TakenError"] = TempData["TakenError"];
 
+            if (user == null)
+            {
+                return NotFound();
+            }
             return View(user);
         }
         
