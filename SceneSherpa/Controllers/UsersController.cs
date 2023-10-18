@@ -34,8 +34,7 @@ namespace SceneSherpa.Controllers
         [HttpPost]
         public IActionResult Index(User user)
         {
-            if (ModelState.IsValid)
-            {
+
                 ViewBag.MediaList = _context.Media.ToList();
                 //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
                 user.Password = user.ReturnEncryptedString(user.Password);
@@ -54,8 +53,6 @@ namespace SceneSherpa.Controllers
                 Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
 
                 ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
-
-            }
 
             return Redirect($"/users/{user.Id}");
         }
