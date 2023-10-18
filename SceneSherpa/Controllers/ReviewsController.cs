@@ -59,8 +59,12 @@ namespace SceneSherpa.Controllers
 
         [HttpPost]
         [Route("/Media/{mediaId:int}/Reviews")]
-        public IActionResult Create(int mediaId, Review review)
+        public IActionResult Create(int? mediaId, Review review)
         {
+            if (mediaId == null)
+            {
+                return BadRequest();
+            }
             //Getting Currently Logged in User
             var currentUsername = Request.Cookies["CurrentUserIdUsername"].Split()[1];
             var currentUserId = _context.Users
@@ -73,6 +77,10 @@ namespace SceneSherpa.Controllers
                 .Where(m => m.Id == mediaId)
                 .Include(m => m.Reviews)
                 .First();
+            if (media == null)
+            {
+                return NotFound();
+            }
             review.CreatedAt = DateTime.Now.ToUniversalTime();
             review.Content = Markdown.Parse(review.Content);
             media.Reviews.Add(review);
