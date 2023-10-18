@@ -19,26 +19,14 @@
             <div class="dropdown-menu" style="">
                 <h6 class="dropdown-header">Options</h6>
                 <form action="/Users/@Model.Id/ConfirmPassword">
-                    <button type="submit">DELETE @Model.Username</button>
+                    <button type="submit" class="btn btn-primary btn-sm">DELETE @Model.Username</button>
                 </form>
                 <form action="/Users/@Model.Id/Edit">
-                    <button type="submit">EDIT @Model.Username</button>
+                    <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 5px !important;">EDIT @Model.Username</button>
                 </form>
             </div>
         </div>
     </div>
-
-
-    <!--    <form action="/Users/@Model.Id/Delete" method="post">
-        <button "submit" onclick="return confirm('Are You Sure You Want To Delete Profile For @Model.Name?')">DELETE @Model.Username</button>
-    </form>
-    <form action="/Users/@Model.Id/Edit">
-        <button type="submit">EDIT @Model.Username</button>
-    </form>-->
-
-
-
-
     <hr />
     <h3>Library</h3>
     <br />

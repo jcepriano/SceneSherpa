@@ -117,7 +117,6 @@ namespace SceneSherpa.Controllers
             return View(user);
         }
         
-        //------------------------------------------------------------
         [HttpPost]
         [Route("users/{id:int}")]
         public IActionResult Update(int id, User user)
@@ -150,50 +149,8 @@ namespace SceneSherpa.Controllers
                 _context.SaveChanges();
             }
 
-            //bool CheckUsernames = usernames.Where(e => e == user.Username).Any();
-            //bool CheckEmails = emails.Where(e => e == user.Email).Any();
-
-            //if (CheckUsernames)
-            //{
-            //    TempData["ErrorMessage"] = "Username already exists";
-            //    return Redirect($"/users/{id}/edit");
-            //}
-            //if (CheckEmails)
-            //{
-            //    TempData["ErrorMessage"] = "Email already exists";
-            //    return Redirect($"/users/{id}/edit");
-            //}
-            //else if(user.Age != CurrentUser.Age)
-            //{
-
-            //}
-
-            //user.Id = id;
-            //_context.Users.Update(user);
-            //_context.SaveChanges();
-
-            //return RedirectToAction("show", new { id = user.Id });
             return Redirect($"/users/{CurrentUser.Id}");
         }
-        //------------------------------------------------------------
-
-        //[HttpPost]
-        //[Route("/Users/{id:int}/Delete")]
-        //public IActionResult Delete(int id)
-        //{
-        //    //Grab user from context with all lists included
-        //    var user = _context.Users
-        //        .Where(u => u.Id == id)
-        //        .Include(u => u.AllWatched)
-        //        .Include(u => u.CurrentWatch)
-        //        .Include(u => u.ToWatch)
-        //        .First();
-        //    _context.Users.Remove(user);
-        //    _context.SaveChanges();
-
-        //    Response.Cookies.Delete("CurrentUserIdUsername");
-        //    return Redirect("/media");
-        //}
 
         [HttpPost]
         [Route("/Users/{id:int}/Delete")]
@@ -247,6 +204,7 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
             return Redirect($"/media/{movieId}");
         }
+
         //jk: Add or remove from users towatch list
         [HttpPost]
         [Route("/Users/{id:int}/{movieId:int}/ToWatch")]
@@ -265,6 +223,7 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
             return Redirect($"/media/{movieId}");
         }
+
         //jk: Add or remove from users CurrentlyWatch list
         [HttpPost]
         [Route("/Users/{id:int}/{movieId:int}/CurrentlyWatch")]
@@ -283,15 +242,14 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
             return Redirect($"/media/{movieId}");
         }
+
         [HttpPost]
         [Route("/Users/{id:int}/{mediaId:int}/CurrentlyWatch/Delete")]
         public IActionResult RemoveFromCurrentWatch(int Id, int mediaId)
         {
             // Retrieve the user and the media item
-            //var user = _context.Users.Include(u => u.CurrentWatch).FirstOrDefault(u => u.Id == userId);
             var user = _context.Users.Where(u => u.Id == Id).Include(u => u.CurrentWatch).Single();
             var media = user.CurrentWatch.Where(m => m.Id == mediaId).FirstOrDefault();
-            //var media = _context.Media.Find(mediaId);
 
             if (user.CurrentWatch.Contains(media))
             {
@@ -303,23 +261,16 @@ namespace SceneSherpa.Controllers
             }
             _context.SaveChanges();
 
-            //if (user != null && media != null)
-            //{
-            //    user.CurrentWatch.Remove(media);
-            //    _context.SaveChanges();
-            //}
-
             return RedirectToAction("Show", new { id = Id });
         }
+
         [HttpPost]
         [Route("/Users/{id:int}/{mediaId:int}/AllWatched/Delete")]
         public IActionResult RemoveFromAllWatched(int Id, int mediaId)
         {
             // Retrieve the user and the media item
-            //var user = _context.Users.Include(u => u.CurrentWatch).FirstOrDefault(u => u.Id == userId);
             var user = _context.Users.Where(u => u.Id == Id).Include(u => u.AllWatched).Single();
             var media = user.AllWatched.Where(m => m.Id == mediaId).FirstOrDefault();
-            //var media = _context.Media.Find(mediaId);
 
             if (user.AllWatched.Contains(media))
             {
@@ -331,39 +282,16 @@ namespace SceneSherpa.Controllers
             }
             _context.SaveChanges();
 
-            //if (user != null && media != null)
-            //{
-            //    user.CurrentWatch.Remove(media);
-            //    _context.SaveChanges();
-            //}
-
             return RedirectToAction("Show", new { id = Id });
         }
 
-        //[HttpPost]
-        //[Route("/Users/{id:int}/{movieId:int}/AllWatched/Delete")]
-        //public IActionResult RemoveFromAllWatched(int userId, int mediaId)
-        //{
-        //    var user = _context.Users.Include(u => u.AllWatched).FirstOrDefault(u => u.Id == userId);
-        //    var media = user?.AllWatched.FirstOrDefault(m => m.Id == mediaId);
-
-        //    if (user != null && media != null)
-        //    {
-        //        user.AllWatched.Remove(media);
-        //        _context.SaveChanges();
-        //    }
-
-        //    return RedirectToAction("Show", new { id = userId });
-        //}
         [HttpPost]
         [Route("/Users/{id:int}/{mediaId:int}/ToWatch/Delete")]
         public IActionResult RemoveFromToWatch(int Id, int mediaId)
         {
             // Retrieve the user and the media item
-            //var user = _context.Users.Include(u => u.CurrentWatch).FirstOrDefault(u => u.Id == userId);
             var user = _context.Users.Where(u => u.Id == Id).Include(u => u.ToWatch).Single();
             var media = user.ToWatch.Where(m => m.Id == mediaId).FirstOrDefault();
-            //var media = _context.Media.Find(mediaId);
 
             if (user.ToWatch.Contains(media))
             {
@@ -375,29 +303,9 @@ namespace SceneSherpa.Controllers
             }
             _context.SaveChanges();
 
-            //if (user != null && media != null)
-            //{
-            //    user.CurrentWatch.Remove(media);
-            //    _context.SaveChanges();
-            //}
-
             return RedirectToAction("Show", new { id = Id });
         }
-        //[HttpPost]
-        //[Route("/Users/{id:int}/{movieId:int}/ToWatch/Delete")]
-        //public IActionResult RemoveFromToWatch(int userId, int mediaId)
-        //{
-        //    var user = _context.Users.Include(u => u.ToWatch).FirstOrDefault(u => u.Id == userId);
-        //    var media = user?.ToWatch.FirstOrDefault(m => m.Id == mediaId);
 
-        //    if (user != null && media != null)
-        //    {
-        //        user.ToWatch.Remove(media);
-        //        _context.SaveChanges();
-        //    }
-
-        //    return RedirectToAction("Show", new { id = userId });
-        //}
         //jk: Add or remove from users allwatched list
         [HttpPost]
         [Route("/Users/{id:int}/{movieId:int}/Button/AllWatched")]
