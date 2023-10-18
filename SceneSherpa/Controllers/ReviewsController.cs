@@ -35,7 +35,7 @@ namespace SceneSherpa.Controllers
                 return NotFound();
             }
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
-            
+
             return View(review);
         }
 
@@ -72,11 +72,9 @@ namespace SceneSherpa.Controllers
                 .First()
                 .Id;
             review.User = _context.Users.Find(currentUserId);
-            
-            var media = _context.Media
-                .Where(m => m.Id == mediaId)
-                .Include(m => m.Reviews)
-                .First();
+
+            var media = FindMediaWithReviewsById(mediaId);
+           
             if (media == null)
             {
                 return NotFound();
@@ -87,7 +85,7 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
             return Redirect($"/Media/{mediaId}");
         }
-        
+
         [Route("/Media/{mediaId:int}/Reviews/New")]
         public IActionResult New(int? mediaId)
         {
@@ -96,7 +94,7 @@ namespace SceneSherpa.Controllers
                 return BadRequest();
             }
             ViewBag.MediaList = _context.Media.ToList();
-            var media = _context.Media.Where(m => m.Id == mediaId).Include(m => m.Reviews).First();
+            var media = FindMediaWithReviewsById(mediaId);
             if (media == null)
             {
                 return NotFound();
@@ -122,6 +120,15 @@ namespace SceneSherpa.Controllers
             _context.SaveChanges();
 
             return Redirect($"/media/{mediaId}");
+        }
+
+        public Media FindMediaWithReviewsById(int? mediaId)
+        {
+            return _context.Media
+                .Where(m => m.Id == mediaId)
+                .Include(m => m.Reviews)
+                .First();
+
         }
     }
 }
