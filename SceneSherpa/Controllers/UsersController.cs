@@ -98,11 +98,20 @@ namespace SceneSherpa.Controllers
         }
         
         [Route("/Users/{id:int}")]
-        public IActionResult Show(int id)
+        public IActionResult Show(int? id)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             ViewBag.MediaList = _context.Media.ToList();
             var user = _context.Users.Include(u => u.CurrentWatch).Include(u => u.AllWatched).Include(u => u.ToWatch)
             .FirstOrDefault(u => u.Id == id); ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+            if (user == null)
+            {
+                return NotFound();
+            }
             return View(user);
         }
         
