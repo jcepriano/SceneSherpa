@@ -2,6 +2,42 @@
 <link href='https://unpkg.com/css.gg@2.0.0/icons/css/more-vertical.css' rel='stylesheet'>
 <link href="~/css/forms.css"></link>
 
+
+
+<style>
+
+    .tooltip-nobs{
+        position:relative;
+        display:inline-block;
+        /*border-bottom: 1px dotted black;*/
+    }
+
+        .tooltip-nobs .tooltiptext {
+        visibility: hidden;
+        width: 200px;
+        background-color:black;
+        color: #FFF;
+        text-align:center;
+        padding: 5px 0;
+        border-radius: 6px;
+        opacity: 0;
+        transition: opacity .5s;
+
+       /* postion the tool tip text*/
+        position:absolute;
+        z-index: 1;
+    }
+
+        .tooltip-nobs:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+
+</style>
+
+
+
+
 <script>
     document.addEventListener("DOMContentLoaded", function (event) {
         var scrollpos = localStorage.getItem("scrollpos");
@@ -62,47 +98,60 @@
                          
                             if (!user.CurrentWatch.Contains(media))
                             {
-                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/CurrentlyWatch">
-                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-eye"></i></button></li>
-                                </form>
-
+                                <div class="tooltip-nobs">
+                                    <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/CurrentlyWatch">
+                                    <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-eye"></i></button></li>
+                                    <span class="tooltiptext"> Add To Currently Watched</span>
+                                    </form>
+                                </div>
                             }
                             else
                             {
-                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/CurrentlyWatch">
-                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-eye-fill"></i></button></li>
-                                </form>
+                                <div class="tooltip-nobs">
+                                    <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/CurrentlyWatch">
+                                    <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-eye-fill"></i></button></li>
+                                    <span class="tooltiptext">Remove From Currently Watched</span>
+                                    </form>
+                                </div>
 
                             }
 
                             if (!user.ToWatch.Contains(media))
                             {
-                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/ToWatch">
-                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-bookmark"></i></button></li>
-                                </form>
-
+                                <div class="tooltip-nobs">
+                                    <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/ToWatch">
+                                        <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-bookmark"></i></button></li>
+                                        <span class="tooltiptext">Add To To Watch</span>
+                                    </form>
+                                </div>
                             }
                             else
                             {
-                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/ToWatch">
-                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-bookmark-fill"></i></button></li>
-                                </form>
-
+                                <div class="tooltip-nobs">
+                                    <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/ToWatch">
+                                        <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-bookmark-fill"></i></button></li>
+                                         <span class="tooltiptext">Remove From To Watch</span>
+                                    </form>
+                                </div>
                             }
 
                             if (!user.AllWatched.Contains(media))
                             {
-                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/AllWatched">
-                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-check-circle"></i></button></li>
-                                </form>
-
+                                <div class="tooltip-nobs">
+                                    <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/AllWatched">
+                                        <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-check-circle"></i></button></li>
+                                         <span class="tooltiptext">Add To All Watched</span>
+                                    </form>
+                                </div>
                             }
                             else
                             {
-                                <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/AllWatched">
-                                <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-check-circle-fill"></i></button></li>
-                                </form>
-
+                                <div class="tooltip-nobs">
+                                    <form class=".list-style-none" method="post" action="/Users/@userObj[0]/@media.Id/Button/AllWatched">
+                                        <li class="list-index"><button type="submit" class="no-border"><i class="bi bi-check-circle-fill"></i></button></li>
+                                         <span class="tooltiptext"> Remove From All Watched</span>
+                                    </form>
+                                </div>
                             }
                         }
                         else
