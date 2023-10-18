@@ -183,14 +183,23 @@ namespace SceneSherpa.Controllers
 
         [HttpPost]
         [Route("/Users/{id:int}/Delete")]
-        public IActionResult Delete(int id, string password)
+        public IActionResult Delete(int? id, string password)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             var user = _context.Users
                 .Where(u => u.Id == id)
                 .Include(u => u.AllWatched)
                 .Include(u => u.CurrentWatch)
                 .Include(u => u.ToWatch)
                 .First();
+            if (user == null)
+            {
+                return NotFound();
+            }
 
             if (password != null)
             {
