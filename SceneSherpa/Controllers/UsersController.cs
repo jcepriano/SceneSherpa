@@ -33,24 +33,28 @@ namespace SceneSherpa.Controllers
         [HttpPost]
         public IActionResult Index(User user)
         {
-            ViewBag.MediaList = _context.Media.ToList();
-            //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
-            user.Password = user.ReturnEncryptedString(user.Password);
-
-            bool usernames = _context.Users.Any(u => u.Username == user.Username);
-
-            if (usernames)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("Username", "Username already exists");
-                TempData["ErrorMessage"] = "Username already exists";
-                return Redirect("/users/new");
+                ViewBag.MediaList = _context.Media.ToList();
+                //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
+                user.Password = user.ReturnEncryptedString(user.Password);
+
+                bool usernames = _context.Users.Any(u => u.Username == user.Username);
+
+                if (usernames)
+                {
+                    ModelState.AddModelError("Username", "Username already exists");
+                    TempData["ErrorMessage"] = "Username already exists";
+                    return Redirect("/users/new");
+                }
+                _context.Users.Add(user);
+                _context.SaveChanges();
+
+                Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
+
+                ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+
             }
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
-            Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
-
-            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
 
             return Redirect($"/users/{user.Id}");
         }
@@ -68,7 +72,7 @@ namespace SceneSherpa.Controllers
         public IActionResult LoginAttempt(string username, string password)
         {
             //User Admin = new() { Username = "Admin", Name = "Admin", Age = 0000, Email = "Admin@gmail.com", Id = 0000, Password = "Admin" };
-            if(username != null && password != null)
+            if (username != null && password != null)
             {
                 var LoginAttemptUser = _context.Users.Where(e => e.Username == username).FirstOrDefault();
 
@@ -77,10 +81,10 @@ namespace SceneSherpa.Controllers
                     Response.Cookies.Append("CurrentUserIdUsername", $"{LoginAttemptUser.Id} {LoginAttemptUser.Username}");
                     return Redirect($"/users/{LoginAttemptUser.Id}");
                 }
-            else
-            {
-                TempData["FailedLogin"] = "Either your password or username is incorrect, please try again.";
-            }
+                else
+                {
+                    TempData["FailedLogin"] = "Either your password or username is incorrect, please try again.";
+                }
             }
             return Redirect("/users/login");
         }
@@ -96,7 +100,7 @@ namespace SceneSherpa.Controllers
 
             return Redirect("/media");
         }
-        
+
         [Route("/Users/{id:int}")]
         public IActionResult Show(int? id)
         {
@@ -115,7 +119,7 @@ namespace SceneSherpa.Controllers
             }
             return View(user);
         }
-        
+
         [Route("users/{id:int}/edit")]
         public IActionResult Edit(int? id)
         {
@@ -135,7 +139,7 @@ namespace SceneSherpa.Controllers
             }
             return View(user);
         }
-        
+
         [HttpPost]
         [Route("users/{id:int}")]
         public IActionResult Update(int? id, User user)
@@ -158,12 +162,12 @@ namespace SceneSherpa.Controllers
             usernames.Remove(CurrentUser.Username);
             emails.Remove(CurrentUser.Email);
 
-            if(usernames.Any(e => e == user.Username))
+            if (usernames.Any(e => e == user.Username))
             {
                 TempData["TakenError"] = "That Username is already taken";
                 return Redirect($"/users/{CurrentUser.Id}/edit");
             }
-            if(emails.Any(e => e == user.Email))
+            if (emails.Any(e => e == user.Email))
             {
                 TempData["TakenError"] = "That Email is already taken";
                 return Redirect($"/users/{CurrentUser.Id}/edit");
