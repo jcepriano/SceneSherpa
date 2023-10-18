@@ -89,11 +89,18 @@ namespace SceneSherpa.Controllers
         }
         
         [Route("/Media/{mediaId:int}/Reviews/New")]
-        public IActionResult New(int mediaId)
+        public IActionResult New(int? mediaId)
         {
+            if (mediaId == null)
+            {
+                return BadRequest();
+            }
             ViewBag.MediaList = _context.Media.ToList();
             var media = _context.Media.Where(m => m.Id == mediaId).Include(m => m.Reviews).First();
-
+            if (media == null)
+            {
+                return NotFound();
+            }
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             return View(media);
         }
