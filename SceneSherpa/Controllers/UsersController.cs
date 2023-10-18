@@ -98,30 +98,59 @@ namespace SceneSherpa.Controllers
         }
         
         [Route("/Users/{id:int}")]
-        public IActionResult Show(int id)
+        public IActionResult Show(int? id)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             ViewBag.MediaList = _context.Media.ToList();
             var user = _context.Users.Include(u => u.CurrentWatch).Include(u => u.AllWatched).Include(u => u.ToWatch)
             .FirstOrDefault(u => u.Id == id); ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+
+            if (user == null)
+            {
+                return NotFound();
+            }
             return View(user);
         }
         
         [Route("users/{id:int}/edit")]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             ViewBag.MediaList = _context.Media.ToList();
             var user = _context.Users.Find(id);
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             ViewData["TakenError"] = TempData["TakenError"];
 
+            if (user == null)
+            {
+                return NotFound();
+            }
             return View(user);
         }
         
         [HttpPost]
         [Route("users/{id:int}")]
-        public IActionResult Update(int id, User user)
+        public IActionResult Update(int? id, User user)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             var CurrentUser = _context.Users.Find(id);
+
+            if (CurrentUser == null)
+            {
+                return NotFound();
+            }
 
             var usernames = _context.Users.Select(e => e.Username).ToList();
             var emails = _context.Users.Select(e => e.Email).ToList();
@@ -154,14 +183,23 @@ namespace SceneSherpa.Controllers
 
         [HttpPost]
         [Route("/Users/{id:int}/Delete")]
-        public IActionResult Delete(int id, string password)
+        public IActionResult Delete(int? id, string password)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             var user = _context.Users
                 .Where(u => u.Id == id)
                 .Include(u => u.AllWatched)
                 .Include(u => u.CurrentWatch)
                 .Include(u => u.ToWatch)
                 .First();
+            if (user == null)
+            {
+                return NotFound();
+            }
 
             if (password != null)
             {
