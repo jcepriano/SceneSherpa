@@ -125,7 +125,7 @@ namespace SceneSherpa.Controllers
             }
 
             ViewBag.MediaList = _context.Media.ToList();
-            var user = _context.Users.Find(id);
+            var user = FindUserbyId(id);
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
             ViewData["TakenError"] = TempData["TakenError"];
 
@@ -145,9 +145,9 @@ namespace SceneSherpa.Controllers
                 return BadRequest();
             }
 
-            var CurrentUser = _context.Users.Find(id);
+            var currentUser = FindUserbyId(id);
 
-            if (CurrentUser == null)
+            if (currentUser == null)
             {
                 return NotFound();
             }
@@ -155,30 +155,30 @@ namespace SceneSherpa.Controllers
             var usernames = _context.Users.Select(e => e.Username).ToList();
             var emails = _context.Users.Select(e => e.Email).ToList();
 
-            usernames.Remove(CurrentUser.Username);
-            emails.Remove(CurrentUser.Email);
+            usernames.Remove(currentUser.Username);
+            emails.Remove(currentUser.Email);
 
             if(usernames.Any(e => e == user.Username))
             {
                 TempData["TakenError"] = "That Username is already taken";
-                return Redirect($"/users/{CurrentUser.Id}/edit");
+                return Redirect($"/users/{currentUser.Id}/edit");
             }
             if(emails.Any(e => e == user.Email))
             {
                 TempData["TakenError"] = "That Email is already taken";
-                return Redirect($"/users/{CurrentUser.Id}/edit");
+                return Redirect($"/users/{currentUser.Id}/edit");
             }
             else
             {
-                CurrentUser.Age = user.Age;
-                CurrentUser.Email = user.Email;
-                CurrentUser.Name = user.Name;
-                CurrentUser.Username = user.Username;
-                _context.Users.Update(CurrentUser);
+                currentUser.Age = user.Age;
+                currentUser.Email = user.Email;
+                currentUser.Name = user.Name;
+                currentUser.Username = user.Username;
+                _context.Users.Update(currentUser);
                 _context.SaveChanges();
             }
 
-            return Redirect($"/users/{CurrentUser.Id}");
+            return Redirect($"/users/{currentUser.Id}");
         }
 
         [HttpPost]
@@ -229,8 +229,8 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/AllWatched")]
         public IActionResult AllWatched(int id, int movieId)
         {
-            var user = _context.Users.Find(id);
-            var movie = _context.Media.Find(movieId);
+            var user = FindUserbyId(id);
+            var movie = FindMediaById(movieId);
             if (user.AllWatched.Contains(movie))
             {
                 user.AllWatched.Remove(movie);
@@ -248,8 +248,8 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/ToWatch")]
         public IActionResult ToWatch(int id, int movieId)
         {
-            var user = _context.Users.Find(id);
-            var movie = _context.Media.Find(movieId);
+            var user = FindUserbyId(id);
+            var movie = FindMediaById(movieId);
             if (user.ToWatch.Contains(movie))
             {
                 user.ToWatch.Remove(movie);
@@ -267,8 +267,8 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/CurrentlyWatch")]
         public IActionResult CurrentlyWatch(int id, int movieId)
         {
-            var user = _context.Users.Find(id);
-            var movie = _context.Media.Find(movieId);
+            var user = FindUserbyId(id);
+            var movie = FindMediaById(movieId);
             if (user.CurrentWatch.Contains(movie))
             {
                 user.CurrentWatch.Remove(movie);
@@ -349,8 +349,8 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/Button/AllWatched")]
         public IActionResult AllWatchedButton(int id, int movieId)
         {
-            var user = _context.Users.Find(id);
-            var movie = _context.Media.Find(movieId);
+            var user = FindUserbyId(id);
+            var movie = FindMediaById(movieId);
             if (user.AllWatched.Contains(movie))
             {
                 user.AllWatched.Remove(movie);
@@ -367,8 +367,8 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/Button/ToWatch")]
         public IActionResult ToWatchButton(int id, int movieId)
         {
-            var user = _context.Users.Find(id);
-            var movie = _context.Media.Find(movieId);
+            var user = FindUserbyId(id);
+            var movie = FindMediaById(movieId);
             if (user.ToWatch.Contains(movie))
             {
                 user.ToWatch.Remove(movie);
@@ -385,8 +385,8 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/Button/CurrentlyWatch")]
         public IActionResult CurrentlyWatchButton(int id, int movieId)
         {
-            var user = _context.Users.Find(id);
-            var movie = _context.Media.Find(movieId);
+            var user = FindUserbyId(id);
+            var movie = FindMediaById(movieId);
             if (user.CurrentWatch.Contains(movie))
             {
                 user.CurrentWatch.Remove(movie);
@@ -399,5 +399,16 @@ namespace SceneSherpa.Controllers
             return Redirect("/media");
         }
 
+
+        public User FindUserbyId(int? id)
+        {
+            return _context.Users.Find(id);
+
+        }
+
+        public Media FindMediaById(int? movieId)
+        {
+            return _context.Media.Find(movieId);
+        }
     }
 }
