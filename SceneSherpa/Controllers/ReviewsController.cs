@@ -22,12 +22,20 @@ namespace SceneSherpa.Controllers
         }
 
         [Route("media/{id:int}/reviews/{reviewId:int}")]
-        public IActionResult Edit(int reviewId)
+        public IActionResult Edit(int? reviewId)
         {
+            if (reviewId == null)
+            {
+                return BadRequest();
+            }
             ViewBag.MediaList = _context.Media.ToList();
             var review = _context.Reviews.Where(r => r.Id == reviewId).Include(r => r.Media).First();
-
+            if (review == null)
+            {
+                return NotFound();
+            }
             ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+            
             return View(review);
         }
 
