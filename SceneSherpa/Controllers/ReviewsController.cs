@@ -41,10 +41,14 @@ namespace SceneSherpa.Controllers
 
         [HttpPost]
         [Route("media/{mediaId:int}/reviews/{reviewId:int}")]
-        public IActionResult Update(int mediaId, Review review, int reviewId)
+        public IActionResult Update(int mediaId, Review review, int? reviewId)
         {
+            if (reviewId == null)
+            {
+                return BadRequest();
+            }
             ViewBag.MediaList = _context.Media.ToList();
-            review.Id = reviewId;
+            review.Id = (int)reviewId;
             review.UpdatedAt = DateTime.Now.ToUniversalTime();
             review.Content = Markdown.Parse(review.Content);
             _context.Reviews.Update(review);
