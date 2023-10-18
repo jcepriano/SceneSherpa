@@ -35,24 +35,32 @@ namespace SceneSherpa.Controllers
         public IActionResult Index(User user)
         {
 
-                ViewBag.MediaList = _context.Media.ToList();
-                //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
-                user.Password = user.ReturnEncryptedString(user.Password);
+            ViewBag.MediaList = _context.Media.ToList();
+            //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
+            user.Password = user.ReturnEncryptedString(user.Password);
 
-                bool usernames = _context.Users.Any(u => u.Username == user.Username);
+            bool usernames = _context.Users.Any(u => u.Username == user.Username);
+            //var propLength = _context.Users.Include(u => u.Username.Length);
 
-                if (usernames)
-                {
-                    ModelState.AddModelError("Username", "Username already exists");
-                    TempData["ErrorMessage"] = "Username already exists";
-                    return Redirect("/users/new");
-                }
-                _context.Users.Add(user);
-                _context.SaveChanges();
+            if (usernames)
+            {
+                ModelState.AddModelError("Username", "Username already exists");
+                TempData["ErrorMessage"] = "Username already exists";
+                return Redirect("/users/new");
+            }
 
-                Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
+            //if (usernames)
+            //{
+            //    ModelState.AddModelError("Username", "Username cannot exceed 100 characters");
+            //    TempData["CountErrorMessage"] = "Username cannot exceed 100 characters";
+            //    return Redirect("/users/new");
+            //}
+            _context.Users.Add(user);
+            _context.SaveChanges();
 
-                ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+            Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
+
+            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
 
             return Redirect($"/users/{user.Id}");
         }
