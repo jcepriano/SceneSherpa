@@ -25,9 +25,10 @@ namespace SceneSherpa.Controllers
 
         public IActionResult New()
         {
+            var user = new User();
             ViewBag.MediaList = _context.Media.ToList();
             ViewData["ErrorMessage"] = TempData["ErrorMessage"];
-            return View();
+            return View(user);
         }
 
         [HttpPost]
