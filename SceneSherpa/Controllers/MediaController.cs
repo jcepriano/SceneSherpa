@@ -33,14 +33,18 @@ namespace SceneSherpa.Controllers
         }
 
         [Route("media/{id:int}")]
-        public IActionResult Show(int id)
+        public IActionResult Show(int? id)
         {
-
+            if (id == null)
+            {
+                return BadRequest();
+            }
             var media = _context.Media
                 .Where(m => m.Id == id)
                 .Include(media => media.Reviews)
                 .ThenInclude(review => review.User)
                 .FirstOrDefault();
+            if (media == null) return NotFound();
             ViewBag.MediaList = _context.Media.ToList();
 
             //JK: find current user and pass in their review as a seperate review object, If no one is logged in, pass no user reviews in
