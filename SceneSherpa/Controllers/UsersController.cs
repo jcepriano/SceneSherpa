@@ -138,9 +138,19 @@ namespace SceneSherpa.Controllers
         
         [HttpPost]
         [Route("users/{id:int}")]
-        public IActionResult Update(int id, User user)
+        public IActionResult Update(int? id, User user)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             var CurrentUser = _context.Users.Find(id);
+
+            if (CurrentUser == null)
+            {
+                return NotFound();
+            }
 
             var usernames = _context.Users.Select(e => e.Username).ToList();
             var emails = _context.Users.Select(e => e.Email).ToList();
