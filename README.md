@@ -29,11 +29,11 @@ These instructions will get you a copy of the project up and running on your loc
 9. Done! Run the project from Visual Studio!
 
 ## Built With
-* Bootstrap
-* Markdig
-* ASP .NET Core MVC
-* Serilog
-* Entity Framework Core
+* [Bootstrap](https://getbootstrap.com/)
+* [Markdig](https://github.com/xoofx/markdig)
+* [ASP .NET Core](https://github.com/dotnet/aspnetcore)
+* [Serilog](https://serilog.net/)
+* [Entity Framework Core](https://github.com/dotnet/efcore)
 
 ## Authors
 | <img src="https://github.com/jcepriano.png?">    | <img src="https://github.com/bradenasmith2.png?">|<img src="https://github.com/jeremy-kimball.png?"> |
@@ -43,9 +43,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Acknowledgments
 
-* Eli Paris
-* Isiah Worsham
-* Alexander Buhkmirov
+* Eli Paris [@Eli-J-Paris](https://github.com/Eli-J-Paris)
+* Isiah Worsham [@iworsham](https://github.com/iworsham)
+* Alexander Bukhmirov [@abukhmirov](https://github.com/abukhmirov)
 
 
 
