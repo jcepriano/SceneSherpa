@@ -67,20 +67,42 @@ namespace SceneSherpa.Controllers
         [Route("/users/login/attempt")]
         public IActionResult LoginAttempt(string username, string password)
         {
-            //User Admin = new() { Username = "Admin", Name = "Admin", Age = 0000, Email = "Admin@gmail.com", Id = 0000, Password = "Admin" };
-            if(username != null && password != null)
+            if (ModelState.IsValid)
             {
-                var LoginAttemptUser = _context.Users.Where(e => e.Username == username).FirstOrDefault();
 
-                if (LoginAttemptUser.Password != null && LoginAttemptUser.Password == LoginAttemptUser.ReturnEncryptedString(password))
+                if (username != null && password != null)
                 {
-                    Response.Cookies.Append("CurrentUserIdUsername", $"{LoginAttemptUser.Id} {LoginAttemptUser.Username}");
-                    return Redirect($"/users/{LoginAttemptUser.Id}");
+                    //Method FindUserByUsername
+                    var LoginAttemptUser = FindUserbyUsername(username);
+
+                    if (LoginAttemptUser != null)
+                    {
+                        //Method CheckHashedPassword
+                        if (LoginAttemptUser.Password != null && CheckHashedPassword(password, LoginAttemptUser))
+                        {
+                            //Method AppendIdUsernameCookie
+                            AppendIdUsernameCookie(LoginAttemptUser);
+                            return Redirect($"/users/{LoginAttemptUser.Id}");
+                        }
+                        else
+                        {
+                            //Method FailedLoginTempData
+                            TempData["FailedLogin"] = SetTempData();
+                        }
+
+                    }
+                    else
+                    {
+                        TempData["FailedLogin"] = SetTempData();
+                    }
                 }
-            else
-            {
-                TempData["FailedLogin"] = "Either your password or username is incorrect, please try again.";
-            }
+                else if (username is null || password is null)
+                {
+                    TempData["FailedLogin"] = SetTempData();
+                }
+                {
+                    TempData["FailedLogin"] = SetTempData();
+                }
             }
             return Redirect("/users/login");
         }
@@ -96,7 +118,7 @@ namespace SceneSherpa.Controllers
 
             return Redirect("/media");
         }
-        
+
         [Route("/Users/{id:int}")]
         public IActionResult Show(int? id)
         {
@@ -115,7 +137,7 @@ namespace SceneSherpa.Controllers
             }
             return View(user);
         }
-        
+
         [Route("users/{id:int}/edit")]
         public IActionResult Edit(int? id)
         {
@@ -135,7 +157,7 @@ namespace SceneSherpa.Controllers
             }
             return View(user);
         }
-        
+
         [HttpPost]
         [Route("users/{id:int}")]
         public IActionResult Update(int? id, User user)
@@ -158,12 +180,12 @@ namespace SceneSherpa.Controllers
             usernames.Remove(currentUser.Username);
             emails.Remove(currentUser.Email);
 
-            if(usernames.Any(e => e == user.Username))
+            if (usernames.Any(e => e == user.Username))
             {
                 TempData["TakenError"] = "That Username is already taken";
                 return Redirect($"/users/{currentUser.Id}/edit");
             }
-            if(emails.Any(e => e == user.Email))
+            if (emails.Any(e => e == user.Email))
             {
                 TempData["TakenError"] = "That Email is already taken";
                 return Redirect($"/users/{currentUser.Id}/edit");
@@ -406,9 +428,28 @@ namespace SceneSherpa.Controllers
 
         }
 
+        public User FindUserbyUsername(string username)
+        {
+
+            return _context.Users.Where(e => e.Username == username).FirstOrDefault();
+        }
+        public bool CheckHashedPassword(string password, User LoginAttemptUser)
+        {
+            return LoginAttemptUser.Password == LoginAttemptUser.ReturnEncryptedString(password);
+        }
+        public void AppendIdUsernameCookie(User user)
+        {
+            Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
+        }
+
         public Media FindMediaById(int? movieId)
         {
             return _context.Media.Find(movieId);
+        }
+
+        public string SetTempData()
+        {
+            return "Either your password or username is incorrect, please try again.";
         }
     }
 }
