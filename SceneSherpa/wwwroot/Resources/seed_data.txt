@@ -1,0 +1,133 @@
+﻿INSERT INTO Media (view_count, title, production_company, type)
+VALUES
+    (0, 'The Shawshank Redemption', 'Warner Bros.', 'Movie'),
+    (0, 'Breaking Bad', 'AMC', 'TV Show'),
+    (0, 'The Godfather', 'Paramount Pictures', 'Movie'),
+    (0, 'Game of Thrones', 'HBO', 'TV Show'),
+    (0, 'Pulp Fiction', 'Miramax Films', 'Movie'),
+    (0, 'Stranger Things', 'Netflix', 'TV Show'),
+    (0, 'Forrest Gump', 'Paramount Pictures', 'Movie'),
+    (0, 'The Matrix', 'Warner Bros.', 'Movie'),
+    (0, 'The Office', 'NBC', 'TV Show'),
+    (0, 'Inception', 'Warner Bros.', 'Movie'),
+    (0, 'Friends', 'NBC', 'TV Show'),
+    (0, 'The Dark Knight', 'Warner Bros.', 'Movie'),
+    (0, 'Avatar', '20th Century Fox', 'Movie'),
+    (0, 'The Crown', 'Netflix', 'TV Show'),
+    (0, 'Jurassic Park', 'Universal Pictures', 'Movie'),
+    (0, 'The Mandalorian', 'Lucasfilm', 'TV Show'),
+    (0, 'Star Wars: Episode IV - A New Hope', 'Lucasfilm', 'Movie'),
+    (0, 'The Lord of the Rings: The Fellowship of the Ring', 'New Line Cinema', 'Movie'),
+    (0, 'The Witcher', 'Netflix', 'TV Show'),
+    (0, 'Black Mirror', 'Netflix', 'TV Show');
+INSERT INTO users (name, username, email, password, age)
+VALUES ('jeremy', 'jeremy123', 'jeremy@gmail', 'password123', 25), 
+		('braden', 'braden123', 'braden@gmail', 'password123', 20), 
+		('james', 'james123', 'james@gmail', 'password123', 18);
+INSERT INTO Reviews (rating, media_id, user_id, created_at, updated_at, content)
+VALUES
+  (9.5, 1, 2, '2023-09-20 10:30:00', '2023-09-20 10:30:00', 'This movie was excellent.'),
+  (4.5, 1, 3, '2023-09-21 09:45:00', '2023-09-20 10:30:00', 'Average movie, could have been better.'),
+  (5.0, 1, 1, '2023-09-22 14:20:00', '2023-09-20 10:30:00',  null);
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg',
+ description = 'Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.'
+Where title = 'The Shawshank Redemption';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg',
+ description = 'Don Vito Corleone, head of a mafia family, decides to hand over his empire to his youngest son Michael. However, his decision unintentionally puts the lives of his loved ones in grave danger.'
+Where title = 'The Godfather';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BYmQ4YWMxYjUtNjZmYi00MDQ1LWFjMjMtNjA5ZDdiYjdiODU5XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_SX300.jpg',
+ description = 'A chemistry teacher diagnosed with inoperable lung cancer turns to manufacturing and selling methamphetamine with a former student in order to secure his family''s future.'
+Where title = 'Breaking Bad';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BN2IzYzBiOTQtNGZmMi00NDI5LTgxMzMtN2EzZjA1NjhlOGMxXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg',
+ description = 'Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after being dormant for a millennia.'
+Where title = 'Game of Thrones';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg',
+ description = 'The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.'
+Where title = 'Pulp Fiction';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BMDZkYmVhNjMtNWU4MC00MDQxLWE3MjYtZGMzZWI1ZjhlOWJmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg',
+ description = 'When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.'
+Where title = 'Stranger Things';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
+ description = 'The history of the United States from the 1950s to the ''70s unfolds from the perspective of an Alabama man with an IQ of 75, who yearns to be reunited with his childhood sweetheart.'
+Where title = 'Forest Gump';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg',
+ description = 'When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.'
+Where title = 'The Matrix';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BMDNkOTE4NDQtMTNmYi00MWE0LWE4ZTktYTc0NzhhNWIzNzJiXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg',
+description = 'A mockumentary on a group of typical office workers, where the workday consists of ego clashes, inappropriate behavior, and tedium.'
+Where title = 'The Office';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg',
+ description = 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.'
+Where title = 'Inception';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BNDVkYjU0MzctMWRmZi00NTkxLTgwZWEtOWVhYjZlYjllYmU4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg',
+ description = 'Follows the personal and professional lives of six twenty to thirty year-old friends living in the Manhattan borough of New York City.'
+Where title = 'Friends';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg',
+ description = 'When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.'
+Where title = 'The Dark Knight';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BZDA0OGQxNTItMDZkMC00N2UyLTg3MzMtYTJmNjg3Nzk5MzRiXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg',
+ description = 'A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.'
+Where title = 'Avatar';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BZTEyNjBjYmYtYWYxYi00MmQyLThlYmItY2I4NzM1Mjg1MWYxXkEyXkFqcGdeQXVyMTU3ODI3MTk2._V1_SX300.jpg',
+ description = 'Follows the political rivalries and romance of Queen Elizabeth II''s reign and the events that shaped the second half of the 20th century.'
+Where title = 'The Crown';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_SX300.jpg',
+ description = 'A pragmatic paleontologist touring an almost complete theme park on an island in Central America is tasked with protecting a couple of kids after a power failure causes the park''s cloned dinosaurs to run loose.'
+Where title = 'Jurassic Park';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BN2M5YWFjN2YtYzU2YS00NzBlLTgwZWUtYWQzNWFhNDkyYjg3XkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg',
+ description = 'The travels of a lone bounty hunter in the outer reaches of the galaxy, far from the authority of the New Republic.'
+Where title = 'The Mandalorian';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BOTA5NjhiOTAtZWM0ZC00MWNhLThiMzEtZDFkOTk2OTU1ZDJkXkEyXkFqcGdeQXVyMTA4NDI1NTQx._V1_SX300.jpg',
+ description = 'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire''s world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.'
+Where title = 'Star Wars: Episode IV - A New Hope';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg',
+ description = 'A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.'
+Where title = 'The Lord of the Rings: The Fellowship of the Ring';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BMDEwOWVlY2EtMWI0ZC00OWVmLWJmZGItYTk3YjYzN2Y0YmFkXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg',
+ description = 'Geralt of Rivia, a solitary monster hunter, struggles to find his place in a world where people often prove more wicked than beasts.'
+Where title = 'The Witcher';
+
+UPDATE media 
+SET image_url = 'https://m.media-amazon.com/images/M/MV5BZTgyNTBkNzctN2I3NC00NTA1LWJiMDMtYzA2MmYyZjc1NWQzXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg',
+ description = 'An anthology series exploring a twisted, high-tech multiverse where humanity''s greatest innovations and darkest instincts collide.'
+Where title = 'Black Mirror';
+UPDATE media
+SET image_url = 'https://fr.web.img4.acsta.net/pictures/15/10/13/15/12/514297.jpg'
+WHERE title = 'Forrest Gump'
