@@ -42,6 +42,7 @@ These instructions will get you a copy of the project up and running on your loc
 * [ASP .NET Core](https://github.com/dotnet/aspnetcore)
 * [Serilog](https://serilog.net/)
 * [Entity Framework Core](https://github.com/dotnet/efcore)
+* [PostgreSQL](https://www.postgresql.org/)
 
 ## Authors
 | <img src="https://github.com/jcepriano.png?">    | <img src="https://github.com/bradenasmith2.png?">|<img src="https://github.com/jeremy-kimball.png?"> |
