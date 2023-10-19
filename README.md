@@ -4,41 +4,36 @@ One Paragraph of project description goes here
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+* pgAdmin
+* Visual Studio
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+1. Fork and clone the repository
+2. In the Package Manager Console run the command `update-database`
+3. Right click the SceneSherpa Project file in Visual studio and select user secrets paste the code below into your secrets file, replacing the `YOURUSERNAMEHERE` and `YOURPASSWORDHERE` with your username and password for pgAdmin.
 ```
-Give the example
+{
+  "SCENESHERPA_DBCONNECTIONSTRING": "Server=localhost;Database=SceneSherpa;Port=5432;Username=YOURUSERNAMEHERE;Password=YOURPASSWORDHERE"
+}
 ```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo system
+4. Navigate to the (seed data txt file goes here) and copy the entire contents of this file.
+5. Open pgAdmin and connect to the SceneSherpa Database
+6. Run the Query Tool for SceneSherpa
+7. Paste the contents from the seed_data.txt file.
+8. Run the query
+9. Done! Run the project from Visual Studio!
 
 ## Built With
-*
-*
-*
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+* Bootstrap
+* Markdig
+* ASP .NET Core MVC
+* Serilog
+* Entity Framework Core
 
 ## Authors
 | <img src="https://github.com/jcepriano.png?">    | <img src="https://github.com/bradenasmith2.png?">|<img src="https://github.com/jeremy-kimball.png?"> |
