@@ -31,7 +31,7 @@ These instructions will get you a copy of the project up and running on your loc
 ```
 4. Navigate to the (seed data txt file goes here) and copy the entire contents of this file.
 5. Open pgAdmin and connect to the SceneSherpa Database
-6. Run the Query Tool for SceneSherpa
+6. Run the Query Tool for the SceneSherpa Database
 7. Paste the contents from the seed_data.txt file.
 8. Run the query
 9. Done ✅ Run the project from Visual Studio!
