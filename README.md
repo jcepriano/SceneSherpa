@@ -1,6 +1,15 @@
-# Scene Sherpa
+# 🎥 Scene Sherpa 
 
 One Paragraph of project description goes here
+
+![image](https://github.com/jcepriano/SceneSherpa/assets/130601077/3c14cbe0-0c95-4ae9-b1e7-0519276eff95)
+<details>
+  <summary>Additional Screenshots</summary>
+  <img src="https://github.com/jeremy-kimball/MvcMessageLogger/assets/130601077/6026a762-443a-4d31-b21e-d18013e8733b" name="user-creation">
+  <img src="https://github.com/jeremy-kimball/MvcMessageLogger/assets/130601077/7556ad18-90ed-4150-b81f-e8697504fbee" name="statistics">
+  <img src="https://github.com/jeremy-kimball/MvcMessageLogger/assets/130601077/d085308b-3760-47a4-a7b3-037b050535ac" name="privacy-policy">
+  <img src="https://github.com/jeremy-kimball/MvcMessageLogger/assets/130601077/0e005a64-609f-4fcd-86c9-1bd8c3fd6413" name="welcome">
+</details>
 
 ## Getting Started
 
