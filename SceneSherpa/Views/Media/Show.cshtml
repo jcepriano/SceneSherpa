@@ -85,7 +85,7 @@
             }
         </div>
         <div class="col-5">
-            <img width="503" height="700" src="@Model.ImageURL" class="drop-shadow"></img>
+            <img width="503" height="700" src="@Model.ImageURL" class="drop-shadow" alt="@Model.Title"></img>
             <!--Change Button Logo Based on Users Lists-->
             @if (currentUser != null)
             {
@@ -106,11 +106,11 @@
                         <button class="btn btn-primary" type="submit">
                             @if (currentUser.AllWatched.Contains(Model))
                             {
-                                <span><i class="bi bi-check-square"></i> Watched</span>
+                                <span><i class="bi bi-check-square"></i> Mark as Watched</span>
                             }
                             else
                             {
-                                <span><i class="bi bi-square"></i> Watched</span>
+                                <span><i class="bi bi-square"></i> Remove From Watched</span>
                             }
                         </button>
                     </form>
@@ -118,11 +118,11 @@
                         <button class="btn btn-primary" type="submit">
                             @if (currentUser.ToWatch.Contains(Model))
                             {
-                                <span><i class="bi bi-check-square"></i> To Watch</span>
+                                <span><i class="bi bi-check-square"></i> Add to Watch List</span>
                             }
                             else
                             {
-                                <span><i class="bi bi-square"></i> To Watch</span>
+                                <span><i class="bi bi-square"></i> Remove From Watch List</span>
                             }
                         </button>
                     </form>
