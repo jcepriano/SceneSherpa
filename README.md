@@ -8,8 +8,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-* pgAdmin
-* Visual Studio
+* [pgAdmin](https://www.pgadmin.org/)
+* [Visual Studio](https://visualstudio.microsoft.com/)
 
 ### Installing
 
@@ -26,7 +26,7 @@ These instructions will get you a copy of the project up and running on your loc
 6. Run the Query Tool for SceneSherpa
 7. Paste the contents from the seed_data.txt file.
 8. Run the query
-9. Done! Run the project from Visual Studio!
+9. Done ✅ Run the project from Visual Studio!
 
 ## Built With
 * [Bootstrap](https://getbootstrap.com/)
