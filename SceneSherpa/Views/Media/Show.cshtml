@@ -85,7 +85,7 @@
             }
         </div>
         <div class="col-5">
-            <img width="503" height="700" src="@Model.ImageURL" class="drop-shadow"></img>
+            <img width="503" height="700" src="@Model.ImageURL" class="drop-shadow" alt="@Model.Title"></img>
             <!--Change Button Logo Based on Users Lists-->
             @if (currentUser != null)
             {
@@ -94,23 +94,23 @@
                         <button class="btn btn-primary" type="submit">
                             @if (currentUser.CurrentWatch.Contains(Model))
                             {
-                                <span><i class="bi bi-check-square"></i> Currently Watching</span>
+                                <span><i class="bi bi-check-square" style="position: relative; margin-right: 2px !important; width: 25%;"></i> Currently Watching</span>
                             }
                             else
                             {
-                                <span><i class="bi bi-square"></i> Currently Watching</span>
+                                <span><i class="bi bi-square" style="position: relative; margin-right: 2px !important; width: 25%;"></i> Currently Watching</span>
                             }
                         </button>
                     </form>
                     <form method="post" action="/Users/@currentUser.Id/@Model.Id/AllWatched">
-                        <button class="btn btn-primary" type="submit">
+                        <button class="btn btn-primary" type="submit" style="padding: 5px 5px 18.75px 5px; margin-bottom: 9px;">
                             @if (currentUser.AllWatched.Contains(Model))
                             {
-                                <span><i class="bi bi-check-square"></i> Watched</span>
+                                <span style=""><i class="bi bi-check-square" style="position: relative; margin-right: 2px !important; width: 30% !important; padding-top: 6px;"></i> Watched</span>
                             }
                             else
                             {
-                                <span><i class="bi bi-square"></i> Watched</span>
+                                <span style="display: inline-block;"><i class="bi bi-square" style="position: relative; margin-right: 2px !important"></i> Watched</span>
                             }
                         </button>
                     </form>
@@ -118,11 +118,11 @@
                         <button class="btn btn-primary" type="submit">
                             @if (currentUser.ToWatch.Contains(Model))
                             {
-                                <span><i class="bi bi-check-square"></i> To Watch</span>
+                                <span><i class="bi bi-check-square" style="position: relative; margin-right: 2px !important; width: 35%;"></i> Want to Watch</span>
                             }
                             else
                             {
-                                <span><i class="bi bi-square"></i> To Watch</span>
+                                <span><i class="bi bi-square" style="position: relative; margin-right: 2px !important; width: 35%;"></i> Want to Watch</span>
                             }
                         </button>
                     </form>

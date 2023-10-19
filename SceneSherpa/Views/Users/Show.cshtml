@@ -9,30 +9,38 @@
 {
     <div class="nav-container">
         <div id="userinfo">
-            <h1>Name: @Model.Name</h1>
-            <h1>Age: @Model.Age</h1>
-            <h1>Username: @Model.Username</h1>
-            <h1>Email: @Model.Email</h1>
-        </div>
-        <div class="dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Settings</a>
-            <div class="dropdown-menu" style="">
-                <h6 class="dropdown-header">Options</h6>
-                <form action="/Users/@Model.Id/ConfirmPassword">
-                    <button type="submit" class="btn btn-primary btn-sm">DELETE @Model.Username</button>
-                </form>
-                <form action="/Users/@Model.Id/Edit">
-                    <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 5px !important;">EDIT @Model.Username</button>
-                </form>
+            <div class="card mb-3" style="margin-left: -137.5%;">
+                <div class="dropdown settings-dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Settings</a>
+                    <div class="dropdown-menu" style="">
+                        <h6 class="dropdown-header">Options</h6>
+                        <form action="/Users/@Model.Id/ConfirmPassword">
+                            <button type="submit" class="btn btn-primary btn-sm">DELETE @Model.Username</button>
+                        </form>
+                        <form action="/Users/@Model.Id/Edit">
+                            <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 5px !important;">EDIT @Model.Username</button>
+                        </form>
+                    </div>
+                </div>
+                <h3 class="card-header">My Info</h3>
+                <div class="card-body">
+                    <p class="card-text">@Model.Username</p>
+                    <p class="card-text">Age: @Model.Age</p>
+                    <p class="card-text">Username: @Model.Name</p>
+                    <p class="card-text">Email: @Model.Email</p>
+                </div>
+                <div class="card-body">
+                    
+                </div>
             </div>
         </div>
     </div>
     <hr />
-    <h3>Library</h3>
     <br />
     <br />
     <div id="leftbox">
         <h2>Currently Watching</h2>
+        <hr />
         @if (Model.CurrentWatch != null && Model.CurrentWatch.Any())
         {
             foreach (var media in Model.CurrentWatch)
@@ -40,7 +48,7 @@
                 <p>
                     @media.Type: @media.Title
                     <form method="post" action="/Users/@Model.Id/@media.Id/CurrentlyWatch/Delete">
-                        <button type="submit">Remove from Currently Watching</button>
+                        <button type="submit">Remove</button>
                     </form>
                 </p>
             }
@@ -52,7 +60,8 @@
     </div>
 
     <div id="middlebox">
-        <h2>All Watched</h2>
+        <h2>Watched</h2>
+        <hr />
         @if (Model.AllWatched != null && Model.AllWatched.Any())
         {
             foreach (var media in Model.AllWatched)
@@ -60,19 +69,20 @@
                 <p>
                     @media.Type: @media.Title
                     <form method="post" action="/Users/@Model.Id/@media.Id/AllWatched/Delete">
-                        <button type="submit">Remove from All Watched</button>
+                        <button type="submit">Remove</button>
                     </form>
                 </p>
             }
         }
         else
         {
-            <p>No media in All Watched list.</p>
+            <p>No media in your Watched List.</p>
         }
     </div>
 
     <div id="rightbox">
-        <h2>To Watch</h2>
+        <h2>Watch List</h2>
+        <hr />
         @if (Model.ToWatch != null && Model.ToWatch.Any())
         {
             foreach (var media in Model.ToWatch)
@@ -80,34 +90,34 @@
                 <p>
                     @media.Type: @media.Title
                     <form method="post" action="/Users/@Model.Id/@media.Id/ToWatch/Delete">
-                        <button type="submit">Remove from To Watch</button>
+                        <button type="submit">Remove</button>
                     </form>
                 </p>
             }
         }
         else
         {
-            <p>No media in To Watch list.</p>
+            <p>No media in your Watch List.</p>
         }
     </div>
 
     <style>
         #leftbox {
             float: left;
-            width: 25%;
+            width: 30%;
             height: 280px;
         }
 
         #middlebox {
             float: left;
-            width: 40%;
+            width: 25%;
             margin-left: 14%;
             height: 280px;
         }
 
         #rightbox {
             float: right;
-            width: 20%;
+            width: 25%;
             height: 280px;
         }
 
@@ -129,6 +139,12 @@
         #userinfo {
             float: left;
             margin-right: 220px; /* Adjust margin to provide spacing between dropdown and user info */
+        }
+
+        .settings-dropdown{
+            width: 80px !important;
+            margin-left: 360px;
+            position: absolute;
         }
     </style>
 }
