@@ -21,7 +21,8 @@ namespace SceneSherpa.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        [StringLength(50, ErrorMessage = "Password cannot be more than 50 characters")]
+        [DataType(DataType.Password)]
+        [StrongPassword]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Age is required")]
