@@ -40,7 +40,7 @@ namespace SceneSherpa.Models
         {
             if (listName == "ToWatch") return ToWatch;
             if (listName == "AllWatched") return AllWatched;
-            if (listName == "CurrentWatch") return CurrentWatch;
+            if (listName == "CurrentlyWatch") return CurrentWatch;
 
             else
             {
