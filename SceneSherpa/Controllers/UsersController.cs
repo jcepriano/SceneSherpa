@@ -97,7 +97,7 @@ namespace SceneSherpa.Controllers
                         TempData["FailedLogin"] = FailedLogin;
                     }
                 }
-                
+
             }
             else if (username == null || password == null)
             {
@@ -256,15 +256,8 @@ namespace SceneSherpa.Controllers
         {
             var user = FindUserbyId(id);
             var movie = FindMediaById(movieId);
-            if (user.AllWatched.Contains(movie))
-            {
-                user.AllWatched.Remove(movie);
-            }
-            else
-            {
-                user.AllWatched.Add(movie);
-            }
-            _context.SaveChanges();
+            ToggleMediaInList(user, movie, "AllWatched");
+            
             return Redirect($"/media/{movieId}");
         }
 
@@ -275,15 +268,8 @@ namespace SceneSherpa.Controllers
         {
             var user = FindUserbyId(id);
             var movie = FindMediaById(movieId);
-            if (user.ToWatch.Contains(movie))
-            {
-                user.ToWatch.Remove(movie);
-            }
-            else
-            {
-                user.ToWatch.Add(movie);
-            }
-            _context.SaveChanges();
+            ToggleMediaInList(user, movie, "ToWatch");
+
             return Redirect($"/media/{movieId}");
         }
 
@@ -294,15 +280,8 @@ namespace SceneSherpa.Controllers
         {
             var user = FindUserbyId(id);
             var movie = FindMediaById(movieId);
-            if (user.CurrentWatch.Contains(movie))
-            {
-                user.CurrentWatch.Remove(movie);
-            }
-            else
-            {
-                user.CurrentWatch.Add(movie);
-            }
-            _context.SaveChanges();
+            ToggleMediaInList(user, movie, "CurrentlyWatch");
+
             return Redirect($"/media/{movieId}");
         }
 
@@ -424,6 +403,52 @@ namespace SceneSherpa.Controllers
             return Redirect("/media");
         }
 
+        private void ToggleMediaInList(User user, Media media, string listName)
+        {
+            List<Media> targetList = user.GetListFromName(listName);
+
+            if(targetList != null)
+            {
+                if (targetList.Contains(media))
+                {
+                    targetList.Remove(media);
+                }
+                else
+                {
+                    targetList.Add(media);
+                }
+                _context.SaveChanges();
+            }
+            else
+            {
+                TempData["TargetListError"] = "There was an error processing this request";
+            }
+        }
+
+        private IActionResult SmartRedirect(ControllerContext controllerContext, int objectId)
+        {
+            string controllerName = controllerContext.RouteData.Values["controller"].ToString();
+            string actionName = controllerContext.RouteData.Values["action"].ToString();
+            if(controllerName == "Media")
+            {
+                if(actionName == "Show")
+                {
+                    return Redirect($"/media/{objectId}");
+                }
+                if(actionName == "Index")
+                {
+                    return Redirect("/media/");
+                }
+            }
+            else if(controllerName == "Users")
+            {
+                if(actionName == "Show")
+                {
+                    return Redirect($"/users/{objectId}");
+                }
+            }
+            return NotFound();
+        }
 
         public User FindUserbyId(int? id)
         {
