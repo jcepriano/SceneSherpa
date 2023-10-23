@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SceneSherpa.DataAccess;
 using SceneSherpa.Models;
+using Serilog;
 using System.Security.Cryptography;
 using System.Text;
 using Serilog;
@@ -46,8 +47,16 @@ namespace SceneSherpa.Controllers
                 TempData["ErrorMessage"] = "Username already exists";
                 return Redirect("/users/new");
             }
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            try
+            {
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("Error when adding new user to database");
+            }
+
 
             Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
 
@@ -68,6 +77,7 @@ namespace SceneSherpa.Controllers
         [Route("/users/login/attempt")]
         public IActionResult LoginAttempt(string username, string password)
         {
+            if (username != null && password != null)
             string FailedLogin = "Either your password or username is incorrect, please try again.";
             if (ModelState.IsValid)
             {
@@ -98,7 +108,10 @@ namespace SceneSherpa.Controllers
                         TempData["FailedLogin"] = FailedLogin;
                     }
                 }
-
+                else
+                {
+                    TempData["FailedLogin"] = "Either your password or username is incorrect, please try again.";
+                } 
             }
             else if (username == null || password == null)
             {
@@ -200,8 +213,16 @@ namespace SceneSherpa.Controllers
                 currentUser.Email = user.Email;
                 currentUser.Name = user.Name;
                 currentUser.Username = user.Username;
-                _context.Users.Update(currentUser);
-                _context.SaveChanges();
+                try
+                {
+                    _context.Users.Update(currentUser);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when updating user to database");
+                }
+
             }
 
             return Redirect($"/users/{currentUser.Id}");
@@ -231,9 +252,17 @@ namespace SceneSherpa.Controllers
             {
                 if (user.Password == user.ReturnEncryptedString(password))
                 {
-                    _context.Users.Remove(user);
-                    _context.SaveChanges();
-                    Response.Cookies.Delete("CurrentUserIdUsername");
+                    try
+                    {
+                        _context.Users.Remove(user);
+                        _context.SaveChanges();
+                        Response.Cookies.Delete("CurrentUserIdUsername");
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Fatal("Error when deleting new user to database" + ex.Message);
+                    }
+
 
                     return Redirect("/media");
                 }
@@ -273,7 +302,7 @@ namespace SceneSherpa.Controllers
         {
             return GetObjectsThenToggleMedia(id, movieId, "CurrentlyWatch");
         }
-
+        
         private IActionResult GetObjectsThenToggleMedia(int id, int movieId, string listName)
         {
             string referer = Request.Headers.Referer;
@@ -285,6 +314,7 @@ namespace SceneSherpa.Controllers
             {
                 return NotFound();
             }
+            
             return Redirect(referer);
         }
 

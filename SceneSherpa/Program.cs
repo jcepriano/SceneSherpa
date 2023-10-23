@@ -1,9 +1,8 @@
 using Markdig;
 using Microsoft.EntityFrameworkCore;
 using SceneSherpa.DataAccess;
-
-
-
+using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,5 +52,19 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(name:"default", pattern:"{controller=Media}/{action=Index}/{id?}");
+app.MapControllerRoute(name: "default", pattern: "{controller=Media}/{action=Index}/{id?}");
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Logger(lc => lc
+        .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Information)
+        .WriteTo.File("logfile_info.txt", rollingInterval: RollingInterval.Day))
+    .WriteTo.Logger(lc => lc
+        .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Warning)
+        .WriteTo.File("logfile_warning.txt", rollingInterval: RollingInterval.Day))
+    .WriteTo.Logger(lc => lc
+        .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Fatal)
+        .WriteTo.File("logfile_fatal.txt", rollingInterval: RollingInterval.Day))
+    .WriteTo.Console()
+    .CreateLogger();
 app.Run();
+Log.CloseAndFlush();
