@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
@@ -35,8 +36,18 @@ namespace SceneSherpa.Models
         public List<User>? Friended { get; set; } = new List<User>();
 
 
+        public List<Media> GetListFromName(string listName)
+        {
+            if (listName == "ToWatch") return ToWatch;
+            if (listName == "AllWatched") return AllWatched;
+            if (listName == "CurrentlyWatch") return CurrentWatch;
 
-
+            else
+            {
+                Log.Warning($"Failed to retrieve desired list {listName}");
+                return null;
+            }
+        }
         //this method will take in any string and return it hashed. I've been using it for personal User information.
         public string ReturnEncryptedString(string stringToEncrypt)
         {

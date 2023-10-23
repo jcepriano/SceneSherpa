@@ -5,6 +5,7 @@ using SceneSherpa.Models;
 using Serilog;
 using System.Security.Cryptography;
 using System.Text;
+using Serilog;
 
 namespace SceneSherpa.Controllers
 {
@@ -283,32 +284,7 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/AllWatched")]
         public IActionResult AllWatched(int id, int movieId)
         {
-            var user = FindUserbyId(id);
-            var movie = FindMediaById(movieId);
-            if (user.AllWatched.Contains(movie))
-            {
-                try
-                {
-                    user.AllWatched.Remove(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
-                }
-            }
-            else
-            {
-                try
-                {
-                    user.AllWatched.Add(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when adding media from AllWatched List" + ex.Message);
-                }
-            }
-            _context.SaveChanges();
-            return Redirect($"/media/{movieId}");
+            return GetObjectsThenToggleMedia(id, movieId, "AllWatched");
         }
 
         //jk: Add or remove from users towatch list
@@ -316,32 +292,7 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/ToWatch")]
         public IActionResult ToWatch(int id, int movieId)
         {
-            var user = FindUserbyId(id);
-            var movie = FindMediaById(movieId);
-            if (user.ToWatch.Contains(movie))
-            {
-                try
-                {
-                    user.ToWatch.Remove(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when removing media from ToWatch List" + ex.Message);
-                }
-            }
-            else
-            {
-                try
-                {
-                    user.ToWatch.Add(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when adding media to ToWatch List" + ex.Message);
-                }
-            }
-            _context.SaveChanges();
-            return Redirect($"/media/{movieId}");
+            return GetObjectsThenToggleMedia(id, movieId, "ToWatch");
         }
 
         //jk: Add or remove from users CurrentlyWatch list
@@ -349,236 +300,59 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/CurrentlyWatch")]
         public IActionResult CurrentlyWatch(int id, int movieId)
         {
+            return GetObjectsThenToggleMedia(id, movieId, "CurrentlyWatch");
+        }
+        
+        private IActionResult GetObjectsThenToggleMedia(int id, int movieId, string listName)
+        {
+            string referer = Request.Headers.Referer;
             var user = FindUserbyId(id);
             var movie = FindMediaById(movieId);
-            if (user.CurrentWatch.Contains(movie))
+            ToggleMediaInList(user, movie, listName);
+
+            if (string.IsNullOrEmpty(referer))
             {
-                try
-                {
-                    user.CurrentWatch.Remove(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when removing media from CurrentlyWatch List" + ex.Message);
-                }
+                return NotFound();
             }
-            else
-            {
-                try
-                {
-                    user.CurrentWatch.Add(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when adding media to CurrentlyWatch List" + ex.Message);
-                }
-            }
-            _context.SaveChanges();
-            return Redirect($"/media/{movieId}");
+            
+            return Redirect(referer);
         }
 
-        [HttpPost]
-        [Route("/Users/{id:int}/{mediaId:int}/CurrentlyWatch/Delete")]
-        public IActionResult RemoveFromCurrentWatch(int Id, int mediaId)
+        private void ToggleMediaInList(User user, Media media, string listName)
         {
-            // Retrieve the user and the media item
-            var user = _context.Users.Where(u => u.Id == Id).Include(u => u.CurrentWatch).Single();
-            var media = user.CurrentWatch.Where(m => m.Id == mediaId).FirstOrDefault();
+            List<Media> targetList = user.GetListFromName(listName);
 
-            if (user.CurrentWatch.Contains(media))
+            if(targetList != null)
             {
-                try
+                if (targetList.Contains(media))
                 {
-                    user.CurrentWatch.Remove(media);
+                    try
+                    {
+                        targetList.Remove(media);
+                    }
+                    catch(Exception ex)
+                    {
+                        Log.Fatal("Failed to remove media from list" + ex.Message);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Log.Fatal("Error when removing media from CurrentWatch List");
+                    try
+                    {
+                        targetList.Add(media);
+                    }
+                    catch(Exception ex)
+                    {
+                        Log.Fatal("Failed to Add media to list" + ex.Message);
+                    }
                 }
+                _context.SaveChanges();
             }
             else
             {
-                try
-                {
-                    user.CurrentWatch.Add(media);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when adding media to CurrentlyWatch List");
-                }
+                TempData["TargetListError"] = "There was an error processing this request";
             }
-            _context.SaveChanges();
-
-            return RedirectToAction("Show", new { id = Id });
         }
-
-        [HttpPost]
-        [Route("/Users/{id:int}/{mediaId:int}/AllWatched/Delete")]
-        public IActionResult RemoveFromAllWatched(int Id, int mediaId)
-        {
-            // Retrieve the user and the media item
-            var user = _context.Users.Where(u => u.Id == Id).Include(u => u.AllWatched).Single();
-            var media = user.AllWatched.Where(m => m.Id == mediaId).FirstOrDefault();
-
-            if (user.AllWatched.Contains(media))
-            {
-                try
-                {
-                    user.AllWatched.Remove(media);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when removing media from AllWatched List");
-                }
-            }
-            else
-            {
-                try
-                {
-                    user.AllWatched.Add(media);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when adding media to AllWatched List");
-                }
-            }
-            _context.SaveChanges();
-
-            return RedirectToAction("Show", new { id = Id });
-        }
-
-        [HttpPost]
-        [Route("/Users/{id:int}/{mediaId:int}/ToWatch/Delete")]
-        public IActionResult RemoveFromToWatch(int Id, int mediaId)
-        {
-            // Retrieve the user and the media item
-            var user = _context.Users.Where(u => u.Id == Id).Include(u => u.ToWatch).Single();
-            var media = user.ToWatch.Where(m => m.Id == mediaId).FirstOrDefault();
-
-            if (user.ToWatch.Contains(media))
-            {
-                try
-                {
-                    user.ToWatch.Remove(media);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when removing media from ToWatch List");
-                }
-            }
-            else
-            {
-                try
-                {
-                    user.ToWatch.Add(media);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when adding media to ToWatch List");
-                }
-            }
-            _context.SaveChanges();
-
-            return RedirectToAction("Show", new { id = Id });
-        }
-
-        //jk: Add or remove from users allwatched list
-        [HttpPost]
-        [Route("/Users/{id:int}/{movieId:int}/Button/AllWatched")]
-        public IActionResult AllWatchedButton(int id, int movieId)
-        {
-            var user = FindUserbyId(id);
-            var movie = FindMediaById(movieId);
-            if (user.AllWatched.Contains(movie))
-            {
-                try
-                {
-                    user.AllWatched.Remove(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
-                }
-            }
-            else
-            {
-                try
-                {
-                    user.AllWatched.Add(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when adding media to AllWatched List" + ex.Message);
-                }
-            }
-            _context.SaveChanges();
-            return Redirect("/media");
-        }
-        //jk: Add or remove from users towatch list
-        [HttpPost]
-        [Route("/Users/{id:int}/{movieId:int}/Button/ToWatch")]
-        public IActionResult ToWatchButton(int id, int movieId)
-        {
-            var user = FindUserbyId(id);
-            var movie = FindMediaById(movieId);
-            if (user.ToWatch.Contains(movie))
-            {
-                try
-                {
-                    user.ToWatch.Remove(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when removing media from ToWatch List" + ex.Message);
-                }
-            }
-            else
-            {
-                try
-                {
-                    user.ToWatch.Add(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when adding media to ToWatch List" + ex.Message);
-                }
-            }
-            _context.SaveChanges();
-            return Redirect("/media");
-        }
-        //jk: Add or remove from users CurrentlyWatch list
-        [HttpPost]
-        [Route("/Users/{id:int}/{movieId:int}/Button/CurrentlyWatch")]
-        public IActionResult CurrentlyWatchButton(int id, int movieId)
-        {
-            var user = FindUserbyId(id);
-            var movie = FindMediaById(movieId);
-            if (user.CurrentWatch.Contains(movie))
-            {
-                try
-                {
-                    user.CurrentWatch.Remove(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when removing media from CurrentlyWatch List" + ex.Message);
-                }
-            }
-            else
-            {
-                try
-                {
-                    user.CurrentWatch.Add(movie);
-                }
-                catch (Exception ex)
-                {
-                    Log.Fatal("Error when adding media to CurrentlyWatch List" + ex.Message);
-                }
-            }
-            _context.SaveChanges();
-            return Redirect("/media");
-        }
-
 
         public User FindUserbyId(int? id)
         {
