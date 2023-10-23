@@ -255,16 +255,7 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/AllWatched")]
         public IActionResult AllWatched(int id, int movieId)
         {
-            string referer = Request.Headers.Referer;
-            var user = FindUserbyId(id);
-            var movie = FindMediaById(movieId);
-            ToggleMediaInList(user, movie, "AllWatched");
-
-            if (string.IsNullOrEmpty(referer))
-            {
-                return NotFound();
-            }
-            return Redirect(referer);
+            return GetObjectsThenToggleMedia(id, movieId, "AllWatched");
         }
 
         //jk: Add or remove from users towatch list
@@ -272,16 +263,7 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/ToWatch")]
         public IActionResult ToWatch(int id, int movieId)
         {
-            string referer = Request.Headers.Referer;
-            var user = FindUserbyId(id);
-            var movie = FindMediaById(movieId);
-            ToggleMediaInList(user, movie, "ToWatch");
-
-            if (string.IsNullOrEmpty(referer))
-            {
-                return NotFound();
-            }
-            return Redirect(referer);
+            return GetObjectsThenToggleMedia(id, movieId, "ToWatch");
         }
 
         //jk: Add or remove from users CurrentlyWatch list
@@ -289,10 +271,15 @@ namespace SceneSherpa.Controllers
         [Route("/Users/{id:int}/{movieId:int}/CurrentlyWatch")]
         public IActionResult CurrentlyWatch(int id, int movieId)
         {
+            return GetObjectsThenToggleMedia(id, movieId, "CurrentlyWatch");
+        }
+
+        private IActionResult GetObjectsThenToggleMedia(int id, int movieId, string listName)
+        {
             string referer = Request.Headers.Referer;
             var user = FindUserbyId(id);
             var movie = FindMediaById(movieId);
-            ToggleMediaInList(user, movie, "CurrentlyWatch");
+            ToggleMediaInList(user, movie, listName);
 
             if (string.IsNullOrEmpty(referer))
             {
