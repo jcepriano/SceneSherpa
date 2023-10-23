@@ -76,7 +76,6 @@ namespace SceneSherpa.Controllers
         [Route("/users/login/attempt")]
         public IActionResult LoginAttempt(string username, string password)
         {
-            if (username != null && password != null)
             string FailedLogin = "Either your password or username is incorrect, please try again.";
             if (ModelState.IsValid)
             {
@@ -107,10 +106,6 @@ namespace SceneSherpa.Controllers
                         TempData["FailedLogin"] = FailedLogin;
                     }
                 }
-                else
-                {
-                    TempData["FailedLogin"] = "Either your password or username is incorrect, please try again.";
-                } 
             }
             else if (username == null || password == null)
             {
