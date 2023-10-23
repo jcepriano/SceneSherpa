@@ -1,6 +1,11 @@
 # 🎥 Scene Sherpa 
 
-One Paragraph of project description goes here
+SceneSherpa is an MVC web application that allows users to CRUD an account and track their media consumption through the use of three lists: media they want to watch, media they have watched, and media that they are watching. In addition to being able to edit their lists, users are able to add reviews to media that they have seen, allowing other users to view their rating and review directly from the media's page.
+
+### Project Context
+* Number of primary contributors: **3**
+* Number of other contributors: **4**
+* Total work-time: **70 Hours**
 
 ![image](https://github.com/jcepriano/SceneSherpa/assets/130601077/3c14cbe0-0c95-4ae9-b1e7-0519276eff95)
 <details>
@@ -40,9 +45,11 @@ These instructions will get you a copy of the project up and running on your loc
 * [Bootstrap](https://getbootstrap.com/)
 * [Markdig](https://github.com/xoofx/markdig)
 * [ASP .NET Core](https://github.com/dotnet/aspnetcore)
-* [Serilog](https://serilog.net/)
 * [Entity Framework Core](https://github.com/dotnet/efcore)
 * [PostgreSQL](https://www.postgresql.org/)
+
+## Maintained With
+* [Serilog](https://serilog.net/)
 
 ## Authors
 | <img src="https://github.com/jcepriano.png?">    | <img src="https://github.com/bradenasmith2.png?">|<img src="https://github.com/jeremy-kimball.png?"> |
