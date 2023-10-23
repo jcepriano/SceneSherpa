@@ -297,7 +297,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                    Log.Fatal("Error when removing media from ToWatch List" + ex.Message);
                 }
             }
             else
@@ -308,7 +308,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                    Log.Fatal("Error when adding media to ToWatch List" + ex.Message);
                 }
             }
             _context.SaveChanges();
@@ -330,7 +330,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                    Log.Fatal("Error when removing media from CurrentlyWatch List" + ex.Message);
                 }
             }
             else
@@ -341,7 +341,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                    Log.Fatal("Error when adding media to CurrentlyWatch List" + ex.Message);
                 }
             }
             _context.SaveChanges();
@@ -364,7 +364,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List");
+                    Log.Fatal("Error when removing media from CurrentWatch List");
                 }
             }
             else
@@ -375,7 +375,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List");
+                    Log.Fatal("Error when adding media to CurrentlyWatch List");
                 }
             }
             _context.SaveChanges();
@@ -410,7 +410,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List");
+                    Log.Fatal("Error when adding media to AllWatched List");
                 }
             }
             _context.SaveChanges();
@@ -434,7 +434,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List");
+                    Log.Fatal("Error when removing media from ToWatch List");
                 }
             }
             else
@@ -445,7 +445,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List");
+                    Log.Fatal("Error when adding media to ToWatch List");
                 }
             }
             _context.SaveChanges();
@@ -479,7 +479,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                    Log.Fatal("Error when adding media to AllWatched List" + ex.Message);
                 }
             }
             _context.SaveChanges();
@@ -500,7 +500,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                    Log.Fatal("Error when removing media from ToWatch List" + ex.Message);
                 }
             }
             else
@@ -511,7 +511,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                    Log.Fatal("Error when adding media to ToWatch List" + ex.Message);
                 }
             }
             _context.SaveChanges();
@@ -532,7 +532,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                    Log.Fatal("Error when removing media from CurrentlyWatch List" + ex.Message);
                 }
             }
             else
@@ -543,7 +543,7 @@ namespace SceneSherpa.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                    Log.Fatal("Error when adding media to CurrentlyWatch List" + ex.Message);
                 }
             }
             _context.SaveChanges();
