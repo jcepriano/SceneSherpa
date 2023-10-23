@@ -39,12 +39,15 @@
     {
         <p style="color: salmon">@errorMessage</p>
     }
+    
+    <br />
     <ul id="password-requirements">
-        <li style="color: red;">At least 8 characters</li>
-        <li style="color: red;">At least one uppercase letter</li>
-        <li style="color: red;">At least one digit</li>
+        <li style="color: salmon;">At least 8 characters</li>
+        <li style="color: salmon;">At least one uppercase letter</li>
+        <li style="color: salmon;">At least one digit</li>
     </ul>
-    <div id="password-message" style="display: none; color: green;">Password meets the criteria!</div>
+
+    <div id="password-message" style="display: none; color: lightgreen;">Password meets the criteria!</div>
 
     <button class="login-button" type="submit">Create Account</button>
 </form>
@@ -65,9 +68,9 @@
             var hasDigit = /\d/.test(password);
 
             // Update the color of each list item and display the message
-            passwordRequirements.eq(0).css("color", isLongEnough ? "green" : "red");
-            passwordRequirements.eq(1).css("color", hasUppercase ? "green" : "red");
-            passwordRequirements.eq(2).css("color", hasDigit ? "green" : "red");
+            passwordRequirements.eq(0).css("color", isLongEnough ? "lightgreen" : "salmon");
+            passwordRequirements.eq(1).css("color", hasUppercase ? "lightgreen" : "salmon");
+            passwordRequirements.eq(2).css("color", hasDigit ? "lightgreen" : "salmon");
 
             // Check if all requirements are met
             if (isLongEnough && hasUppercase && hasDigit) {
