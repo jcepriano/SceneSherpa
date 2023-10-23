@@ -35,34 +35,42 @@ namespace SceneSherpa.Controllers
         [HttpPost]
         public IActionResult Index(User user)
         {
-            ViewBag.MediaList = _context.Media.ToList();
-            //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
-            user.Password = user.ReturnEncryptedString(user.Password);
-
-            bool usernames = _context.Users.Any(u => u.Username == user.Username);
-
-            if (usernames)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("Username", "Username already exists");
-                TempData["ErrorMessage"] = "Username already exists";
-                return Redirect("/users/new");
+                ViewBag.MediaList = _context.Media.ToList();
+                //this properly hashes these properties and saves to Db. Method is located in *SceneSherpa.Models.User*
+                user.Password = user.ReturnEncryptedString(user.Password);
+
+                bool usernames = _context.Users.Any(u => u.Username == user.Username);
+
+                if (usernames)
+                {
+                    ModelState.AddModelError("Username", "Username already exists");
+                    TempData["ErrorMessage"] = "Username already exists";
+                    return Redirect("/users/new");
+                }
+                try
+                {
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when adding new user to database");
+                }
+
+
+                Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
+
+                ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
+
+                return Redirect($"/users/{user.Id}");
+
             }
-            try
+            else
             {
-                _context.Users.Add(user);
-                _context.SaveChanges();
+                return View("New", user);
             }
-            catch (Exception ex)
-            {
-                Log.Fatal("Error when adding new user to database");
-            }
-
-
-            Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
-
-            ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
-
-            return Redirect($"/users/{user.Id}");
         }
 
         [Route("/users/login")]
@@ -107,10 +115,6 @@ namespace SceneSherpa.Controllers
                         TempData["FailedLogin"] = FailedLogin;
                     }
                 }
-                else
-                {
-                    TempData["FailedLogin"] = "Either your password or username is incorrect, please try again.";
-                } 
             }
             else if (username == null || password == null)
             {

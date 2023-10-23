@@ -1,4 +1,5 @@
-﻿<link rel="preconnect" href="https://fonts.gstatic.com">
+﻿@model SceneSherpa.Models.User
+<link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="stylesheet" href="/css/forms.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
@@ -25,12 +26,58 @@
     <label for="age" class="login-form-label">Age</label>
     <input type="text" placeholder="Age" id="age" class="login-form-input" required name="Age">
 
-    <label for="password" class="login-form-label">Password</label>
-    <input type="password" placeholder="Password" id="password" class="login-form-input" name="Password" required>
+        <label for="Password" class="login-form-label">Password:</label>
+        <input asp-for="Password" type="password" placeholder="Password" class="login-form-input" name="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+
+    <!--    <label for="password" class="login-form-label">Password</label>
+        <input asp-for="Password" type="password" placeholder="Password" id="password" class="login-form-input" name="Password" >
+        <span asp-validation-for="Password" class="text-danger"></span>
+    -->
+
     @if (errorMessage != null)
     {
         <p style="color: salmon">@errorMessage</p>
     }
+    
+    <br />
+    <ul id="password-requirements">
+        <li style="color: salmon;">At least 8 characters</li>
+        <li style="color: salmon;">At least one uppercase letter</li>
+        <li style="color: salmon;">At least one digit</li>
+    </ul>
+
+    <div id="password-message" style="display: none; color: lightgreen;">Password meets the criteria!</div>
 
     <button class="login-button" type="submit">Create Account</button>
 </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Reference the password input field and the password requirements list
+        var passwordField = $("#Password");
+        var passwordRequirements = $("#password-requirements li");
+        var passwordMessage = $("#password-message");
+
+        passwordField.on("input", function () {
+            // Check the password against your criteria
+            var password = passwordField.val();
+
+            var isLongEnough = password.length >= 8;
+            var hasUppercase = /[A-Z]/.test(password);
+            var hasDigit = /\d/.test(password);
+
+            // Update the color of each list item and display the message
+            passwordRequirements.eq(0).css("color", isLongEnough ? "lightgreen" : "salmon");
+            passwordRequirements.eq(1).css("color", hasUppercase ? "lightgreen" : "salmon");
+            passwordRequirements.eq(2).css("color", hasDigit ? "lightgreen" : "salmon");
+
+            // Check if all requirements are met
+            if (isLongEnough && hasUppercase && hasDigit) {
+                passwordMessage.show();
+            } else {
+                passwordMessage.hide();
+            }
+        });
+    });
+</script>
