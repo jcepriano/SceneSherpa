@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using SceneSherpa.DataAccess;
 using SceneSherpa.Models;
+using Serilog;
 
 namespace SceneSherpa.Controllers
 {
@@ -51,8 +52,16 @@ namespace SceneSherpa.Controllers
             review.Id = (int)reviewId;
             review.UpdatedAt = DateTime.Now.ToUniversalTime();
             review.Content = Markdown.Parse(review.Content);
+            try
+            {
             _context.Reviews.Update(review);
             _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("Error when updating review in the database" + ex.Message);
+            }
+
 
             return Redirect($"/media/{mediaId}");
         }
@@ -81,8 +90,16 @@ namespace SceneSherpa.Controllers
             }
             review.CreatedAt = DateTime.Now.ToUniversalTime();
             review.Content = Markdown.Parse(review.Content);
+            try
+            {
             media.Reviews.Add(review);
             _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("Error when adding review to the database");
+            }
+
             return Redirect($"/Media/{mediaId}");
         }
 
@@ -116,8 +133,16 @@ namespace SceneSherpa.Controllers
             {
                 return NotFound();
             }
+            try
+            {
             _context.Reviews.Remove(review);
             _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("Error when removing review from database" + ex.Message);
+            }
+
 
             return Redirect($"/media/{mediaId}");
         }
