@@ -61,6 +61,9 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Logger(lc => lc
         .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Warning)
         .WriteTo.File("logfile_warning.txt", rollingInterval: RollingInterval.Day))
+    .WriteTo.Logger(lc => lc
+        .Filter.ByIncludingOnly(evt => evt.Level == LogEventLevel.Fatal)
+        .WriteTo.File("logfile_fatal.txt", rollingInterval: RollingInterval.Day))
     .WriteTo.Console()
     .CreateLogger();
 app.Run();
