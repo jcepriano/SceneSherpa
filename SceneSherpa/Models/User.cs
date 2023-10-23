@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -34,6 +35,8 @@ namespace SceneSherpa.Models
         public List<User>? Friended { get; set; } = new List<User>();
 
 
+
+
         //this method will take in any string and return it hashed. I've been using it for personal User information.
         public string ReturnEncryptedString(string stringToEncrypt)
         {
@@ -49,6 +52,7 @@ namespace SceneSherpa.Models
             }
             return firstInputBuilder.ToString();
         }
+
 
     }
 }

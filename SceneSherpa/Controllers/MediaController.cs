@@ -14,6 +14,7 @@ namespace SceneSherpa.Controllers
         }
         public IActionResult Index()
         {
+
             var media = _context.Media.Include(e => e.Reviews).ThenInclude(r => r.User);
             if (media == null) return NotFound();
             var currentUsernameId = Request.Cookies["CurrentUserIdUsername"];
@@ -25,6 +26,7 @@ namespace SceneSherpa.Controllers
 
                 var user = _context.Users.Find(Int32.Parse(userObj[0]));
                 ViewData["User"] = user;
+   //             user.FindUserbyUsername(user.Id);
                 ViewData["CurrentUserIdUsername"] = Request.Cookies["CurrentUserIdUsername"];
                 ViewBag.MediaList = _context.Media.ToList();
             }
