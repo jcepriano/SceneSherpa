@@ -1,44 +1,48 @@
-# Scene Sherpa
+# 🎥 Scene Sherpa 
 
 One Paragraph of project description goes here
 
+![image](https://github.com/jcepriano/SceneSherpa/assets/130601077/3c14cbe0-0c95-4ae9-b1e7-0519276eff95)
+<details>
+  <summary>Additional Screenshots</summary>
+  <img src="https://github.com/jcepriano/SceneSherpa/assets/130601077/333eb95d-dce4-4aa6-93b4-57bd5aa3d848" name="media-show">
+  <img src="https://github.com/jcepriano/SceneSherpa/assets/130601077/e64b766c-cabe-4923-8ce7-f61c5f15b857" name="user-show">
+  <img src="https://github.com/jcepriano/SceneSherpa/assets/130601077/885420a5-13df-48ca-81c2-b501e1ac03ec" name="about-page">
+</details>
+
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+* [pgAdmin](https://www.pgadmin.org/)
+* [Visual Studio](https://visualstudio.microsoft.com/)
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+1. Fork and clone the repository
+2. In the Package Manager Console run the command `update-database`
+3. Right click the SceneSherpa Project file in Visual studio and select user secrets paste the code below into your secrets file, replacing the `YOURUSERNAMEHERE` and `YOURPASSWORDHERE` with your username and password for pgAdmin.
 ```
-Give the example
+{
+  "SCENESHERPA_DBCONNECTIONSTRING": "Server=localhost;Database=SceneSherpa;Port=5432;Username=YOURUSERNAMEHERE;Password=YOURPASSWORDHERE"
+}
 ```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo system
+4. Navigate to the [seed data file](SceneSherpa/wwwroot/Resources/seed_data.txt) and copy the entire contents of this file.
+5. Open pgAdmin and connect to the SceneSherpa Database
+6. Run the Query Tool for the SceneSherpa Database
+7. Paste the contents from the seed_data.txt file.
+8. Run the query
+9. Done ✅ Run the project from Visual Studio!
 
 ## Built With
-*
-*
-*
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+* [Bootstrap](https://getbootstrap.com/)
+* [Markdig](https://github.com/xoofx/markdig)
+* [ASP .NET Core](https://github.com/dotnet/aspnetcore)
+* [Serilog](https://serilog.net/)
+* [Entity Framework Core](https://github.com/dotnet/efcore)
+* [PostgreSQL](https://www.postgresql.org/)
 
 ## Authors
 | <img src="https://github.com/jcepriano.png?">    | <img src="https://github.com/bradenasmith2.png?">|<img src="https://github.com/jeremy-kimball.png?"> |
@@ -48,9 +52,9 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Acknowledgments
 
-* Eli Paris
-* Isiah Worsham
-* Alexander Buhkmirov
+* Eli Paris [@Eli-J-Paris](https://github.com/Eli-J-Paris)
+* Isiah Worsham [@iworsham](https://github.com/iworsham)
+* Alexander Bukhmirov [@abukhmirov](https://github.com/abukhmirov)
 
 
 
