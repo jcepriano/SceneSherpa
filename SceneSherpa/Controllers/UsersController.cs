@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SceneSherpa.DataAccess;
 using SceneSherpa.Models;
+using Serilog;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -45,8 +46,16 @@ namespace SceneSherpa.Controllers
                 TempData["ErrorMessage"] = "Username already exists";
                 return Redirect("/users/new");
             }
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            try
+            {
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("Error when adding new user to database");
+            }
+
 
             Response.Cookies.Append("CurrentUserIdUsername", $"{user.Id} {user.Username}");
 
@@ -68,7 +77,7 @@ namespace SceneSherpa.Controllers
         public IActionResult LoginAttempt(string username, string password)
         {
             //User Admin = new() { Username = "Admin", Name = "Admin", Age = 0000, Email = "Admin@gmail.com", Id = 0000, Password = "Admin" };
-            if(username != null && password != null)
+            if (username != null && password != null)
             {
                 var LoginAttemptUser = _context.Users.Where(e => e.Username == username).FirstOrDefault();
 
@@ -77,10 +86,10 @@ namespace SceneSherpa.Controllers
                     Response.Cookies.Append("CurrentUserIdUsername", $"{LoginAttemptUser.Id} {LoginAttemptUser.Username}");
                     return Redirect($"/users/{LoginAttemptUser.Id}");
                 }
-            else
-            {
-                TempData["FailedLogin"] = "Either your password or username is incorrect, please try again.";
-            }
+                else
+                {
+                    TempData["FailedLogin"] = "Either your password or username is incorrect, please try again.";
+                }
             }
             return Redirect("/users/login");
         }
@@ -96,7 +105,7 @@ namespace SceneSherpa.Controllers
 
             return Redirect("/media");
         }
-        
+
         [Route("/Users/{id:int}")]
         public IActionResult Show(int? id)
         {
@@ -115,7 +124,7 @@ namespace SceneSherpa.Controllers
             }
             return View(user);
         }
-        
+
         [Route("users/{id:int}/edit")]
         public IActionResult Edit(int? id)
         {
@@ -135,7 +144,7 @@ namespace SceneSherpa.Controllers
             }
             return View(user);
         }
-        
+
         [HttpPost]
         [Route("users/{id:int}")]
         public IActionResult Update(int? id, User user)
@@ -158,12 +167,12 @@ namespace SceneSherpa.Controllers
             usernames.Remove(currentUser.Username);
             emails.Remove(currentUser.Email);
 
-            if(usernames.Any(e => e == user.Username))
+            if (usernames.Any(e => e == user.Username))
             {
                 TempData["TakenError"] = "That Username is already taken";
                 return Redirect($"/users/{currentUser.Id}/edit");
             }
-            if(emails.Any(e => e == user.Email))
+            if (emails.Any(e => e == user.Email))
             {
                 TempData["TakenError"] = "That Email is already taken";
                 return Redirect($"/users/{currentUser.Id}/edit");
@@ -174,8 +183,16 @@ namespace SceneSherpa.Controllers
                 currentUser.Email = user.Email;
                 currentUser.Name = user.Name;
                 currentUser.Username = user.Username;
-                _context.Users.Update(currentUser);
-                _context.SaveChanges();
+                try
+                {
+                    _context.Users.Update(currentUser);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when updating user to database");
+                }
+
             }
 
             return Redirect($"/users/{currentUser.Id}");
@@ -205,9 +222,17 @@ namespace SceneSherpa.Controllers
             {
                 if (user.Password == user.ReturnEncryptedString(password))
                 {
-                    _context.Users.Remove(user);
-                    _context.SaveChanges();
-                    Response.Cookies.Delete("CurrentUserIdUsername");
+                    try
+                    {
+                        _context.Users.Remove(user);
+                        _context.SaveChanges();
+                        Response.Cookies.Delete("CurrentUserIdUsername");
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Fatal("Error when deleting new user to database" + ex.Message);
+                    }
+
 
                     return Redirect("/media");
                 }
@@ -233,11 +258,25 @@ namespace SceneSherpa.Controllers
             var movie = FindMediaById(movieId);
             if (user.AllWatched.Contains(movie))
             {
-                user.AllWatched.Remove(movie);
+                try
+                {
+                    user.AllWatched.Remove(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             else
             {
-                user.AllWatched.Add(movie);
+                try
+                {
+                    user.AllWatched.Add(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when adding media from AllWatched List" + ex.Message);
+                }
             }
             _context.SaveChanges();
             return Redirect($"/media/{movieId}");
@@ -252,11 +291,25 @@ namespace SceneSherpa.Controllers
             var movie = FindMediaById(movieId);
             if (user.ToWatch.Contains(movie))
             {
-                user.ToWatch.Remove(movie);
+                try
+                {
+                    user.ToWatch.Remove(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             else
             {
-                user.ToWatch.Add(movie);
+                try
+                {
+                    user.ToWatch.Add(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             _context.SaveChanges();
             return Redirect($"/media/{movieId}");
@@ -271,11 +324,25 @@ namespace SceneSherpa.Controllers
             var movie = FindMediaById(movieId);
             if (user.CurrentWatch.Contains(movie))
             {
-                user.CurrentWatch.Remove(movie);
+                try
+                {
+                    user.CurrentWatch.Remove(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             else
             {
-                user.CurrentWatch.Add(movie);
+                try
+                {
+                    user.CurrentWatch.Add(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             _context.SaveChanges();
             return Redirect($"/media/{movieId}");
@@ -291,11 +358,25 @@ namespace SceneSherpa.Controllers
 
             if (user.CurrentWatch.Contains(media))
             {
-                user.CurrentWatch.Remove(media);
+                try
+                {
+                    user.CurrentWatch.Remove(media);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List");
+                }
             }
             else
             {
-                user.CurrentWatch.Add(media);
+                try
+                {
+                    user.CurrentWatch.Add(media);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List");
+                }
             }
             _context.SaveChanges();
 
@@ -312,11 +393,25 @@ namespace SceneSherpa.Controllers
 
             if (user.AllWatched.Contains(media))
             {
-                user.AllWatched.Remove(media);
+                try
+                {
+                    user.AllWatched.Remove(media);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List");
+                }
             }
             else
             {
-                user.AllWatched.Add(media);
+                try
+                {
+                    user.AllWatched.Add(media);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List");
+                }
             }
             _context.SaveChanges();
 
@@ -333,11 +428,25 @@ namespace SceneSherpa.Controllers
 
             if (user.ToWatch.Contains(media))
             {
-                user.ToWatch.Remove(media);
+                try
+                {
+                    user.ToWatch.Remove(media);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List");
+                }
             }
             else
             {
-                user.ToWatch.Add(media);
+                try
+                {
+                    user.ToWatch.Add(media);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List");
+                }
             }
             _context.SaveChanges();
 
@@ -353,11 +462,25 @@ namespace SceneSherpa.Controllers
             var movie = FindMediaById(movieId);
             if (user.AllWatched.Contains(movie))
             {
-                user.AllWatched.Remove(movie);
+                try
+                {
+                    user.AllWatched.Remove(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             else
             {
-                user.AllWatched.Add(movie);
+                try
+                {
+                    user.AllWatched.Add(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             _context.SaveChanges();
             return Redirect("/media");
@@ -371,11 +494,25 @@ namespace SceneSherpa.Controllers
             var movie = FindMediaById(movieId);
             if (user.ToWatch.Contains(movie))
             {
-                user.ToWatch.Remove(movie);
+                try
+                {
+                    user.ToWatch.Remove(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             else
             {
-                user.ToWatch.Add(movie);
+                try
+                {
+                    user.ToWatch.Add(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             _context.SaveChanges();
             return Redirect("/media");
@@ -389,11 +526,25 @@ namespace SceneSherpa.Controllers
             var movie = FindMediaById(movieId);
             if (user.CurrentWatch.Contains(movie))
             {
-                user.CurrentWatch.Remove(movie);
+                try
+                {
+                    user.CurrentWatch.Remove(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             else
             {
-                user.CurrentWatch.Add(movie);
+                try
+                {
+                    user.CurrentWatch.Add(movie);
+                }
+                catch (Exception ex)
+                {
+                    Log.Fatal("Error when removing media from AllWatched List" + ex.Message);
+                }
             }
             _context.SaveChanges();
             return Redirect("/media");
